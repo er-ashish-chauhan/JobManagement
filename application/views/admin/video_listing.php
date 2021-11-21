@@ -60,7 +60,7 @@
                               <!-- <div class="form-group"> -->
                               <div class="row">
                                   <div class="form-group col-sm-6 col-xs-12">
-                                      <label for="exampleFormControlSelect3">Select Firm</label>
+                                      <label for="exampleFormControlSelect3">Select User</label>
                                       <select class="form-control" name="assignToId" id="assignToId">
                                           
                                       </select>

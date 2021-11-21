@@ -32,9 +32,9 @@ if(isset($data) && !empty($data))
                     <input type="text" class="form-control" maxlength="35" id="job_name" name="job_name">
                     </div>
                     <div class="form-group col-sm-6 col-xs-12">
-                    <label for="exampleFormControlSelect3">Select User</label>
+                    <label for="exampleFormControlSelect3">Select Firm</label>
                     <select class="form-control" name="firmId" id="firmId">
-                      <option value="">--User--</option>
+                      <option value="">--firm--</option>
                       <?php 
                         if(!empty($firm_list))
                         {

@@ -164,7 +164,7 @@ class Job extends CI_Controller
 	{
 		$user_result = $this->db->select("*")->from("users")->where("role", 3)->get()->result();
 
-		$user_option = " <option value=''>--firm--</option>";
+		$user_option = " <option value=''>--user--</option>";
 
 		if (!empty($user_result)) {
 			foreach ($user_result as $list) {
