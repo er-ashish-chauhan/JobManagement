@@ -105,3 +105,6 @@ define("BANNER_IMAGE_URL", $base_url."uploads/banner_image/");
 define("COACH_VIDEO_PATH", FCPATH."uploads/coach_video/");
 define("COACH_VIDEO_URL", $base_url."uploads/coach_video/");
 
+define("JOB_IMAGE_PATH", FCPATH."uploads/");
+define("JOB_IMAGE_URL", $base_url."uploads/");
+

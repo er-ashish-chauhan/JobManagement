@@ -77,7 +77,7 @@ class Admin_video_model extends CI_Model
         if (!empty($columnName)) {
             $this->db->order_by($columnName, $columnSortOrder);
         } else {
-            $this->db->order_by('usr.firstName', 'DESC');
+            $this->db->order_by('u.firstName', 'DESC');
         }
 
         if ($rowperpage != -1) {
@@ -110,14 +110,14 @@ class Admin_video_model extends CI_Model
             if (empty($record->assignToId)) {
                 $actionLinks = "<a  data-id='" .$id. "' id='delete-video' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-info' title='Assign'data-toggle='modal' data-target='#job_modal'  >Assign</a> ";
             } 
-            // // link to edit user
-            // $actionLinks .= "<a  href='" . base_url('admin/firm_video/manage_video_detail?id=') . "" . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit' ><i class=' fa fa-edit'></i></a> ";
+            // link to edit user
+            $actionLinks_view = "<a  href='" . base_url('admin/job/view_job_detail?id=') . "" . encode($id) . "&action=view ' class='btn btn-sm btn-flat  btn-primary' title='View job details' >View Details</a> ";
 
            
  
             $data[] = array(
                 $i++,
-                // $actionLinks,
+                $actionLinks_view,
                 $record->job_name,
                 $record->firm_name,
                 !empty($record->assignToId) ? $record->fullname : $actionLinks,

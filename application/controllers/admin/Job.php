@@ -179,13 +179,6 @@ class Job extends CI_Controller
 	public function assign_job()
 	{
 
-		// 		Array
-		// (
-		//     [id] => 5
-		//     [firmId] => 17
-		// )
-		// pr($this->input->post()); die;
-
 		$request = $this->input->post();
 
 		$data_arr = array(
@@ -202,4 +195,41 @@ class Job extends CI_Controller
 		}
 		redirect_back();
 	}
+
+
+
+	/*
+		* function to edit and update user     
+		* @param       userid on edit and post values on update
+		* @return      null
+		*/
+		public function view_job_detail()
+		{
+	
+			if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+				$id = decode($this->input->get("id"));
+	
+				$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | View Job';
+	
+				// in case of view patient only
+				if ($this->input->get('action') == 'view') {
+					$this->data_array['disabled'] = TRUE;
+					$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | View Job';
+					$this->data_array['pageTitle'] = 'Manage Video';
+					$this->data_array["btn_name"] = "Add";
+	
+					$this->db->select("CONCAT_WS(' ',u.firstName, u.lastName) fullname, j.id,  j.job_name, f.firm_name, j.assignToId, jm.quantityConfirmed, jm.image");
+					$this->db->from("job j");
+					$this->db->join("firm f", "j.firmId = f.id", "left");
+					$this->db->join("users u", "j.assignToId = u.id", "left");
+					$this->db->join("jobMeta jm", "j.id = jm.jobId", "left");
+					$this->db->where("j.id", $id);
+
+					$query = $this->db->get();
+					$this->data_array['data'] = $query->row();
+	
+					adminviews('view_job', $this->data_array);
+				}
+			}
+		}
 }

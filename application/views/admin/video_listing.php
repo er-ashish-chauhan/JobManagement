@@ -18,7 +18,7 @@
                                               <thead>
                                                   <tr>
                                                       <th>#</th>
-                                                      <!-- <th>Action</th> -->
+                                                      <th>Action</th>
                                                       <th>Job Name</th>
                                                       <th>Firm Name</th>
                                                       <th>Assignee</th>
