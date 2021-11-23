@@ -34,7 +34,8 @@ $image = "";
                                             <tr>
                                                 <th>#</th>
                                                 <th>Job Name</th>
-                                                <th>Quantity</th>
+                                                <th>Total Quantity</th>
+                                                <th>Quantity Confirmed</th>
                                                 <th>Image</th>
                                                 <th>Created</th>
                                             </tr>
@@ -44,6 +45,7 @@ $image = "";
                                                 <tr>
                                                     <td><?php echo $value->id ?></td>
                                                     <td><?php echo $value->job_name ?></td>
+                                                    <td><?php echo $value->total_quantity ?></td>
                                                     <td><?php echo $value->quantityConfirmed ?></td>
                                                     <td>
                                                         <image src=<?php echo str_replace("JobManagement/", "", base_url()) . str_replace("/var/www/html/", "", $value->image) ?> width="80" height="80" />

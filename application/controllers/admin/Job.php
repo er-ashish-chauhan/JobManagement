@@ -218,7 +218,7 @@ class Job extends CI_Controller
 				$this->data_array['pageTitle'] = 'Manage Video';
 				$this->data_array["btn_name"] = "Add";
 
-				$this->db->select("j.id,  j.job_name, jm.quantityConfirmed, jm.image, jm.created");
+				$this->db->select("j.id,  j.job_name, j.total_quantity, jm.quantityConfirmed, jm.image, jm.created");
 				// $this->db->select("CONCAT_WS(' ',u.firstName, u.lastName) fullname, j.id,  j.job_name, f.firm_name, j.assignToId, jm.quantityConfirmed, jm.image");
 				$this->db->from("jobMeta jm");
 				// $this->db->join("firm f", "j.firmId = f.id", "left");
