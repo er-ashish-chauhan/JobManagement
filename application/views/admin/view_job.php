@@ -46,7 +46,7 @@ $image = "";
                                                     <td><?php echo $value->job_name ?></td>
                                                     <td><?php echo $value->quantityConfirmed ?></td>
                                                     <td>
-                                                        <image src=<?php echo str_replace("JobManagement/", "", base_url()) . str_replace("/var/www/html/", "", $value->image) ?> width="200" height="300" />
+                                                        <image src=<?php echo str_replace("JobManagement/", "", base_url()) . str_replace("/var/www/html/", "", $value->image) ?> width="100" height="150" />
                                                     </td>
                                                     <td><?php echo $value->created ?></td>
 
