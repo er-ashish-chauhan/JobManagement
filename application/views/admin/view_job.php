@@ -40,10 +40,11 @@ $image = "";
                                                 <th>Created</th>
                                             </tr>
                                             <?php
+                                            $sn_count = 1;
                                             foreach ($data as $value) {
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $value->id ?></td>
+                                                    <td><?php echo $sn_count ?></td>
                                                     <td><?php echo $value->job_name ?></td>
                                                     <td><?php echo $value->total_quantity ?></td>
                                                     <td><?php echo $value->quantityConfirmed ?></td>
@@ -54,6 +55,7 @@ $image = "";
 
                                                 </tr>
                                             <?php
+                                                $sn_count++;
                                             }
                                             ?>
                                         </thead>
