@@ -1,18 +1,15 @@
 <?php
-if(!function_exists('pr'))
-{
-  function pr($data, $flag='')
-  {
-	  echo "<pre>";
-	  print_r($data);
-	  echo "</pre>";
+if (!function_exists('pr')) {
+	function pr($data, $flag = '')
+	{
+		echo "<pre>";
+		print_r($data);
+		echo "</pre>";
 
-	  if($flag == 1)
-	  {
-		  die;
-	  }
-
-  }
+		if ($flag == 1) {
+			die;
+		}
+	}
 }
 
 
@@ -53,16 +50,16 @@ if (!function_exists('decode')) {
  * @param no params
  */
 if (!function_exists('redirect_back')) {
-    function redirect_back($get = null)
-    {
-        $param = ($get == null) ? "" : $get;
-        if (isset($_SERVER['HTTP_REFERER'])) {
-            header('Location: ' . $_SERVER['HTTP_REFERER'] . $param);
-        } else {
-            header('Location: http://' . $_SERVER['SERVER_NAME'] . $param);
-        }
-        exit;
-    }
+	function redirect_back($get = null)
+	{
+		$param = ($get == null) ? "" : $get;
+		if (isset($_SERVER['HTTP_REFERER'])) {
+			header('Location: ' . $_SERVER['HTTP_REFERER'] . $param);
+		} else {
+			header('Location: http://' . $_SERVER['SERVER_NAME'] . $param);
+		}
+		exit;
+	}
 }
 
 /**
@@ -86,23 +83,22 @@ if (!function_exists('adminAuth')) {
 
 // function to load admin view
 
-if( !function_exists('adminviews'))
-{
-   function adminviews($viewName,$data= array())
-   {
-	   $CI = &get_instance();
-	   $CI->load->view('admin/includes/header', $data);
-	   $CI->load->view('admin/includes/sidebar', $data);
-	   $CI->load->view('admin/'.$viewName, $data);
-	//    die('raghav');
-      $CI->load->view('admin/includes/footer', $data);
-   }
+if (!function_exists('adminviews')) {
+	function adminviews($viewName, $data = array())
+	{
+		$CI = &get_instance();
+		$CI->load->view('admin/includes/header', $data);
+		$CI->load->view('admin/includes/sidebar', $data);
+		$CI->load->view('admin/' . $viewName, $data);
+		//    die('raghav');
+		$CI->load->view('admin/includes/footer', $data);
+	}
 }
 
 // FUNCTIO TO CONVERT TIME ZONE
 function convertTimeZone($dateTime, $TimeZoneFrom = "America/New_York", $TimeZoneTo = "UTC")
 {
-    $CI = &get_instance();
-    $query = "SELECT CONVERT_TZ('$dateTime','$TimeZoneFrom','$TimeZoneTo') as ConvertedDateTime";
-    return $CI->db->query($query)->row()->ConvertedDateTime;
+	$CI = &get_instance();
+	$query = "SELECT CONVERT_TZ('$dateTime','$TimeZoneFrom','$TimeZoneTo') as ConvertedDateTime";
+	return $CI->db->query($query)->row()->ConvertedDateTime;
 }

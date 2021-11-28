@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin_video_model extends CI_Model
 {
@@ -18,7 +18,7 @@ class Admin_video_model extends CI_Model
     // get all user details for listing
     public function list_video($postData = null)
     {
-      
+
         $response = array();
         ## Reading post values
         $draw = $postData['draw'];
@@ -31,14 +31,14 @@ class Admin_video_model extends CI_Model
         ## variable to store data for searching.
         $searchQuery = "";
         if ($searchValue != '') {
-            if ($searchValue == 'Active') { 
+            if ($searchValue == 'Active') {
                 $searchValue = 'Enabled';
             }
             if ($searchValue == 'Inactive') {
                 $searchValue = 'Disabled';
             }
 
-            $searchQuery = " (j.job_name like '%" . $searchValue . "%' or f.firm_name like '%".$searchValue."%' or u.firstName like '%". $searchValue . "%' or u.lastName like '%" . $searchValue . "%') ";
+            $searchQuery = " (j.job_name like '%" . $searchValue . "%' or f.firm_name like '%" . $searchValue . "%' or u.firstName like '%" . $searchValue . "%' or u.lastName like '%" . $searchValue . "%') ";
         }
 
         ## Total number of records without filtering
@@ -69,11 +69,11 @@ class Admin_video_model extends CI_Model
         $this->db->from("job j");
         $this->db->join("firm f", "j.firmId = f.id", "left");
         $this->db->join("users u", "j.assignToId = u.id", "left");
-               
+
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
         }
-        
+
         if (!empty($columnName)) {
             $this->db->order_by($columnName, $columnSortOrder);
         } else {
@@ -87,7 +87,7 @@ class Admin_video_model extends CI_Model
         $records = $query->result();
         $data = array();
 
-        $i=$start+1;
+        $i = $start + 1;
         // loop to iterate and storing data into array accordingly that is going to display.
         foreach ($records as $record) {
             $id = $record->id;
@@ -106,25 +106,25 @@ class Admin_video_model extends CI_Model
             // } else {
             //     $actionLinks .= "<div style='width:140px;' class='$class'><a  href='javascript:void(0)' data-id='" .$id. "' data-status='0' class='btn btn-sm btn-flat btn-success change-video-status' title='Click to deactivate'><i class='fa fa-check'></i></a> ";
             // }
-            
+
             if (empty($record->assignToId)) {
-                $actionLinks = "<a  data-id='" .$id. "' id='delete-video' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-info' title='Assign'data-toggle='modal' data-target='#job_modal'  >Assign</a> ";
-            } 
+                $actionLinks = "<a  data-id='" . $id . "' id='delete-video' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-info' title='Assign'data-toggle='modal' data-target='#job_modal'  >Assign</a> ";
+            }
             // link to edit user
             $actionLinks_view = "<a  href='" . base_url('admin/job/view_job_detail?id=') . "" . encode($id) . "&action=view ' class='btn btn-sm btn-flat  btn-primary' title='View job details' >View Details</a> ";
 
-           
- 
+
+
             $data[] = array(
                 $i++,
                 $actionLinks_view,
                 $record->job_name,
                 $record->firm_name,
                 !empty($record->assignToId) ? $record->fullname : $actionLinks,
-             );
+            );
         }
 
- 
+
 
         ## Response
         $response = array(
@@ -132,9 +132,9 @@ class Admin_video_model extends CI_Model
             "iTotalRecords" => $totalRecords,
             "iTotalDisplayRecords" => $totalRecordwithFilter,
             "aaData" => $data,
-            "detail"=> [ $columnName ,$columnSortOrder],
-            "detail"                => [ $columnName ,$columnSortOrder],
-            "search_query"          =>$searchQuery,
+            "detail" => [$columnName, $columnSortOrder],
+            "detail"                => [$columnName, $columnSortOrder],
+            "search_query"          => $searchQuery,
             "last_query"            => $this->db->last_query()
         );
         // pr($response,1);
@@ -148,10 +148,19 @@ class Admin_video_model extends CI_Model
         $this->db->from("$this->table_video vd");
         $this->db->where("vd.isDeleted", 0);
         $this->db->where("id", $id);
-        $result=$this->db->get()->row();
+        $result = $this->db->get()->row();
         return $result;
-
     }
 
-    
+    function getCommodities()
+    {
+        $this->db->select("*");
+        $this->db->from("commodities");
+        $result = $this->db->get();
+        if ($result->num_rows() > 0) {
+            return $result->result();
+        } else {
+            return array();
+        }
+    }
 }
