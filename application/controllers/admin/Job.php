@@ -20,6 +20,17 @@ class Job extends CI_Controller
 		adminviews('video_listing', $this->data_array);
 	}
 
+	public function get_video_data()
+	{
+		try {
+			$postData = $this->input->post();
+			$data = $this->admin_video_model->list_video($postData);
+			echo json_encode($data);
+		} catch (Exception $e) {
+			log_message('error', 'Error while getting coach video details: FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
+		}
+	}
+
 	/*
 		* function to edit and update user     
 		* @param       userid on edit and post values on update
