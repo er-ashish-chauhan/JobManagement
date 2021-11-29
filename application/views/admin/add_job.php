@@ -55,7 +55,7 @@
                         if (!empty($commodities)) {
                             foreach ($commodities as $list) {
                         ?>
-                                <option value="<?= $list->id ?>"><?= $list->comodity ?></option>
+                                <option value="<?= $list->id ?>"><?= $list->commodity ?></option>
 
                         <?php
                             }

@@ -72,6 +72,11 @@ class Job extends CI_Controller
 		}
 	}
 
+	public function getJobsList()
+	{
+		# code...
+	}
+
 	// function to upload banner called from another function.
 	private function upload_files()
 	{
@@ -110,7 +115,6 @@ class Job extends CI_Controller
 
 	public function assign_job()
 	{
-
 		$request = $this->input->post();
 
 		$data_arr = array(
