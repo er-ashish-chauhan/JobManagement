@@ -45,8 +45,11 @@
                     <input type="number" class="form-control" maxlength="5" id="qtyPrice" name="qtyPrice" min="0">
                 </div>
             </div>
-
             <div class="row">
+                <div class="form-group col-sm-6 col-xs-12">
+                    <label for="exampleFormControlSelect2">Broker Name</label>
+                    <input type="text" class="form-control" id="broker_name" name="broker_name">
+                </div>
                 <div class="form-group col-sm-3 col-xs-12">
                     <label for="exampleFormControlSelect3">Select Commodity</label>
                     <select class="form-control" name="commodityId" id="commodityId">
@@ -71,6 +74,9 @@
                         <option value="FOR">FOR</option>
                     </select>
                 </div>
+            </div>
+            <div class="row">
+
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect2">Deal valid upto</label>
                     <input type="date" class="form-control" maxlength="5" id="dealvalid" name="dealvalid">

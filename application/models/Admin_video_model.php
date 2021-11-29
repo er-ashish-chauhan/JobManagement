@@ -16,7 +16,7 @@ class Admin_video_model extends CI_Model
     }
 
     // get all user details for listing
-    public function list_video($postData = null)
+    public function jobsList($postData = null)
     {
 
         $response = array();
@@ -45,7 +45,7 @@ class Admin_video_model extends CI_Model
         $this->db->select('count(*) as allcount');
         $this->db->from("job j");
         $this->db->join("firm f", "j.firmId = f.id", "left");
-        $this->db->join("users u", "j.assignToId = u.id", "left");
+        // $this->db->join("users u", "j.assignToId = u.id", "left");
         $query = $this->db->get();
         $records = $query->result();
         $totalRecords = $records[0]->allcount;
@@ -54,7 +54,7 @@ class Admin_video_model extends CI_Model
         $this->db->select('count(*) as allcount');
         $this->db->from("job j");
         $this->db->join("firm f", "j.firmId = f.id", "left");
-        $this->db->join("users u", "j.assignToId = u.id", "left");
+        // $this->db->join("users u", "j.assignToId = u.id", "left");
 
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
@@ -65,10 +65,10 @@ class Admin_video_model extends CI_Model
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
-        $this->db->select("CONCAT_WS(' ',u.firstName, u.lastName) fullname, j.id,  j.job_name, f.firm_name, j.assignToId");
+        $this->db->select("j.id,  j.job_name, f.firm_name, j.assignToId");
         $this->db->from("job j");
         $this->db->join("firm f", "j.firmId = f.id", "left");
-        $this->db->join("users u", "j.assignToId = u.id", "left");
+        // $this->db->join("users u", "j.assignToId = u.id", "left");
 
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
@@ -77,7 +77,7 @@ class Admin_video_model extends CI_Model
         if (!empty($columnName)) {
             $this->db->order_by($columnName, $columnSortOrder);
         } else {
-            $this->db->order_by('u.firstName', 'DESC');
+            $this->db->order_by('j.job_name', 'DESC');
         }
 
         if ($rowperpage != -1) {
