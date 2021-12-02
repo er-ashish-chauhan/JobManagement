@@ -86,14 +86,14 @@ $(document).on("click", ".change-coach-status", function (e) {
 
 
 // confirmation before deleting coach
-$(document).on("click", "#delete-coach", function (e) {
+$(document).on("click", "#delete-commodity", function (e) {
   e.preventDefault();
 
   let id = $(this).data("id");
 
   Swal.fire({
     title: "Are you sure?",
-    text: "You want to delete this coach.",
+    text: "You want to delete this commodity.",
     type: "warning",
     showCancelButton: true,
     confirmButtonColor: "#8b0101",
@@ -102,7 +102,7 @@ $(document).on("click", "#delete-coach", function (e) {
   }).then(function (inputValue) {
     if (inputValue.value) {
       $.ajax({
-        url: admin_url + "firm/delete_user",
+        url: admin_url + "commodity/delete_commodity",
         method: "post",
         data: { id: id },
         success: (data) => {
@@ -144,8 +144,6 @@ $(function() {
 $("#user_listing").DataTable({
   processing: true,
   serverSide: true,
-  // dom:
-  //   '<"row"<"col-xs-12 col-sm-4" <"top" l <" col-sm-6 mb-1" i> >><"col-xs-12 col-sm-8"f>>t<"row"<"col-sm-4"i><"col-sm-8"p>><"clear">',
   pageLength: 25,
   scrollY: "calc(100vh - 250px)",
   stateSave: true,
@@ -163,11 +161,6 @@ $("#user_listing").DataTable({
     { orderable: false, targets:[0] },
     { targets: 1, name: "usr.firstName" },
     { targets: 2, name: "usr.email" },
-    // { targets: 4, name: "usr.contact" },
-    // { targets: 6, name: "usr.dob" },
-    // { targets: 7, name: "um.gender" },
-    // { targets: 8, name: "usr.created" },
-   
   ],
   lengthMenu: [
     [10, 25, 50, -1],
@@ -334,7 +327,6 @@ $("#video_listing").DataTable({
         $("#job_modal").modal('show');
       },
     });
-    
   });
 
 
@@ -343,5 +335,33 @@ $("#video_listing").DataTable({
     var fileName = $(this).val().split("\\").pop();
     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
   });
+
+
+  // code to list user in ajax datatable
+$("#commodity_listing").DataTable({
+  processing: true,
+  serverSide: true,
+  pageLength: 25,
+  scrollY: "calc(100vh - 250px)",
+  stateSave: true,
+  scrollX: true,
+  scrollCollapse: true,
+  fixedColumns: {
+    leftColumns: 4,
+  },
+  serverMethod: "post",
+  ajax: {
+    url: admin_url + "commodity/get_commodity_data",
+  },
+  order: [[2, "asc"]],
+  columnDefs: [
+    { orderable: false, targets:[0,1] },
+    { targets: 2, name: "c.commodity" },
+  ],
+  lengthMenu: [
+    [10, 25, 50, -1],
+    [10, 25, 50, "All"],
+  ],
+});
   
   

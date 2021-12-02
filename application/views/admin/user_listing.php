@@ -18,15 +18,8 @@
                                               <thead>
                                                   <tr>
                                                       <th>#</th>
-                                                      <!-- <th>Action</th> -->
                                                       <th>Name</th>
                                                       <th>Username</th>
-                                                      <!-- <th>Contact</th> -->
-                                                      <!-- <th>Profile Pic</th> -->
-                                                      <!-- <th>Dob</th> -->
-                                                      <!-- <th>Gender</th> -->
-                                                      <!-- <th>Created at</th> -->
-                                                      
                                                   </tr>
                                               </thead>
                                           </table>
@@ -37,7 +30,5 @@
                       </div>
                   </div>
               </div>
-
-
           </div>
           <!-- content-wrapper ends -->

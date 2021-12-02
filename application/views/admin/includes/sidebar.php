@@ -9,7 +9,7 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item" > <a class="nav-link" href="<?= base_url('admin/job/manage_job_detail'); ?>">Add Job</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/job/manage_job_detail'); ?>">Add Job</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/job') ?>">Job's Listing</a></li>
               </ul>
             </div>
@@ -39,6 +39,12 @@
                 <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/firm') ?>"> Firm's List </a></li>
               </ul>
             </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin/commodity') ?>">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Manage Commodity</span>
+            </a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
