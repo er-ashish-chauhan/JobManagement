@@ -2,7 +2,7 @@
 //  pr($data,1);
 $vProfilePic = "";
 $dob = "";
-$gender="";
+$gender = "";
 
 if (isset($data) && !empty($data)) {
     // pr($data); die;
@@ -21,11 +21,8 @@ if (isset($data) && !empty($data)) {
     <div class="content-wrapper">
 
         <form action="<?= base_url('admin/user/manage_user_detail'); ?>" method="post" id="edit_coach" enctype="multipart/form-data">
-
             <input type="hidden" name="id" id="id" value="<?= $data->id ?? "" ?>">
-
             <div class="form-group">
-
                 <div class="row">
                     <div class="form-group col-sm-6 col-xs-12">
                         <label for="firstName">First Name <span class="astric-sign">*</span></label>

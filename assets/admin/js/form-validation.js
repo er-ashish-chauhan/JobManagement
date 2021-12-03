@@ -1,18 +1,18 @@
-(function($) {
+(function ($) {
   'use strict';
   $.validator.setDefaults({
-    submitHandler: function() {
+    submitHandler: function () {
       alert("submitted!");
     }
   });
-  $(function() {
+  $(function () {
     // validate the comment form when it is submitted
     $("#commentForm").validate({
-      errorPlacement: function(label, element) {
+      errorPlacement: function (label, element) {
         label.addClass('mt-2 text-danger');
         label.insertAfter(element);
       },
-      highlight: function(element, errorClass) {
+      highlight: function (element, errorClass) {
         $(element).parent().addClass('has-danger')
         $(element).addClass('form-control-danger')
       }
@@ -61,21 +61,21 @@
           minlength: "Your password must be at least 5 characters long",
           equalTo: "Please enter the same password as above"
         },
-        email: "Please enter a valid email address",
+        email: "Please enter a valid username",
         agree: "Please accept our policy",
         topic: "Please select at least 2 topics"
       },
-      errorPlacement: function(label, element) {
+      errorPlacement: function (label, element) {
         label.addClass('mt-2 text-danger');
         label.insertAfter(element);
       },
-      highlight: function(element, errorClass) {
+      highlight: function (element, errorClass) {
         $(element).parent().addClass('has-danger')
         $(element).addClass('form-control-danger')
       }
     });
     // propose username by combining first- and lastname
-    $("#username").focus(function() {
+    $("#username").focus(function () {
       var firstname = $("#firstname").val();
       var lastname = $("#lastname").val();
       if (firstname && lastname && !this.value) {
@@ -89,7 +89,7 @@
     var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
     var topicInputs = topics.find("input").attr("disabled", !inital);
     // show when newsletter is checked
-    newsletter.on("click", function() {
+    newsletter.on("click", function () {
       topics[this.checked ? "removeClass" : "addClass"]("gray");
       topicInputs.attr("disabled", !this.checked);
     });

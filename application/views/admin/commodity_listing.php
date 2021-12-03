@@ -1,62 +1,64 @@
     <style>
-    button.btn.btn-success.btn-flat.ml-1.comm_submit_btn {
-    margin-top: 29px;
-}
+        button.btn.btn-success.btn-flat.ml-1.comm_submit_btn {
+            margin-top: 29px;
+        }
     </style>
-    
-    
-      <!-- partial -->
-      <div class="main-panel">
-          <div class="content-wrapper">
 
-              <div class="row">
-                  <div class="col-md-12">
-                      <h3 style="display:inline;" class="card-title"><?= $pageTitle = "Manage Commodity" ?></h3>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-12 grid-margin stretch-card">
-                      <div class="card">
-                          <div class="card-body">
-                              <div class="row">
-                                  <!-- <div class="col-md-12"> -->
-                                      <div class="form-group col-sm-6 col-xs-12">
-                                          <label for="firstName">Commodity <span class="astric-sign">*</span></label>
-                                          <input type="text" class="form-control" maxlength="35" id="firm_name" name="firm_name">
-                                      </div>
 
-                                      <div class="form-group col-sm-6 col-xs-12">
-                                          <button type="submit" class="btn btn-success btn-flat ml-1 comm_submit_btn" title="add" >Add</button>
-                                      </div>
-                                  <!-- </div> -->
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-md-12 grid-margin stretch-card">
-                      <div class="card">
-                          <div class="card-body">
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="table-responsive">
-                                          <table id="commodity_listing" class="display expandable-table" style="width:100%">
-                                              <thead>
-                                                  <tr>
-                                                      <th>#</th>
-                                                      <th>Action</th>
-                                                      <th>Commodity</th>
+    <!-- partial -->
+    <div class="main-panel">
+        <div class="content-wrapper">
 
-                                                  </tr>
-                                              </thead>
-                                          </table>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <!-- content-wrapper ends -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 style="display:inline;" class="card-title"><?= $pageTitle = "Manage Commodity" ?></h3>
+                </div>
+            </div>
+            <form action="<?= base_url('admin/Commodity/submitCommodity'); ?>" method="post" name="submitCommodity" id="submitCommodity">
+                <div class="row">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <!-- <div class="col-md-12"> -->
+                                    <div class="form-group col-sm-6 col-xs-12">
+                                        <label for="firstName">Commodity <span class="astric-sign">*</span></label>
+                                        <input type="text" class="form-control" maxlength="35" id="commodity" name="commodity">
+                                    </div>
+
+                                    <div class="form-group col-sm-6 col-xs-12">
+                                        <button type="submit" class="btn btn-success btn-flat ml-1 comm_submit_btn" name="add_commodity" value="add" title="add">Add</button>
+                                    </div>
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table id="commodity_listing" class="display expandable-table" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Action</th>
+                                                    <th>Commodity</th>
+
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- content-wrapper ends -->

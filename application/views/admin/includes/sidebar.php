@@ -46,6 +46,12 @@
               <span class="menu-title">Manage Commodity</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= base_url('admin/entries') ?>">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Manage Entries</span>
+            </a>
+          </li>
           <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
               <i class="icon-ban menu-icon"></i>

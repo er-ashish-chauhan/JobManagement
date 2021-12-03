@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Commodity_model extends CI_Model
+class Entries_model extends CI_Model
 {
     private $table_users;
     private $table_states;
@@ -15,7 +15,7 @@ class Commodity_model extends CI_Model
     }
 
     // get all user details for listing
-    public function commodity_list($postData = null)
+    public function entries_list($postData = null)
     {
 
         $response = array();
@@ -42,14 +42,18 @@ class Commodity_model extends CI_Model
 
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
-        $this->db->from("commodities c");
+        $this->db->from("jobMeta");
+        $this->db->where("status", 1);
+        // echo $this->db->last_query();
         $query = $this->db->get();
         $records = $query->result();
+        // echo '<pre>'; print_r($records); echo '</pre>';
         $totalRecords = $records[0]->allcount;
 
         ## Total number of record with filtering
         $this->db->select('count(*) as allcount');
-        $this->db->from("commodities c");
+        $this->db->from("jobMeta");
+        $this->db->where("status", 1);
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
         }
@@ -59,18 +63,23 @@ class Commodity_model extends CI_Model
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
-        $this->db->select("c.id,  c.commodity");
-        $this->db->from("commodities c");
+        $this->db->select("jobMeta.id, jobMeta.previousSlip, jobMeta.currentSlip,jobMeta.bill,
+        jobMeta.firmId, jobMeta.commodityId, jobMeta.entryType, jobMeta.deliveryType, jobMeta.created,
+        commodities.commodity, firm.firm_name");
+        $this->db->from("jobMeta");
+        $this->db->where('status', 1);
+        $this->db->join('firm', 'firm.id = jobMeta.firmId', 'left');
+        $this->db->join('commodities', 'commodities.id = jobMeta.commodityId', 'left');
 
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
         }
 
-        if (!empty($columnName)) {
-            $this->db->order_by($columnName, $columnSortOrder);
-        } else {
-            $this->db->order_by('c.commodity', 'ASC');
-        }
+        // if (!empty($columnName)) {
+        //     $this->db->order_by($columnName, $columnSortOrder);
+        // } else {
+        $this->db->order_by('jobMeta.id', 'DESC');
+        // }
 
         if ($rowperpage != -1) {
             $this->db->limit($rowperpage, $start);
@@ -83,33 +92,28 @@ class Commodity_model extends CI_Model
         // loop to iterate and storing data into array accordingly that is going to display.
         foreach ($records as $record) {
             $id = $record->id;
+            $actionLinks = "<a data-id='" . $id . "' id='approveEntry' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' title='Approve'>Approve</a> <br><br> <a data-id='" . $id . "' id='rejectEntry' href='javascript:void(0)' class='btn btn-sm btn-flat  btn-danger' title='Reject'>Reject</a> ";
+            
+            $previousSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
+             href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
 
-            // $eStatus = $record->isActive;
-            // $actionLinks = ""; // variable to store action link.
-            //     if ($record->isDeleted != 0 || $record->isDeleted == "Disabled") {
-            //         $class = "deleted-user-row";
-            //     } else {
-            //         $class = "";
-            //     }
+            $currentSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->currentSlip . "'
+             href='javascript:void(0)'><Image alt='Current Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->currentSlip . "' /></a>";
 
-            // link to change status
-            // if ($record->isActive == "0") {
-            //     $actionLinks .= "<div style='width:140px;' class='$class'><a  href='javascript:void(0)' data-id='" .$id. "' data-status='1' class='btn btn-sm btn-flat btn-warning change-video-status' title='Click to activate' ><i class='fa fa-times'></i></a> ";
-            // } else {
-            //     $actionLinks .= "<div style='width:140px;' class='$class'><a  href='javascript:void(0)' data-id='" .$id. "' data-status='0' class='btn btn-sm btn-flat btn-success change-video-status' title='Click to deactivate'><i class='fa fa-check'></i></a> ";
-            // }
-
-            // if (empty($record->assignToId)) {
-                $actionLinks = "<a  data-id='" . $id . "' id='delete-commodity' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-danger' title='delete'  >Delete</a> ";
-            // }
-            // link to edit user
-            $actionLinks_view = "<a  href='" . base_url('admin/job/view_job_detail?id=') . "" . encode($id) . "&action=view ' class='btn btn-sm btn-flat  btn-primary' title='View job details' >View Details</a> ";
-
+            $bill = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->bill . "'
+             href='javascript:void(0)'><Image alt='Bill Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->bill . "' /></a>";
 
             $data[] = array(
                 $i++,
                 $actionLinks,
+                $record->firm_name,
                 $record->commodity,
+                $previousSlip,
+                $currentSlip,
+                $bill,
+                $record->entryType,
+                $record->deliveryType,
+                $record->created,
             );
         }
 
@@ -130,15 +134,25 @@ class Commodity_model extends CI_Model
         return $response;
     }
 
-    function getCommodities()
+    public function getJobByEntryDetails($entryId)
     {
-        $this->db->select("*");
-        $this->db->from("commodities");
+        $this->db->select("job.id as jobId");
+        $this->db->from("jobMeta");
+        $this->db->where("jobMeta.id", $entryId);
+        $this->db->join("job", "job.firmId = jobMeta.firmId AND job.commodityId = jobMeta.commodityId", "left");
         $result = $this->db->get();
         if ($result->num_rows() > 0) {
-            return $result->result();
+            return $result->row();
         } else {
-            return array();
+            return null;
         }
+    }
+
+    public function updatedJobMeta($entryId, $data)
+    {
+        $this->db->where('id', $entryId);
+        $this->db->update('jobMeta', $data);
+        $afftectedRow = $this->db->affected_rows();
+        return  $afftectedRow;
     }
 }

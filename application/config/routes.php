@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -55,4 +55,5 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['admin'] = 'admin/login';
+$route['job/viewJobEntries/(:any)'] = 'admin/Job/view_job_detail/$1';
 // $route['admin/job'] = 'admin/coach_video';
