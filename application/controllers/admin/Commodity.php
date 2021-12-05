@@ -15,6 +15,7 @@ class Commodity extends CI_Controller
 	public function index()
 	{
 		$this->data_array['name'] = 'Commodity';
+	    $this->data_array['btn_name'] = 'Add';
 		adminviews('commodity_listing', $this->data_array);
 	}
 
@@ -36,12 +37,34 @@ class Commodity extends CI_Controller
 		*/
 	public function submitCommodity()
 	{
-		// condition to Add new Coach...........................................
+		// condition to Add new Commodity...........................................
 		$request = $this->input->post();
 		$request = $this->security->xss_clean($request);
-		unset($request['id']);
+		// unset($request['id']);
 	
-		if ($request["add_commodity"]) {
+		if(!empty($request['id']))
+		{
+			// echo "<pre>";
+			// pr($request);
+			// die;
+			$id = $request['id'];
+
+			$update_data = array(
+				'commodity' => $request['commodity']
+			);
+
+			$this->db->where('id', $id);
+			$update_result = $this->db->update('commodities', $update_data);
+
+			if ($update_result) {
+				$this->session->set_flashdata("success", 'Commodity updated successfully');
+			} else {
+				$this->session->set_flashdata("error", 'Error while updating commodity');
+			}
+
+			redirect('admin/Commodity');
+		}
+		else if ($request["add_commodity"]) {
 			$form_data_arr = array(
 				"commodity" => $request["commodity"]
 			);
@@ -57,6 +80,18 @@ class Commodity extends CI_Controller
 			$this->session->set_flashdata("error", 'Error while adding commodity');
 		}
 		redirect('admin/Commodity');
+	}
+
+	public function edit_commodity_detail()
+	{
+		$id = decode($this->input->get('id'));
+
+	  $comm_result	= $this->db->select("*")->from('commodities')->where("id", $id)->get()->row();
+
+	    $this->data_array['name'] = 'Commodity';
+	    $this->data_array['data'] = $comm_result;
+	    $this->data_array['btn_name'] = 'Update';
+		adminviews('commodity_listing', $this->data_array);
 	}
 
 

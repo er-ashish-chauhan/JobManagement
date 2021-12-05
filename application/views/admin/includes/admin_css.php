@@ -28,3 +28,5 @@
   <!-- <link rel="stylesheet" href="css/vertical-layout-light/style.css"> -->
 <link rel="stylesheet" href="<?= base_url('assets/admin/css/vertical-layout-light/style.css'); ?>">
 
+<link rel="stylesheet" href="<?= base_url('assets/admin/css/custom.css'); ?>">
+

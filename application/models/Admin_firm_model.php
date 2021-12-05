@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin_coach_model extends CI_Model
+class Admin_firm_model extends CI_Model
 {
     private $table_users;
     private $table_states;
@@ -10,16 +10,6 @@ class Admin_coach_model extends CI_Model
     {
 
         parent::__construct();
-        $this->table = 'admin';
-        $this->table_users = 'users';
-        $this->table_patient_details = 'patient_details';
-        $this->table_documents = 'documents';
-        $this->table_appointment = 'appointment';
-        $this->table_doctor_details = 'doctor_details';
-        $this->table_states = 'states';
-        $this->table_pharmacy_details='pharmacy_details';
-        $this->table_timezone = 'user_timezones';
-        $this->table_insurance = 'insurance';
     }
 
     // get all user details for listing
@@ -95,18 +85,14 @@ class Admin_coach_model extends CI_Model
         // loop to iterate and storing data into array accordingly that is going to display.
         foreach ($records as $record) {
             $id = $record->id;
+
+            $actionLinks = "<a  href='" . base_url('admin/firm/manage_firm_detail?id=') . "" . encode($id) . "&action=edit ' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit</a> ";
           
             $data[] = array(
                 $i++,
-                // $actionLinks,
+                $actionLinks,
                 $record->firm_name,
                 $record->address,
-                // $record->contact,
-                // $profile_img,
-                // $dob,
-                // $record->bio,
-                // $result_follower,
-                // $createdDate
              );
         }
 
@@ -128,14 +114,12 @@ class Admin_coach_model extends CI_Model
     }
 
     // get user data to edit
-    function get_coach_to_edit($id)
+    function get_firm_to_edit($id)
     {
-        $this->db->select("usr.firstName, usr.lastName, usr.email,usr.contact,usr.profileImage,usr.dob,cd.bio, usr.id, usr.isActive, usr.isDeleted, usr.created");
-        $this->db->from("$this->table_users usr");
-        $this->db->join("coachDetails cd", "usr.id = cd.userId", "left");
-        $this->db->where("role",2);
-        $this->db->where("isDeleted", 0);
-        $this->db->where("usr.id", $id);
+        $this->db->select("id,firm_name,address")
+                  ->from("firm")
+                  ->where('id', $id);
+        
         $result=$this->db->get()->row();
         return $result;
 

@@ -14,20 +14,13 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="table-responsive">
-                                          <table id="coach_listing" class="display expandable-table" style="width:100%">
+                                          <table id="firm_listing" class="display expandable-table" style="width:100%">
                                               <thead>
                                                   <tr>
                                                       <th>#</th>
-                                                      <!-- <th>Action</th> -->
+                                                      <th>Action</th>
                                                       <th>Name</th>
                                                       <th>Address</th>
-                                                      <!-- <th>Contact</th>
-                                                      <th>Profile Pic</th>
-                                                      <th>Dob</th>
-                                                      <th>Bio</th>
-                                                      <th>Total Follower</th>
-                                                      <th>Created at</th> -->
-
                                                   </tr>
                                               </thead>
                                           </table>

@@ -37,14 +37,13 @@ class Admin_job_model extends CI_Model
                 $searchValue = 'Disabled';
             }
 
-            $searchQuery = " (j.job_name like '%" . $searchValue . "%' or f.firm_name like '%" . $searchValue . "%' or u.firstName like '%" . $searchValue . "%' or u.lastName like '%" . $searchValue . "%') ";
+            $searchQuery = " (j.job_name like '%" . $searchValue . "%' or f.firm_name like '%" . $searchValue . "%' or j.status like '%" . $searchValue . "%' or j.dealValidFrom like '%" . $searchValue . "%' or j.dealValidUpto like '%" . $searchValue . "%') ";
         }
 
         ## Total number of records without filtering
         $this->db->select('count(*) as allcount');
         $this->db->from("job j");
         $this->db->join("firm f", "j.firmId = f.id", "left");
-        // $this->db->join("users u", "j.assignToId = u.id", "left");
         $query = $this->db->get();
         $records = $query->result();
         $totalRecords = $records[0]->allcount;
@@ -64,10 +63,9 @@ class Admin_job_model extends CI_Model
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
-        $this->db->select("j.id,  j.job_name, f.firm_name, j.assignToId");
+        $this->db->select("j.id,  j.job_name, f.firm_name, j.assignToId, j.dealValidFrom, j.dealValidUpto, j.status");
         $this->db->from("job j");
         $this->db->join("firm f", "j.firmId = f.id", "left");
-        // $this->db->join("users u", "j.assignToId = u.id", "left");
 
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
@@ -91,35 +89,23 @@ class Admin_job_model extends CI_Model
         foreach ($records as $record) {
             $id = $record->id;
 
-            // $eStatus = $record->isActive;
-            // $actionLinks = ""; // variable to store action link.
-            //     if ($record->isDeleted != 0 || $record->isDeleted == "Disabled") {
-            //         $class = "deleted-user-row";
-            //     } else {
-            //         $class = "";
-            //     }
-
-            // link to change status
-            // if ($record->isActive == "0") {
-            //     $actionLinks .= "<div style='width:140px;' class='$class'><a  href='javascript:void(0)' data-id='" .$id. "' data-status='1' class='btn btn-sm btn-flat btn-warning change-video-status' title='Click to activate' ><i class='fa fa-times'></i></a> ";
-            // } else {
-            //     $actionLinks .= "<div style='width:140px;' class='$class'><a  href='javascript:void(0)' data-id='" .$id. "' data-status='0' class='btn btn-sm btn-flat btn-success change-video-status' title='Click to deactivate'><i class='fa fa-check'></i></a> ";
-            // }
-
             if (empty($record->assignToId)) {
                 $actionLinks = "<a  data-id='" . $id . "' id='delete-video' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-info' title='Assign'data-toggle='modal' data-target='#job_modal'  >Assign</a> ";
             }
             // link to edit user
             $actionLinks_view = "<a  href='" . base_url('job/viewJobEntries') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >View Details</a> ";
 
-
+             $newvalidfrom= date('m-d-Y', strtotime($record->dealValidFrom));
+             $newvalidto= date('m-d-Y', strtotime($record->dealValidUpto));
 
             $data[] = array(
                 $i++,
                 $actionLinks_view,
                 $record->job_name,
                 $record->firm_name,
-                !empty($record->assignToId) ? $record->fullname : $actionLinks,
+                $newvalidfrom,
+                $newvalidto,
+                $record->status
             );
         }
 

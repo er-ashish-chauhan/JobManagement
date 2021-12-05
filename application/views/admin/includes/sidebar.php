@@ -35,7 +35,7 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/firm/manage_coach_detail?action=add'); ?>"> Add Firm </a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/firm/manage_firm_detail?action=add'); ?>"> Add Firm </a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/firm') ?>"> Firm's List </a></li>
               </ul>
             </div>

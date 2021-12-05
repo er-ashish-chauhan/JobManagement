@@ -4,7 +4,17 @@
         }
     </style>
 
+<?php
+$commodity='';
+$id='';
 
+if(isset($data) && !empty(($data)))
+{
+    $commodity = $data->commodity;
+    $id = $data->id;
+}
+
+?>
     <!-- partial -->
     <div class="main-panel">
         <div class="content-wrapper">
@@ -20,14 +30,15 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
+                                <input type="hidden" name="id" value="<?= $id ?>" >
                                     <!-- <div class="col-md-12"> -->
                                     <div class="form-group col-sm-6 col-xs-12">
                                         <label for="firstName">Commodity <span class="astric-sign">*</span></label>
-                                        <input type="text" class="form-control" maxlength="35" id="commodity" name="commodity">
+                                        <input type="text" class="form-control" maxlength="35" id="commodity" name="commodity" value="<?= $commodity ?>" >
                                     </div>
 
                                     <div class="form-group col-sm-6 col-xs-12">
-                                        <button type="submit" class="btn btn-success btn-flat ml-1 comm_submit_btn" name="add_commodity" value="add" title="add">Add</button>
+                                        <button type="submit" class="btn btn-success btn-flat ml-1 comm_submit_btn" name="add_commodity" value="add" title="add"><?= $btn_name ?></button>
                                     </div>
                                     <!-- </div> -->
                                 </div>

@@ -14,12 +14,9 @@ function alert_msg(type, msg) {
 }
 
 
-$("#coach_listing").DataTable({
+$("#firm_listing").DataTable({
   processing: true,
   serverSide: true,
-  // "dom": '<"top"lif>rt<"row"<"col-sm-4"i><"col-sm-8"p>><"clear">',
-  // dom:
-  //   '<"row"<"col-xs-12 col-sm-4" <"top" l <" col-sm-6 mb-1" i> >><"col-xs-12 col-sm-8"f>>t<"row"<"col-sm-4"i><"col-sm-8"p>><"clear">',
   pageLength: 25,
   scrollY: "calc(100vh - 250px)",
   stateSave: true,
@@ -34,9 +31,9 @@ $("#coach_listing").DataTable({
   },
   order: [[1, "asc"]],
   columnDefs: [
-    { orderable: false, targets: [0] },
-    { targets: 1, name: "firm_name" },
-    { targets: 2, name: "address" },
+    { orderable: false, targets: [0,1] },
+    { targets: 2, name: "firm_name" },
+    { targets: 3, name: "address" },
     // { targets: 4, name: "usr.contact" },
     // { targets: 6, name: "usr.dob" },
     // { targets: 9, name: "usr.created" },
@@ -237,7 +234,7 @@ $(document).on("click", "#delete-user", function (e) {
 
 
 // code to list video in ajax datatable
-$("#video_listing").DataTable({
+$("#job_listing").DataTable({
   processing: true,
   serverSide: true,
   // dom:
@@ -259,9 +256,9 @@ $("#video_listing").DataTable({
     { orderable: false, targets: [0, 1] },
     { targets: 2, name: "j.job_name" },
     { targets: 3, name: "f.firm_name" },
-    { targets: 4, name: "u.firstname" },
-    // { targets: 6, name: "vd.title" },
-    // { targets: 8, name: "vd.views" },
+    { targets: 4, name: "j.dealValidFrom" },
+    { targets: 5, name: "j.dealValidUpto" },
+    { targets: 6, name: "j.status" },
     // { targets: 9, name: "vd.created" },
 
   ],

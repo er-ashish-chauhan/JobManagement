@@ -17,7 +17,7 @@ class Job extends CI_Controller
 	public function index()
 	{
 		$this->data_array['name'] = 'raghav';
-		adminviews('video_listing', $this->data_array);
+		adminviews('job_listing', $this->data_array);
 	}
 
 	public function get_video_data()

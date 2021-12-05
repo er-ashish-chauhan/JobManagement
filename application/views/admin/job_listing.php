@@ -14,19 +14,16 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="table-responsive">
-                                          <table id="video_listing" class="display expandable-table" style="width:100%">
+                                          <table id="job_listing" class="display expandable-table" style="width:100%">
                                               <thead>
                                                   <tr>
                                                       <th>#</th>
                                                       <th>Action</th>
                                                       <th>Job Name</th>
                                                       <th>Firm Name</th>
-                                                      <th>Assignee</th>
-                                                      <!-- <th>URL</th>
-                                                      <th>Title</th>
-                                                      <th>Description</th>
-                                                      <th>Total views</th>
-                                                      <th>Created at</th> -->
+                                                      <th>Valid From</th>
+                                                      <th>Valid upto</th>
+                                                      <th>Status</th>
 
                                                   </tr>
                                               </thead>

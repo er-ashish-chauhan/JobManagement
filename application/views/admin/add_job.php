@@ -1,10 +1,8 @@
 <!-- partial -->
 <div class="main-panel">
     <div class="content-wrapper">
-
         <form action="<?= base_url('admin/job/manage_job_detail'); ?>" method="post" id="add_job" enctype="multipart/form-data">
 
-            <!-- <div class="form-group"> -->
             <div class="row">
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect2">Job Name</label>
@@ -76,14 +74,11 @@
                 </div>
             </div>
             <div class="row">
-
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect2">Deal valid upto</label>
-                    <input type="date" class="form-control" maxlength="5" id="dealvalid" name="dealvalid">
+                    <input type="date" class="form-control" id="dealvalid" name="dealvalid">
                 </div>
             </div>
-
-            <!-- </div> -->
             <!-- /.card-body -->
             <div class="card-footer">
                 <a href="<?= base_url('admin/job'); ?>" class="btn btn-warning step-back float-left admin-cancel-btn" title="Cancel">Cancel</a>

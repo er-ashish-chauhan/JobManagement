@@ -37,7 +37,7 @@ class Commodity_model extends CI_Model
                 $searchValue = 'Disabled';
             }
 
-            $searchQuery = " (j.job_name like '%" . $searchValue . "%' or f.firm_name like '%" . $searchValue . "%' or u.firstName like '%" . $searchValue . "%' or u.lastName like '%" . $searchValue . "%') ";
+            $searchQuery = " (c.commodity like '%" . $searchValue . "%') ";
         }
 
         ## Total number of records without filtering
@@ -84,26 +84,10 @@ class Commodity_model extends CI_Model
         foreach ($records as $record) {
             $id = $record->id;
 
-            // $eStatus = $record->isActive;
-            // $actionLinks = ""; // variable to store action link.
-            //     if ($record->isDeleted != 0 || $record->isDeleted == "Disabled") {
-            //         $class = "deleted-user-row";
-            //     } else {
-            //         $class = "";
-            //     }
-
-            // link to change status
-            // if ($record->isActive == "0") {
-            //     $actionLinks .= "<div style='width:140px;' class='$class'><a  href='javascript:void(0)' data-id='" .$id. "' data-status='1' class='btn btn-sm btn-flat btn-warning change-video-status' title='Click to activate' ><i class='fa fa-times'></i></a> ";
-            // } else {
-            //     $actionLinks .= "<div style='width:140px;' class='$class'><a  href='javascript:void(0)' data-id='" .$id. "' data-status='0' class='btn btn-sm btn-flat btn-success change-video-status' title='Click to deactivate'><i class='fa fa-check'></i></a> ";
-            // }
-
-            // if (empty($record->assignToId)) {
-                $actionLinks = "<a  data-id='" . $id . "' id='delete-commodity' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-danger' title='delete'  >Delete</a> ";
-            // }
+                // $actionLinks = "<a  data-id='" . $id . "' id='delete-commodity' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-danger' title='delete'  >Delete</a> ";
+            
             // link to edit user
-            $actionLinks_view = "<a  href='" . base_url('admin/job/view_job_detail?id=') . "" . encode($id) . "&action=view ' class='btn btn-sm btn-flat  btn-primary' title='View job details' >View Details</a> ";
+            $actionLinks = "<a  href='" . base_url('admin/commodity/edit_commodity_detail?id=') . "" . encode($id) . "&action=edit ' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit</a> ";
 
 
             $data[] = array(

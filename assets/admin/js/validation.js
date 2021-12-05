@@ -9,7 +9,6 @@ $("#edit_coach").validate({
     },
     email: {
       required: true,
-      email: true,
       maxlength: 100,
       remote: {
         url: admin_url + "firm/unique_email",
@@ -95,4 +94,64 @@ $("#edit_profile").validate({
       remote: "this username already exist",
     }
   }
+});
+
+
+
+$("#add_job").validate({
+  rules: {
+    job_name: {
+      required: true,
+    },
+    firmId: {
+      required: true,
+    },
+    total_quantity: {
+      required: true,
+    },
+    qtyTpe: {
+      required: true,
+    },
+    qtyPrice: {
+      required: true,
+    },
+    commodityId: {
+      required: true,
+    },
+    deliveryType:{
+      required: true
+    },
+    dealvalid:{
+      required:true
+    }
+  },
+  messages: {
+    email: {
+      remote: "this username already exist",
+    }
+  }
+});
+
+$("#submitCommodity").validate({
+  rules: {
+    commodity: {
+      required: true,
+    },
+  },
+  messages: {
+    email: {
+      remote: "this username already exist",
+    }
+  }
+});
+
+$("#edit_firm").validate({
+  rules: {
+    firm_name: {
+      required: true,
+    },
+    address: {
+      required: true,
+    },
+  },
 });
