@@ -63,9 +63,11 @@ class Admin_job_model extends CI_Model
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
-        $this->db->select("j.id,  j.job_name, f.firm_name, j.assignToId, j.dealValidFrom, j.dealValidUpto, j.status");
+        $this->db->select("j.id,  j.job_name, f.firm_name, j.assignToId, j.dealValidFrom, j.dealValidUpto, 
+        j.total_quantity, CONCAT(j.total_quantity,' ',j.quantityType) AS quanity, j.status, commodities.commodity");
         $this->db->from("job j");
         $this->db->join("firm f", "j.firmId = f.id", "left");
+        $this->db->join("commodities", "j.commodityId = commodities.id", "left");
 
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
@@ -95,8 +97,8 @@ class Admin_job_model extends CI_Model
             // link to edit user
             $actionLinks_view = "<a  href='" . base_url('job/viewJobEntries') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >View Details</a> ";
 
-             $newvalidfrom= date('m-d-Y', strtotime($record->dealValidFrom));
-             $newvalidto= date('m-d-Y', strtotime($record->dealValidUpto));
+            $newvalidfrom = date('m-d-Y', strtotime($record->dealValidFrom));
+            $newvalidto = date('m-d-Y', strtotime($record->dealValidUpto));
 
             $data[] = array(
                 $i++,
@@ -105,6 +107,8 @@ class Admin_job_model extends CI_Model
                 $record->firm_name,
                 $newvalidfrom,
                 $newvalidto,
+                $record->quanity,
+                $record->commodity,
                 $record->status
             );
         }
@@ -244,5 +248,18 @@ class Admin_job_model extends CI_Model
         );
         // pr($response,1);
         return $response;
+    }
+
+    public function checkIfJobExist($where)
+    {
+        $this->db->select('*');
+        $this->db->from("job");
+        $this->db->where($where);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        } else {
+            return null;
+        }
     }
 }

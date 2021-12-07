@@ -23,6 +23,8 @@
                                                       <th>Firm Name</th>
                                                       <th>Valid From</th>
                                                       <th>Valid upto</th>
+                                                      <th>Quantity</th>
+                                                      <th>Commodity</th>
                                                       <th>Status</th>
 
                                                   </tr>

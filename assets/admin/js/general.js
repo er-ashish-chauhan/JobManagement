@@ -258,7 +258,9 @@ $("#job_listing").DataTable({
     { targets: 3, name: "f.firm_name" },
     { targets: 4, name: "j.dealValidFrom" },
     { targets: 5, name: "j.dealValidUpto" },
-    { targets: 6, name: "j.status" },
+    { targets: 6, name: "j.quanity" },
+    { targets: 7, name: "j.commodity" },
+    { targets: 8, name: "j.status" },
     // { targets: 9, name: "vd.created" },
 
   ],

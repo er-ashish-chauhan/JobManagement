@@ -60,7 +60,19 @@ class Job extends CI_Controller
 			$request = $this->security->xss_clean($request);
 			unset($request['id']);
 
-			// $this->form_validation->set_rules("job_name", "Job Name", "required|");
+			$checkIfJobExist = $this->admin_job_model->checkIfJobExist(
+				[
+					"firmId" => $request["firmId"],
+					"commodityId" => $request["commodityId"],
+					"status" => "active"
+				]
+			);
+
+			if($checkIfJobExist){
+				$this->session->set_flashdata("error", 'Job already exist in our record with the same firm and commodity.');
+				redirect('admin/job/manage_job_detail');
+			}
+
 			$form_data_arr = array(
 				"job_name" => $request["job_name"],
 				"firmId" => $request["firmId"],
