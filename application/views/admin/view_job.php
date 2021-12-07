@@ -19,6 +19,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
+                                <div class="col-12">
+                                    <span>Job Name: - <?php echo $jobDetails->job_name ?></span><br>
+                                    <span>Broker Name: - <?php echo $jobDetails->brokerName != "" ? $jobDetails->brokerName : "-" ?></span><br>
+                                    <span>Total Quantity: - <?php echo $jobDetails->total_quantity." ". $jobDetails->quantityType?></span>
+                                </div>
+                                <br>
+                                <br>
                                 <div class="table-responsive">
                                     <table id="jobEntriesList" data-jobid="<?php echo decode($jobId) ?>" class="display expandable-table" style="width:100%">
                                         <thead>

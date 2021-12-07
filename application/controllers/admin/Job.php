@@ -68,7 +68,7 @@ class Job extends CI_Controller
 				]
 			);
 
-			if($checkIfJobExist){
+			if ($checkIfJobExist) {
 				$this->session->set_flashdata("error", 'Job already exist in our record with the same firm and commodity.');
 				redirect('admin/job/manage_job_detail');
 			}
@@ -169,6 +169,9 @@ class Job extends CI_Controller
 		$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | View Job Details';
 		$this->data_array['pageTitle'] = 'Manage Job Entries';
 		$this->data_array["jobId"] = $jobId;
+
+		$this->data_array["jobDetails"] = $this->admin_job_model->checkIfJobExist(["id" => decode($jobId)]);
+
 		adminviews('view_job', $this->data_array);
 	}
 
