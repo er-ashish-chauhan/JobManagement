@@ -39,6 +39,7 @@
                                                 <th>Bill Slip</th>
                                                 <th>Entry Type</th>
                                                 <th>Delivery Type</th>
+                                                <th>Net Weight</th>
                                                 <th>Created</th>
                                             </tr>
                                         </thead>

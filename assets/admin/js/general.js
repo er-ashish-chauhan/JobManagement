@@ -389,7 +389,8 @@ $("#entries_list").DataTable({
     { targets: 6, name: "jobMeta.bill" },
     { targets: 7, name: "jobMeta.entryType" },
     { targets: 8, name: "jobMeta.deliveryType" },
-    { targets: 9, name: "jobMeta.created" },
+    { targets: 9, name: "jobMeta.cNetWeight" },
+    { targets: 10, name: "jobMeta.created" },
   ],
   lengthMenu: [
     [10, 25, 50, -1],
