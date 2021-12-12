@@ -21,7 +21,7 @@
                                                       <th>#</th>
                                                       <th>Action</th>
                                                       <th>Purchase Order</th>
-                                                      <th>Firm Name</th>
+                                                      <th>Party Name</th>
                                                       <th>Valid From</th>
                                                       <th>Valid upto</th>
                                                       <th>Quantity</th>
