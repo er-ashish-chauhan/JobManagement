@@ -4,13 +4,13 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <i class="icon-layout menu-icon"></i>
-              <span class="menu-title">Jobs</span>
+              <span class="menu-title">Manage Bargain</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/job/manage_job_detail'); ?>">Add Job</a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/job') ?>">Job's Listing</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/addBargain'); ?>">Add Bargain</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/bargainsListing') ?>">Bargain's Listing</a></li>
               </ul>
             </div>
           </li>
@@ -30,13 +30,13 @@
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="icon-head menu-icon"></i>
-              <span class="menu-title">Manage Firm</span>
+              <span class="menu-title">Manage Party</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/firm/manage_firm_detail?action=add'); ?>"> Add Firm </a></li>
-                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/firm') ?>"> Firm's List </a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/firm/manageParty?action=add'); ?>">Add Party</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/firm') ?>"> Party's List </a></li>
               </ul>
             </div>
           </li>

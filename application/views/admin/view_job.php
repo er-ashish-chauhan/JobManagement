@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="col-12">
-                                    <span>Job Name: - <?php echo $jobDetails->job_name ?></span><br>
+                                    <span>Purchase Order: - <?php echo $jobDetails->purchaseOrder ?></span><br>
                                     <span>Broker Name: - <?php echo $jobDetails->brokerName != "" ? $jobDetails->brokerName : "-" ?></span><br>
                                     <span>Total Quantity: - <?php echo $jobDetails->total_quantity." ". $jobDetails->quantityType?></span>
                                 </div>

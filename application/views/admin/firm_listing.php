@@ -4,7 +4,7 @@
 
               <div class="row">
                   <div class="col-md-12" >
-                      <h3 style="display:inline;" class="card-title"><?= $pageTitle = "Manage Firm" ?></h3>
+                      <h3 style="display:inline;" class="card-title"><?= $pageTitle = "Manage Party's" ?></h3>
                   </div>
               </div>
               <div class="row">
@@ -21,6 +21,8 @@
                                                       <th>Action</th>
                                                       <th>Name</th>
                                                       <th>Address</th>
+                                                      <th>Contact</th>
+                                                      <th>Created</th>
                                                   </tr>
                                               </thead>
                                           </table>

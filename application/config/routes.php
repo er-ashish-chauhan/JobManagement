@@ -55,5 +55,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 
 $route['admin'] = 'admin/login';
-$route['job/viewJobEntries/(:any)'] = 'admin/Job/view_job_detail/$1';
+$route['admin/addBargain'] = 'admin/Job/manage_job_detail';
+$route['admin/bargainsListing'] = 'admin/Job';
+$route['admin/editBargain/(:any)'] = 'admin/Job/editBargain/$1';
+$route['admin/viewJobEntries/(:any)'] = 'admin/Job/view_job_detail/$1';
 // $route['admin/job'] = 'admin/coach_video';

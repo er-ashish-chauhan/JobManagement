@@ -45,8 +45,8 @@ class Job extends CI_Controller
 			$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Jobs';
 
 			$this->data_array['disabled'] = TRUE;
-			$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Job';
-			$this->data_array['pageTitle'] = 'Manage Jobs';
+			$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Bargain';
+			$this->data_array['pageTitle'] = 'Manage Bargain\'s';
 			$this->data_array["btn_name"] = "Add";
 
 			$this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
@@ -55,31 +55,28 @@ class Job extends CI_Controller
 			adminviews('add_job', $this->data_array);
 		} else if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
-			// condition to Add new Coach...........................................
 			$request = $this->input->post();
 			$request = $this->security->xss_clean($request);
 			unset($request['id']);
 
-			$checkIfJobExist = $this->admin_job_model->checkIfJobExist(
-				[
-					"firmId" => $request["firmId"],
-					"commodityId" => $request["commodityId"],
-					"status" => "active"
-				]
-			);
+			$checkIfJobExist = $this->admin_job_model->getLastBargain();
+
+			$job_PO_number = str_pad(1, 5, "0", STR_PAD_LEFT);
 
 			if ($checkIfJobExist) {
-				$this->session->set_flashdata("error", 'Job already exist in our record with the same firm and commodity.');
-				redirect('admin/job/manage_job_detail');
+				// $this->session->set_flashdata("error", 'Job already exist in our record with the same firm and commodity.');
+				// redirect('admin/addBargain');
+				$job_PO_number = str_pad($checkIfJobExist->purchaseOrder + 1, 5, 0, STR_PAD_LEFT);
 			}
 
 			$form_data_arr = array(
-				"job_name" => $request["job_name"],
+				"purchaseOrder" => $job_PO_number,
 				"firmId" => $request["firmId"],
 				'total_quantity' => $request['total_quantity'],
 				"price" => $request["qtyPrice"],
 				"commodityId" => $request["commodityId"],
 				"dealValidUpto" => $request["dealvalid"],
+				"dealValidFrom" => $request["dealvalidFrom"],
 				"deliveryType" => $request["deliveryType"],
 				"quantityType" => $request["qtyTpe"],
 				"brokerName" => $request["broker_name"]
@@ -88,11 +85,11 @@ class Job extends CI_Controller
 			$response_data =  $this->db->insert("job", $form_data_arr);
 
 			if ($response_data) {
-				$this->session->set_flashdata("success", 'Job added successfully');
+				$this->session->set_flashdata("success", 'Bargain added successfully');
 			} else {
-				$this->session->set_flashdata("error", 'Error while adding job');
+				$this->session->set_flashdata("error", 'Error while adding Bargain');
 			}
-			redirect('admin/job');
+			redirect('admin/bargainsListing');
 		}
 	}
 
@@ -156,8 +153,6 @@ class Job extends CI_Controller
 		redirect_back();
 	}
 
-
-
 	/*
 		* function to edit and update user     
 		* @param       userid on edit and post values on update
@@ -185,5 +180,37 @@ class Job extends CI_Controller
 		} catch (Exception $e) {
 			log_message('error', 'Error while getting entries details: FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
 		}
+	}
+
+	public function editBargain($jobId)
+	{
+		$this->data_array['disabled'] = TRUE;
+		$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Edit Bargain';
+		$this->data_array['pageTitle'] = 'Edit Bargain';
+		$this->data_array["jobId"] = $jobId;
+		$this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
+		$this->data_array["commodities"] = $this->admin_job_model->getCommodities();
+		$this->data_array["bargain"] = $this->admin_job_model->checkIfJobExist(["id" => decode($jobId)]);
+
+
+		if ($this->input->post()) {
+			$dateTime = new DateTime();
+			$form_data_arr = array(
+				'total_quantity' => $this->input->post('total_quantity'),
+				"dealValidUpto" => $this->input->post("dealvalid"),
+				"dealValidFrom" => $this->input->post("dealvalidFrom"),
+				"updated" => $dateTime->getTimestamp()
+			);
+
+			$response_data =  $this->admin_job_model->updateBargain($form_data_arr, ["id" => decode($jobId)]);
+
+			if ($response_data) {
+				$this->session->set_flashdata("success", 'Bargain updated successfully');
+			} else {
+				$this->session->set_flashdata("error", 'Error while update bargain');
+			}
+			redirect('admin/bargainsListing');
+		}
+		adminviews('editBargain', $this->data_array);
 	}
 }

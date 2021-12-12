@@ -53,7 +53,7 @@ class Firm extends CI_Controller
 		* @param       userid on edit and post values on update
 		* @return      null
 		*/
-	public function manage_firm_detail()
+	public function manageParty()
 	{
 
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -65,96 +65,56 @@ class Firm extends CI_Controller
 			// in case of view patient only
 			if ($this->input->get('action') == 'add') {
 				$this->data_array['disabled'] = TRUE;
-				$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Coach';
-				$this->data_array['pageTitle'] = 'Add Coach';
+				$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Party';
+				$this->data_array['pageTitle'] = 'Add Party';
 				$this->data_array["btn_name"] = "Add";
 				return adminviews('manage_firm', $this->data_array);
 			} else if ($this->input->get('action') == 'edit') {
 
-				$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Update Firm';
-				$this->data_array['pageTitle'] = 'Update Firm';
+				$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Update Party';
+				$this->data_array['pageTitle'] = 'Update Party';
 				$this->data_array["btn_name"] = "Update";
 				$this->data_array['data'] = $this->admin_firm_model->get_firm_to_edit($id);
 				return adminviews('manage_firm', $this->data_array);
 			}
 
-
-
-			// $this->adminviews('edit_user_profile', $this->data_array);
 		} else if ($_SERVER["REQUEST_METHOD"] == 'POST') {
-			// condition to Add new Coach...........................................
 			$request = $this->input->post();
 			$request = $this->security->xss_clean($request);
-			// unset($request['id']);
 
 			if (!empty($request['id'])) {
 				$form_data_arr = array(
 					"firm_name" => trim($request["firm_name"], " "),
 					"address" => $request["address"],
+					"contactNumber" => $request["contact"]
 				);
 
-				// $this->doctor_model->create_doctor($form_data_arr);
-				                 $this->db->where('id', $request['id']);
+				$this->db->where('id', $request['id']);
 				$response_data = $this->db->update("firm", $form_data_arr);
 
 				if ($response_data) {
-					$this->session->set_flashdata("success", 'Firm updated successfully');
+					$this->session->set_flashdata("success", 'Party updated successfully');
 				} else {
-					$this->session->set_flashdata("error", 'Error while updating firm');
+					$this->session->set_flashdata("error", 'Error while updating party');
 				}
 				redirect('admin/firm');
-			}
-			else{
+			} else {
 				$form_data_arr = array(
 					"firm_name" => trim($request["firm_name"], " "),
 					"address" => $request["address"],
+					"contactNumber" => $request["contact"]
 				);
-	
+
 				$response_data = $this->db->insert("firm", $form_data_arr);
-	
+
 				if ($response_data) {
-					$this->session->set_flashdata("success", 'Firm added successfully');
+					$this->session->set_flashdata("success", 'Party added successfully');
 				} else {
-					$this->session->set_flashdata("error", 'Error while Adding firm');
+					$this->session->set_flashdata("error", 'Error while Adding party');
 				}
 				redirect('admin/firm');
 			}
-
-			$form_data_arr = array(
-				"firm_name" => trim($request["firm_name"], " "),
-				"address" => $request["address"],
-			);
-
-			// $this->doctor_model->create_doctor($form_data_arr);
-			$response_data = $this->db->insert("firm", $form_data_arr);
-
-			if ($response_data) {
-				$this->session->set_flashdata("success", 'Firm added successfully');
-			} else {
-				$this->session->set_flashdata("error", 'Error while Adding firm');
-			}
-			redirect('admin/firm');
 		}
-	}
-
-	// function to upload image called from another function.
-	private function upload_files()
-	{
-		$config['upload_path']          = COACH_IMAGE_PATH;
-		$config['allowed_types']        = 'jpg|png|jpeg';
-		$config['max_size']        = 10000;
-
-		$this->load->library('upload', $config);
-		$this->upload->initialize($config);
-
-		if (!$this->upload->do_upload('profileImage')) {
-			$error['msg'] = $this->upload->display_errors();
-			$error['er_no'] = 0;
-			log_message('error', 'Error while uploading profile image of coach: Error-message' . $error['msg'] . ' FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
-			$this->session->set_flashdata("error", $error['msg']);
-			redirect_back();
-		}
-		return $this->upload->data();
 	}
 
 

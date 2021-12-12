@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Admin_firm_model extends CI_Model
 {
@@ -15,7 +15,7 @@ class Admin_firm_model extends CI_Model
     // get all user details for listing
     public function list_coach($postData = null)
     {
-      
+
         $response = array();
         ## Reading post values
         $draw = $postData['draw'];
@@ -28,14 +28,14 @@ class Admin_firm_model extends CI_Model
         ## variable to store data for searching.
         $searchQuery = "";
         if ($searchValue != '') {
-            if ($searchValue == 'Active') { 
+            if ($searchValue == 'Active') {
                 $searchValue = 'Enabled';
             }
             if ($searchValue == 'Inactive') {
                 $searchValue = 'Disabled';
             }
 
-            $searchQuery = " (firm_name like '%" . $searchValue . "%' or address like '%".$searchValue."%' ) ";
+            $searchQuery = " (firm_name like '%" . $searchValue . "%' or address like '%" . $searchValue . "%' ) ";
         }
 
         ## Total number of records without filtering
@@ -57,15 +57,15 @@ class Admin_firm_model extends CI_Model
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
-        $this->db->select("id,firm_name,address");
+        $this->db->select("*");
         $this->db->from("firm");
-      
+
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
         }
 
-      
-        
+
+
         if (!empty($columnName)) {
             $this->db->order_by($columnName, $columnSortOrder);
         } else {
@@ -81,22 +81,24 @@ class Admin_firm_model extends CI_Model
         // pr($this->db->last_query(),1);
         $data = array();
 
-        $i=$start+1;
+        $i = $start + 1;
         // loop to iterate and storing data into array accordingly that is going to display.
         foreach ($records as $record) {
             $id = $record->id;
 
-            $actionLinks = "<a  href='" . base_url('admin/firm/manage_firm_detail?id=') . "" . encode($id) . "&action=edit ' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit</a> ";
-          
+            $actionLinks = "<a  href='" . base_url('admin/firm/manageParty?id=') . "" . encode($id) . "&action=edit ' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit</a> ";
+            $date = date_format(date_create($record->created), "d-M-Y");
             $data[] = array(
                 $i++,
                 $actionLinks,
                 $record->firm_name,
                 $record->address,
-             );
+                $record->contactNumber,
+                $date,
+            );
         }
 
- 
+
 
         ## Response
         $response = array(
@@ -104,9 +106,9 @@ class Admin_firm_model extends CI_Model
             "iTotalRecords" => $totalRecords,
             "iTotalDisplayRecords" => $totalRecordwithFilter,
             "aaData" => $data,
-            "detail"=> [ $columnName ,$columnSortOrder],
-            "detail"                => [ $columnName ,$columnSortOrder],
-            "search_query"          =>$searchQuery,
+            "detail" => [$columnName, $columnSortOrder],
+            "detail"                => [$columnName, $columnSortOrder],
+            "search_query"          => $searchQuery,
             "last_query"            => $this->db->last_query()
         );
         // pr($response,1);
@@ -117,13 +119,10 @@ class Admin_firm_model extends CI_Model
     function get_firm_to_edit($id)
     {
         $this->db->select("id,firm_name,address")
-                  ->from("firm")
-                  ->where('id', $id);
-        
-        $result=$this->db->get()->row();
+            ->from("firm")
+            ->where('id', $id);
+
+        $result = $this->db->get()->row();
         return $result;
-
     }
-
-
 }

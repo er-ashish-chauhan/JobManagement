@@ -34,9 +34,8 @@ $("#firm_listing").DataTable({
     { orderable: false, targets: [0,1] },
     { targets: 2, name: "firm_name" },
     { targets: 3, name: "address" },
-    // { targets: 4, name: "usr.contact" },
-    // { targets: 6, name: "usr.dob" },
-    // { targets: 9, name: "usr.created" },
+    { targets: 4, name: "contactNumber" },
+    { targets: 5, name: "date" },
 
   ],
   lengthMenu: [
@@ -254,7 +253,7 @@ $("#job_listing").DataTable({
   order: [[1, "asc"]],
   columnDefs: [
     { orderable: false, targets: [0, 1] },
-    { targets: 2, name: "j.job_name" },
+    { targets: 2, name: "j.purchaseOrder" },
     { targets: 3, name: "f.firm_name" },
     { targets: 4, name: "j.dealValidFrom" },
     { targets: 5, name: "j.dealValidUpto" },

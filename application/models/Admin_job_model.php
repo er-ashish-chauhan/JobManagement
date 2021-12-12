@@ -37,7 +37,7 @@ class Admin_job_model extends CI_Model
                 $searchValue = 'Disabled';
             }
 
-            $searchQuery = " (j.job_name like '%" . $searchValue . "%' or f.firm_name like '%" . $searchValue . "%' or j.status like '%" . $searchValue . "%' or j.dealValidFrom like '%" . $searchValue . "%' or j.dealValidUpto like '%" . $searchValue . "%') ";
+            $searchQuery = " (j.purchaseOrder like '%" . $searchValue . "%' or f.firm_name like '%" . $searchValue . "%' or j.status like '%" . $searchValue . "%' or j.dealValidFrom like '%" . $searchValue . "%' or j.dealValidUpto like '%" . $searchValue . "%') ";
         }
 
         ## Total number of records without filtering
@@ -63,7 +63,7 @@ class Admin_job_model extends CI_Model
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
-        $this->db->select("j.id,  j.job_name, f.firm_name, j.assignToId, j.dealValidFrom, j.dealValidUpto, 
+        $this->db->select("j.id,  j.purchaseOrder, f.firm_name, j.assignToId, j.dealValidFrom, j.dealValidUpto, 
         j.total_quantity, CONCAT(j.total_quantity,' ',j.quantityType) AS quanity, j.status, commodities.commodity");
         $this->db->from("job j");
         $this->db->join("firm f", "j.firmId = f.id", "left");
@@ -76,7 +76,7 @@ class Admin_job_model extends CI_Model
         if (!empty($columnName)) {
             $this->db->order_by($columnName, $columnSortOrder);
         } else {
-            $this->db->order_by('j.job_name', 'DESC');
+            $this->db->order_by('j.purchaseOrder', 'DESC');
         }
 
         if ($rowperpage != -1) {
@@ -95,15 +95,16 @@ class Admin_job_model extends CI_Model
                 $actionLinks = "<a  data-id='" . $id . "' id='delete-video' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-info' title='Assign'data-toggle='modal' data-target='#job_modal'  >Assign</a> ";
             }
             // link to edit user
-            $actionLinks_view = "<a  href='" . base_url('job/viewJobEntries') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >View Details</a> ";
+            $actionLinks_view = "<a  href='" . base_url('admin/viewJobEntries') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >View Details</a> ";
+            $actionLinks_edit = "<a  href='" . base_url('admin/editBargain') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit Bargain</a> ";
 
             $newvalidfrom = date('m-d-Y', strtotime($record->dealValidFrom));
             $newvalidto = date('m-d-Y', strtotime($record->dealValidUpto));
 
             $data[] = array(
                 $i++,
-                $actionLinks_view,
-                $record->job_name,
+                $actionLinks_view . "  " . $actionLinks_edit,
+                $record->purchaseOrder,
                 $record->firm_name,
                 $newvalidfrom,
                 $newvalidto,
@@ -163,7 +164,7 @@ class Admin_job_model extends CI_Model
                 $searchValue = 'Disabled';
             }
 
-            $searchQuery = " (j.job_name like '%" . $searchValue . "%') ";
+            $searchQuery = " (j.purchaseOrder like '%" . $searchValue . "%') ";
         }
 
         ## Total number of records without filtering
@@ -261,5 +262,27 @@ class Admin_job_model extends CI_Model
         } else {
             return null;
         }
+    }
+
+    public function getLastBargain()
+    {
+        $this->db->select('*');
+        $this->db->from("job");
+        $this->db->limit(1);
+        $this->db->order_by('id', "DESC");
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->row();
+        } else {
+            return null;
+        }
+    }
+
+    public function updateBargain($data, $where)
+    {
+        $this->db->where($where);
+        $this->db->update('job', $data);
+        $afftectedRow = $this->db->affected_rows();
+        return  $afftectedRow;
     }
 }
