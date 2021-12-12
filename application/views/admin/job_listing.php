@@ -20,7 +20,7 @@
                                                   <tr>
                                                       <th>#</th>
                                                       <th>Action</th>
-                                                      <th>Job Name</th>
+                                                      <th>Purchase Order</th>
                                                       <th>Firm Name</th>
                                                       <th>Valid From</th>
                                                       <th>Valid upto</th>
