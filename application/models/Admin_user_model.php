@@ -37,7 +37,7 @@ class Admin_user_model extends CI_Model
                 $searchValue = 'Disabled';
             }
 
-            $searchQuery = " (usr.firstName like '%" . $searchValue . "%' or usr.lastName like '%". $searchValue . "%' or usr.email like '%" . $searchValue . "%' or usr.contact like'%" . $searchValue . "%' or DATE(usr.created) like'%" . date('Y-m-d H:i:s', strtotime($searchValue)) . "%' or um.gender like'%" . $searchValue . "%' or DATE(usr.dob) like'%" . date('Y-m-d', strtotime($searchValue)) . "%' ) ";
+            $searchQuery = " (usr.firstName like '%" . $searchValue . "%' or usr.lastName like '%". $searchValue . "%' or usr.email like '%" . $searchValue . "%') ";
         }
 
         ## Total number of records without filtering
@@ -67,7 +67,7 @@ class Admin_user_model extends CI_Model
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
-        $this->db->select("CONCAT_WS(' ',usr.firstName,usr.lastName) vFullName,usr.email,usr.contact,usr.profileImage,usr.dob,um.gender, usr.id, usr.isActive, usr.isDeleted, usr.created");
+        $this->db->select("CONCAT_WS(' ',usr.firstName,usr.lastName) vFullName,usr.email, usr.coFirm, usr.id, usr.isActive, usr.isDeleted, usr.created");
         $this->db->from("$this->table_users usr");
         $this->db->join("userMeta um", "usr.id = um.userId", "left");
                
@@ -106,44 +106,36 @@ class Admin_user_model extends CI_Model
                     $class = "";
                 }
 
-            // link to change status
-            if ($record->isActive == "0") {
-                $actionLinks .= "<div style='width:140px;' class='$class'><a  href='javascript:void(0)' data-id='" .$id. "' data-status='1' class='btn btn-sm btn-flat btn-warning change-user-status' title='Click to activate' ><i class='fa fa-times'></i></a> ";
-            } else {
-                $actionLinks .= "<div style='width:140px;' class='$class'><a  href='javascript:void(0)' data-id='" .$id. "' data-status='0' class='btn btn-sm btn-flat btn-success change-user-status' title='Click to deactivate'><i class='fa fa-check'></i></a> ";
-            }
+    
             
-            // if ($record->bDeleted == 0) {
-                // link to soft deletion.
-                $actionLinks .= "<a  data-id='" . encode($id) . "' id='delete-user' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-danger' title='Delete' ><i class=' fa fa-trash'></i></a> ";
-            // } 
+            // // if ($record->bDeleted == 0) {
+            //     // link to soft deletion.
+            //     $actionLinks .= "<a  data-id='" . encode($id) . "' id='delete-user' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-danger' title='Delete' ><i class=' fa fa-trash'></i></a> ";
+            // // } 
             // link to edit user
-            $actionLinks .= "<a  href='" . base_url('admin/user/manage_user_detail?id=') . "" . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit' ><i class=' fa fa-edit'></i></a> ";
+            $actionLinks .= "<a  href='" . base_url('admin/user/manage_user_detail?id=') . "" . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit' ><i class=' fa fa-edit'></i></a>";
 
             // $newcreatedDate = convertTimeZone($record->created, 'UTC', 'US/Eastern');
             $createdDate = !empty($record->created) ? date('m/d/Y h:i A', strtotime($record->created)) : "";
 
-            $dob = date("m/d/Y", strtotime($record->dob));
+            // $dob = date("m/d/Y", strtotime($record->dob));
 
-            if(!empty($record->profileImage) && file_exists(USER_IMAGE_PATH.$record->profileImage) )
-            {
-                $path= USER_IMAGE_URL.$record->profileImage;
-                $profile_img= "<a title='view profile image' class='btn btn-primary' href='$path' target='_blank' >view </a>";
-            }
-            else{
-                $profile_img='-';
-            }
+            // if(!empty($record->profileImage) && file_exists(USER_IMAGE_PATH.$record->profileImage) )
+            // {
+            //     $path= USER_IMAGE_URL.$record->profileImage;
+            //     $profile_img= "<a title='view profile image' class='btn btn-primary' href='$path' target='_blank' >view </a>";
+            // }
  
             $data[] = array(
                 $i++,
-                // $actionLinks,
+                $actionLinks,
                 $record->vFullName,
                 $record->email,
-                // $record->contact,
+                $record->coFirm,
                 // $profile_img,
                 // $dob,
                 // $record->gender,
-                // $createdDate
+                $createdDate
              );
         }
 

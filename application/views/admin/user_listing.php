@@ -4,7 +4,7 @@
 
               <div class="row">
                   <div class="col-md-12">
-                  <h3 style="display:inline;" class="card-title"><?= $pageTitle="Manage User" ?></h3>
+                      <h3 style="display:inline;" class="card-title"><?= $pageTitle = "Manage User" ?></h3>
                   </div>
               </div>
               <div class="row">
@@ -18,8 +18,11 @@
                                               <thead>
                                                   <tr>
                                                       <th>#</th>
+                                                      <th>Actions</th>
                                                       <th>Name</th>
                                                       <th>Username</th>
+                                                      <th>Co-Party</th>
+                                                      <th>Created</th>
                                                   </tr>
                                               </thead>
                                           </table>

@@ -95,8 +95,9 @@ class Admin_job_model extends CI_Model
                 $actionLinks = "<a  data-id='" . $id . "' id='delete-video' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-info' title='Assign'data-toggle='modal' data-target='#job_modal'  >Assign</a> ";
             }
             // link to edit user
-            $actionLinks_view = "<a  href='" . base_url('admin/viewJobEntries') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >View Details</a> ";
-            $actionLinks_edit = "<a  href='" . base_url('admin/editBargain') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit Bargain</a> ";
+            $actionLinks_view = "<a  href='" . base_url('admin/viewJobEntries') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' ><i class=' fa fa-eye'></i></a> ";
+            $actionLinks_edit = "<a  href='" . base_url('admin/editBargain') . "/" . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit Bargain' ><i class=' fa fa-edit'></i></a>";
+            // $actionLinks_edit = "<a  href='" . base_url('admin/editBargain') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit Bargain</a> ";
 
             $newvalidfrom = date('m-d-Y', strtotime($record->dealValidFrom));
             $newvalidto = date('m-d-Y', strtotime($record->dealValidUpto));

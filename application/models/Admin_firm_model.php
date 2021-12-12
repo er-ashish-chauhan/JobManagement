@@ -86,8 +86,8 @@ class Admin_firm_model extends CI_Model
         foreach ($records as $record) {
             $id = $record->id;
 
-            $actionLinks = "<a  href='" . base_url('admin/firm/manageParty?id=') . "" . encode($id) . "&action=edit ' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit</a> ";
-            $date = date_format(date_create($record->created), "d-M-Y");
+            $actionLinks = "<a  href='" . base_url('admin/firm/manageParty?id=') . "" . encode($id) . "&action=edit ' class='btn btn-sm btn-flat  btn-primary' title='View job details' ><i class=' fa fa-edit'></i></a> ";
+            $date = !empty($record->created) ? date('m/d/Y h:i A', strtotime($record->created)) : "";
             $data[] = array(
                 $i++,
                 $actionLinks,
@@ -97,8 +97,6 @@ class Admin_firm_model extends CI_Model
                 $date,
             );
         }
-
-
 
         ## Response
         $response = array(

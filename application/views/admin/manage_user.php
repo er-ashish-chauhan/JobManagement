@@ -35,14 +35,23 @@ if (isset($data) && !empty($data)) {
                 </div>
                 <div class="row">
                     <div class="form-group col-sm-6 col-xs-12">
+                        <label for="pargtyName">Co-Party Name <span class="astric-sign">*</span></label>
+                        <input type="text" class="form-control" maxlength="70" id="coParty" value="<?= $data->coFirm ?? "" ?>" name="coParty" placeholder="Co-Party Name">
+                    </div>
+                    <div class="form-group col-sm-6 col-xs-12">
                         <label for="email">Username <span class="astric-sign">*</span></label>
                         <input type="text" class="form-control" maxlength="70" id="email" value="<?= $data->email ?? "" ?>" name="email" placeholder="Email">
                     </div>
-                    <div class="form-group col-sm-6 col-xs-12">
-                        <label for="password">Password<span class="astric-sign">*</span></label>
-                        <input type="password" class="form-control" maxlength="128" id="password" name="password" value="<?= $data->password ?? "" ?>" placeholder="Username">
-                    </div>
+
                 </div>
+                <?php
+                echo !$data ?
+                    '<div class="row">
+                        <div class="form-group col-sm-6 col-xs-12">
+                            <label for="password">Password<span class="astric-sign">*</span></label>
+                            <input type="password" class="form-control" maxlength="128" id="password" name="password" value="" placeholder="Password">
+                        </div>
+                    </div>' : "" ?>
             </div>
             <!-- /.card-body -->
             <div class="card-footer">

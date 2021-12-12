@@ -2,32 +2,32 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 class User extends CI_Controller
 {
-   private $pageData = array();
-    function __construct()
-    {
-        parent::__construct();
-        adminAuth();
-        $this->load->model('admin_user_model');
-    }
+	private $pageData = array();
+	function __construct()
+	{
+		parent::__construct();
+		adminAuth();
+		$this->load->model('admin_user_model');
+	}
 
-    public function index()
-    {
-        $this->pageData['name'] = 'raghav';
-        adminviews('user_listing', $this->pageData);
-    }
+	public function index()
+	{
+		$this->pageData['name'] = 'raghav';
+		adminviews('user_listing', $this->pageData);
+	}
 
-    public function get_user_data()
-    {
-        try {
+	public function get_user_data()
+	{
+		try {
 			$postData = $this->input->post();
 			$data = $this->admin_user_model->list_user($postData);
 			echo json_encode($data);
 		} catch (Exception $e) {
-            log_message('error', 'Error while getting coach details: FILE-'.__FILE__.'CLASS: '.__CLASS__.'FUNCTION: '.__FUNCTION__);
+			log_message('error', 'Error while getting coach details: FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
 		}
-    }
+	}
 
-    // function to change user status for listing
+	// function to change user status for listing
 	function change_status()
 	{
 		$iUserId = $this->input->post("id");
@@ -35,20 +35,20 @@ class User extends CI_Controller
 		$data1 = array("isActive" => $eStatus);
 		try {
 			$status_val = "";
-				$this->db->where("id", $iUserId);
-				$response_data = $this->db->update("users", $data1);
-				if ($response_data) {
-					if ($eStatus == "1") {
-						$this->session->set_flashData("success", lang("USER_ACTIVATION_SUCCESS"));
-					} elseif ($eStatus == "0") {
-						$this->session->set_flashData("success", lang("USER_DEACTIVATION_SUCCESS"));
-					}
-				} else {
-					$this->session->set_flashData("error", lang("USER_ACTIVATION_FAILED"));
+			$this->db->where("id", $iUserId);
+			$response_data = $this->db->update("users", $data1);
+			if ($response_data) {
+				if ($eStatus == "1") {
+					$this->session->set_flashData("success", lang("USER_ACTIVATION_SUCCESS"));
+				} elseif ($eStatus == "0") {
+					$this->session->set_flashData("success", lang("USER_DEACTIVATION_SUCCESS"));
 				}
+			} else {
+				$this->session->set_flashData("error", lang("USER_ACTIVATION_FAILED"));
+			}
 			echo json_encode($response_data);
 		} catch (Exception $e) {
-            log_message('error', 'Error while changing status of coach: FILE-'.__FILE__.'CLASS: '.__CLASS__.'FUNCTION: '.__FUNCTION__);
+			log_message('error', 'Error while changing status of coach: FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
 		}
 	}
 
@@ -58,18 +58,18 @@ class User extends CI_Controller
 		$id = decode($this->input->post("id"));
 
 		try {
-				$update_data= array("isDeleted" => 1);
+			$update_data = array("isDeleted" => 1);
 
-                         $this->db->where("id", $id);
-               $result = $this->db->update("users",$update_data);
-				if ($result) {
-					$this->session->set_flashdata("success", lang("USER_DELETE_SUCCESS"));
-				} else {
-					$this->session->set_flashdata("error", lang("USER_DELETE_SUCCESS"));
-				}
+			$this->db->where("id", $id);
+			$result = $this->db->update("users", $update_data);
+			if ($result) {
+				$this->session->set_flashdata("success", lang("USER_DELETE_SUCCESS"));
+			} else {
+				$this->session->set_flashdata("error", lang("USER_DELETE_SUCCESS"));
+			}
 			echo json_decode($result);
 		} catch (Exception $e) {
-			log_message('error', 'Error while deleting to user: FILE-'.__FILE__.'CLASS: '.__CLASS__.'FUNCTION: '.__FUNCTION__);
+			log_message('error', 'Error while deleting to user: FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
 		}
 	}
 
@@ -95,9 +95,9 @@ class User extends CI_Controller
 				$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | View Patient';
 				$this->data_array['pageTitle'] = 'Add Coach';
 				$this->data_array["btn_name"] = "View";
-                adminviews('manage_coach', $this->pageData);
+				adminviews('manage_coach', $this->pageData);
 			}
-		 
+
 			$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | View Patient';
 			$this->data_array['pageTitle'] = 'Update Caoch';
 			$this->data_array["btn_name"] = "Update";
@@ -105,8 +105,7 @@ class User extends CI_Controller
 			adminviews('manage_user', $this->data_array);
 
 			// $this->adminviews('edit_user_profile', $this->data_array);
-		}
-	    else if ($_SERVER["REQUEST_METHOD"] == 'POST') {
+		} else if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 			//code to update edited doctor data..........................................
 			if (!empty($this->input->post('id'))) {
 				$request = $this->input->post();
@@ -116,16 +115,14 @@ class User extends CI_Controller
 				// pr($request,1);
 				$form_data_arr = array(
 					"firstName" => trim($request["firstName"], " "),
-					"lastName" => trim($request["lastName"], " "),	
-					"contact" => $request["contact"],
+					"lastName" => trim($request["lastName"], " "),
 					"email" => $request["email"],
-					"dob" => date("Y-m-d", strtotime($request["dob"])),
+					"coFirm" => $request["coParty"],
 					"role" => 3,
 					"updated" => date("Y-m-d H:i:s"),
 				);
 
-				if(!empty($request["password"]))
-				{
+				if (!empty($request["password"])) {
 					$form_data_arr['password'] = password_hash($request["password"], PASSWORD_DEFAULT);
 				}
 
@@ -141,7 +138,7 @@ class User extends CI_Controller
 
 				$this->db->trans_start();
 
-                // pr($form_data_arr,1);
+				// pr($form_data_arr,1);
 
 				$this->db->where("id", $id);
 				$this->db->update("users", $form_data_arr);
@@ -156,41 +153,38 @@ class User extends CI_Controller
 
 				$this->db->trans_complete();
 
-				if($this->db->trans_status() == FALSE)
-				{
+				if ($this->db->trans_status() == FALSE) {
 					$this->db->trans_rollback();
 					$this->session->set_flashdata("error", lang("USER_UPDATE_FAILED"));
 					// echo "raghav"; die;
 					redirect('admin/user');
-				}
-				else{
+				} else {
 					$this->db->trans_commit();
 					$this->session->set_flashdata("success", lang("USER_UPDATE_SUCCESS"));
 					// echo "raghav2"; die;
 					redirect('admin/user');
 				}
-				
 			} else {
-				// condition to Add new Coach...........................................
+				// condition to Add new User...........................................
 				$request = $this->input->post();
 				$request = $this->security->xss_clean($request);
 				unset($request['id']);
 
 				$form_data_arr = array(
 					"firstName" => trim($request["firstName"], " "),
-					"lastName" => trim($request["lastName"], " "),	
+					"lastName" => trim($request["lastName"], " "),
 					"email" => $request["email"],
+					"coFirm" => $request["coParty"],
 					"role" => 3
 				);
 
-				if(!empty($request["password"]))
-				{
+				if (!empty($request["password"])) {
 					$form_data_arr['password'] = password_hash($request["password"], PASSWORD_DEFAULT);
 				}
-				
+
 				// $this->doctor_model->create_doctor($form_data_arr);
 				$response_data =  $this->db->insert("users", $form_data_arr);
-				
+
 				if ($response_data) {
 					$this->session->set_flashdata("success", 'User added successfully');
 				} else {
@@ -214,7 +208,7 @@ class User extends CI_Controller
 		if (!$this->upload->do_upload('profileImage')) {
 			$error['msg'] = $this->upload->display_errors();
 			$error['er_no'] = 0;
-			log_message('error', 'Error while uploading profile image of coach: Error-message'. $error['msg'].' FILE-'.__FILE__.'CLASS: '.__CLASS__.'FUNCTION: '.__FUNCTION__);
+			log_message('error', 'Error while uploading profile image of coach: Error-message' . $error['msg'] . ' FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
 			$this->session->set_flashdata("error", $error['msg']);
 			redirect_back();
 		}
@@ -222,7 +216,7 @@ class User extends CI_Controller
 	}
 
 
-		/**
+	/**
 	 * Function to check unique email (jquery validation)
 	 * @return      true or false
 	 * 
@@ -245,5 +239,4 @@ class User extends CI_Controller
 			echo "true";
 		}
 	}
-
 }

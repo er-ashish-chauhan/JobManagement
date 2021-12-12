@@ -153,9 +153,11 @@ $("#user_listing").DataTable({
   },
   order: [[2, "asc"]],
   columnDefs: [
-    { orderable: false, targets: [0] },
-    { targets: 1, name: "usr.firstName" },
-    { targets: 2, name: "usr.email" },
+    { orderable: false, targets: [0, 1] },
+    { targets: 2, name: "usr.firstName" },
+    { targets: 3, name: "usr.email" },
+    { targets: 4, name: "usr.coFirm" },
+    { targets: 5, name: "usr.created" },
   ],
   lengthMenu: [
     [10, 25, 50, -1],
