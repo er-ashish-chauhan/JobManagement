@@ -80,4 +80,44 @@ class Entries extends CI_Controller
             log_message('error', 'Error while deleting to commodity: FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
         }
     }
+
+    public function getjobdetails()
+    {
+        $id = $this->input->post('id');
+        // $cid = $this->input->post('cid');
+
+        $this->db->select('j.purchaseOrder, j.total_quantity, j.status, f.firm_name, c.commodity');
+        $this->db->from('jobMeta jm');
+        $this->db->join("job j", "jm.jobId=j.id AND jm.firmId=j.firmId", "left");
+        $this->db->join("firm f", "j.firmId=f.id", "left");
+        $this->db->join("commodities c", "j.commodityId=c.id", "left");
+        $this->db->where("jm.id", $id);
+        $result =  $this->db->get()->result();
+
+        // echo "<pre>";
+        // print_r($result);
+
+        $data="";
+
+        foreach($result as $row)
+        {
+
+            $radiobtn = '<div class="custom-control custom-radio">
+            <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios">
+            <label class="custom-control-label" for="defaultGroupExample1"></label>
+          </div>
+          ';
+          $data .= "<row>
+          <td>$radiobtn</td>
+          <td>$row->purchaseOrder</td>
+          <td>$row->firm_name</td>
+          <td>$row->commodity</td>
+          <td>$row->total_quantity</td>
+          <td>$row->status</td>";
+
+
+        }
+
+       echo $data;
+    }
 }

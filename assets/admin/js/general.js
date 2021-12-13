@@ -519,3 +519,25 @@ $("#jobEntriesList").DataTable({
     [10, 25, 50, "All"],
   ],
 });
+
+
+
+// reject entry
+$(document).on("click", "#showentrymodel", function (e) {
+  e.preventDefault();
+
+  let id = $(this).data("id");
+
+      $.ajax({
+        url: admin_url + "entries/getjobdetails",
+        method: "post",
+        data: { 
+          id: id 
+        },
+        success: (data) => {
+          // location.reload();
+          $(".tbl_body").html(data);
+        },
+      });
+    
+});

@@ -92,7 +92,11 @@ class Entries_model extends CI_Model
         // loop to iterate and storing data into array accordingly that is going to display.
         foreach ($records as $record) {
             $id = $record->id;
-            $actionLinks = "<a data-id='" . $id . "' id='approveEntry' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' title='Approve'>Approve</a> <br><br> <a data-id='" . $id . "' id='rejectEntry' href='javascript:void(0)' class='btn btn-sm btn-flat  btn-danger' title='Reject'>Reject</a> ";
+
+            $actionLinks = "<a data-id='" . $id . "' id='showentrymodel' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' data-toggle='modal' data-target='#entriesModal
+            ' title='Approve'>Approve</a> ";
+            
+            $actionLinks .= "<a data-id='" . $id . "' id='rejectEntry' href='javascript:void(0)' class='btn btn-sm btn-flat  btn-danger' title='Reject'>Reject</a> ";
             
             $previousSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
              href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
