@@ -31,7 +31,7 @@ $("#firm_listing").DataTable({
   },
   order: [[1, "asc"]],
   columnDefs: [
-    { orderable: false, targets: [0,1] },
+    { orderable: false, targets: [0, 1] },
     { targets: 2, name: "firm_name" },
     { targets: 3, name: "address" },
     { targets: 4, name: "contactNumber" },
@@ -528,16 +528,47 @@ $(document).on("click", "#showentrymodel", function (e) {
 
   let id = $(this).data("id");
 
+  $.ajax({
+    url: admin_url + "entries/getjobdetails",
+    method: "post",
+    data: {
+      id: id
+    },
+    success: (data) => {
+      // location.reload();
+      $(".tbl_body").html(data);
+    },
+  });
+
+});
+
+// reject entry
+$(document).on("click", "#approve", function (e) {
+  e.preventDefault();
+
+  let id = $(".entriesRadio:checked").data("entryid");
+  let jobId = $(".entriesRadio:checked").data("jobid");
+  console.log(id);
+
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You want to approve this entry.",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#8b0101",
+    cancelButtonColor: "#000",
+    confirmButtonText: "Yes",
+  }).then(function (inputValue) {
+    if (inputValue.value) {
       $.ajax({
-        url: admin_url + "entries/getjobdetails",
+        url: admin_url + "entries/approveEntry",
         method: "post",
-        data: { 
-          id: id 
-        },
+        data: { id: id, jobId: jobId },
         success: (data) => {
-          // location.reload();
-          $(".tbl_body").html(data);
+          location.reload();
         },
       });
-    
+    }
+  });
+
 });

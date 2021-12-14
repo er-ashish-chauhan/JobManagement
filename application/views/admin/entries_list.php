@@ -32,7 +32,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Action</th>
-                                                <th>Firm</th>
+                                                <th>Party</th>
                                                 <th>Commodity</th>
                                                 <th>Previous Slip</th>
                                                 <th>Current Slip</th>
@@ -66,31 +66,31 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                <div class="row">
-                            <div class="col-12">
-                                <div class="table-responsive">
-                                    <table id="entries_list" class="display expandable-table" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Action</th>
-                                                <th>Purchase Order</th>
-                                                <th>Firm</th>
-                                                <th>Commodity</th>
-                                                <th>Quantity</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="tbl_body">
-                                          
-                                        </tbody>
-                                    </table>
-                                </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table id="entries_list" class="display expandable-table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Action</th>
+                                            <th>Purchase Order</th>
+                                            <th>Party</th>
+                                            <th>Commodity</th>
+                                            <th>Quantity</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tbl_body">
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="approve">Approve</button>
                 </div>
             </div>
         </div>

@@ -32,24 +32,20 @@ class Entries extends CI_Controller
     public function approveEntry()
     {
         $id = $this->input->post("id");
+        $jobId = $this->input->post("jobId");
 
         try {
-            $getJobId = $this->entries_model->getJobByEntryDetails($id);
-            if ($getJobId) {
-                $dataToBeUpdate = [
-                    "jobId" => $getJobId->jobId,
-                    "status" => 2
-                ];
-                $result = $this->entries_model->updatedJobMeta($id, $dataToBeUpdate);
-                if ($result) {
-                    $this->session->set_flashdata("success", 'Entry approved successfully');
-                } else {
-                    $this->session->set_flashdata("error", 'Error while approving entry');
-                }
-                echo json_decode($result);
+            $dataToBeUpdate = [
+                "jobId" => $jobId,
+                "status" => 2
+            ];
+            $result = $this->entries_model->updatedJobMeta($id, $dataToBeUpdate);
+            if ($result) {
+                $this->session->set_flashdata("success", 'Entry approved successfully');
             } else {
-                $this->session->set_flashdata("error", 'Job does not exist in the record.');
+                $this->session->set_flashdata("error", 'Error while approving entry');
             }
+            echo json_decode($result);
         } catch (Exception $e) {
             log_message('error', 'Error while deleting to commodity: FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
         }
@@ -86,9 +82,9 @@ class Entries extends CI_Controller
         $id = $this->input->post('id');
         // $cid = $this->input->post('cid');
 
-        $this->db->select('j.purchaseOrder, j.total_quantity, j.status, f.firm_name, c.commodity');
+        $this->db->select('j.id as jobId, j.purchaseOrder, j.total_quantity, j.status, f.firm_name, c.commodity');
         $this->db->from('jobMeta jm');
-        $this->db->join("job j", "jm.jobId=j.id AND jm.firmId=j.firmId", "left");
+        $this->db->join("job j", "jm.commodityId=j.commodityId AND jm.firmId=j.firmId", "left");
         $this->db->join("firm f", "j.firmId=f.id", "left");
         $this->db->join("commodities c", "j.commodityId=c.id", "left");
         $this->db->where("jm.id", $id);
@@ -97,27 +93,23 @@ class Entries extends CI_Controller
         // echo "<pre>";
         // print_r($result);
 
-        $data="";
+        $data = "";
 
-        foreach($result as $row)
-        {
-
+        foreach ($result as $row) {
             $radiobtn = '<div class="custom-control custom-radio">
-            <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupOfDefaultRadios">
-            <label class="custom-control-label" for="defaultGroupExample1"></label>
+            <input type="radio" class="custom-control-input entriesRadio" id="defaultGroupExample' . $row->jobId . '" name="groupOfDefaultRadios" data-jobid="' . $row->jobId . '" data-entryid="' . $id . '">
+            <label class="custom-control-label" for="defaultGroupExample' . $row->jobId . '"></label>
           </div>
           ';
-          $data .= "<row>
+            $data .= "<tr>
           <td>$radiobtn</td>
           <td>$row->purchaseOrder</td>
           <td>$row->firm_name</td>
           <td>$row->commodity</td>
           <td>$row->total_quantity</td>
-          <td>$row->status</td>";
-
-
+          <td>$row->status</td></tr>";
         }
 
-       echo $data;
+        echo $data;
     }
 }
