@@ -64,8 +64,7 @@ class Entries_model extends CI_Model
 
         ## Fetch records
         $this->db->select("jobMeta.id, jobMeta.previousSlip, jobMeta.currentSlip,jobMeta.bill,
-        jobMeta.firmId, jobMeta.commodityId, jobMeta.entryType, jobMeta.deliveryType, jobMeta.created,
-        commodities.commodity, firm.firm_name, jobMeta.cNetWeight");
+        jobMeta.firmId, jobMeta.commodityId, jobMeta.entryType, jobMeta.deliveryType, jobMeta.created,commodities.commodity, firm.firm_name, jobMeta.cNetWeight");
         $this->db->from("jobMeta");
         $this->db->where('status', 1);
         $this->db->join('firm', 'firm.id = jobMeta.firmId', 'left');
@@ -97,6 +96,8 @@ class Entries_model extends CI_Model
             ' title='Approve'>Approve</a> ";
             
             $actionLinks .= "<a data-id='" . $id . "' id='rejectEntry' href='javascript:void(0)' class='btn btn-sm btn-flat  btn-danger' title='Reject'>Reject</a> ";
+
+            $actionLinks .= "<a  href='" . base_url('admin/entries/manage_bargain_detail?id=') . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit Bargain' >Make Bargain</a>";
             
             $previousSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
              href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
