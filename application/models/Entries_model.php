@@ -94,11 +94,11 @@ class Entries_model extends CI_Model
 
             $actionLinks = "<a data-id='" . $id . "' id='showentrymodel' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' data-toggle='modal' data-target='#entriesModal
             ' title='Approve'>Approve</a> ";
-            
+
             $actionLinks .= "<a data-id='" . $id . "' id='rejectEntry' href='javascript:void(0)' class='btn btn-sm btn-flat  btn-danger' title='Reject'>Reject</a> ";
 
             $actionLinks .= "<a  href='" . base_url('admin/entries/manage_bargain_detail?id=') . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit Bargain' >Make Bargain</a>";
-            
+
             $previousSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
              href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
 
@@ -152,6 +152,27 @@ class Entries_model extends CI_Model
         } else {
             return null;
         }
+    }
+
+    public function getjobById($where)
+    {
+        $this->db->select("*");
+        $this->db->from("job");
+        $this->db->where($where);
+        $result = $this->db->get();
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return null;
+        }
+    }
+
+    public function updateJob($jobId, $data)
+    {
+        $this->db->where('id', $jobId);
+        $this->db->update('job', $data);
+        $afftectedRow = $this->db->affected_rows();
+        return  $afftectedRow;
     }
 
     public function updatedJobMeta($entryId, $data)

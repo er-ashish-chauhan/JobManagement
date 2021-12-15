@@ -78,7 +78,8 @@ class Job extends CI_Controller
 				"dealValidFrom" => $request["dealvalidFrom"],
 				"deliveryType" => $request["deliveryType"],
 				"quantityType" => $request["qtyTpe"],
-				"brokerName" => $request["broker_name"]
+				"brokerName" => $request["broker_name"],
+				"remaining_quantity" => $request['total_quantity']
 			);
 
 			$response_data =  $this->db->insert("job", $form_data_arr);
@@ -196,6 +197,7 @@ class Job extends CI_Controller
 			$dateTime = new DateTime();
 			$form_data_arr = array(
 				'total_quantity' => $this->input->post('total_quantity'),
+				"remaining_quantity" => $this->input->post('total_quantity'),
 				"dealValidUpto" => $this->input->post("dealvalid"),
 				"dealValidFrom" => $this->input->post("dealvalidFrom"),
 				"updated" => $dateTime->getTimestamp()

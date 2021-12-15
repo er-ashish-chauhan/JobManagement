@@ -548,9 +548,12 @@ $(document).on("click", "#approve", function (e) {
 
   let id = $(".entriesRadio:checked").data("entryid");
   let jobId = $(".entriesRadio:checked").data("jobid");
+  let quantity = $(".entriesRadio:checked").data("quantity");
+  let noOfBags = $(".entriesRadio:checked").data("quantitys");
+  let netweight = $(".entriesRadio:checked").data("netweight");
   console.log(id);
 
-  if(!jobId){
+  if (!jobId) {
     return;
   }
 
@@ -567,7 +570,7 @@ $(document).on("click", "#approve", function (e) {
       $.ajax({
         url: admin_url + "entries/approveEntry",
         method: "post",
-        data: { id: id, jobId: jobId },
+        data: { id: id, jobId: jobId, quantity: quantity, noOfBags: noOfBags, netweight: netweight },
         success: (data) => {
           location.reload();
         },
