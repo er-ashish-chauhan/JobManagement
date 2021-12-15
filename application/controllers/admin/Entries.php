@@ -39,6 +39,7 @@ class Entries extends CI_Controller
                 "jobId" => $jobId,
                 "status" => 2
             ];
+
             $result = $this->entries_model->updatedJobMeta($id, $dataToBeUpdate);
             if ($result) {
                 $this->session->set_flashdata("success", 'Entry approved successfully');
@@ -56,10 +57,10 @@ class Entries extends CI_Controller
         $id = $this->input->post("id");
 
         try {
-            $getJobId = $this->entries_model->getJobByEntryDetails($id);
-            if ($getJobId) {
+            // $getJobId = $this->entries_model->getJobByEntryDetails($id);
+            // if ($getJobId) {
                 $dataToBeUpdate = [
-                    "jobId" => $getJobId->jobId,
+                    // "jobId" => $getJobId->jobId,
                     "status" => 3
                 ];
                 $result = $this->entries_model->updatedJobMeta($id, $dataToBeUpdate);
@@ -69,9 +70,9 @@ class Entries extends CI_Controller
                     $this->session->set_flashdata("error", 'Error while rejecting entry');
                 }
                 echo json_decode($result);
-            } else {
-                $this->session->set_flashdata("error", 'Job does not exist in the record.');
-            }
+            // } else {
+            //     $this->session->set_flashdata("error", 'Job does not exist in the record.');
+            // }
         } catch (Exception $e) {
             log_message('error', 'Error while deleting to commodity: FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
         }

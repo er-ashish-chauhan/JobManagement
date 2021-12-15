@@ -550,6 +550,10 @@ $(document).on("click", "#approve", function (e) {
   let jobId = $(".entriesRadio:checked").data("jobid");
   console.log(id);
 
+  if(!jobId){
+    return;
+  }
+
   Swal.fire({
     title: "Are you sure?",
     text: "You want to approve this entry.",
