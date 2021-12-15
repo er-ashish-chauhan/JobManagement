@@ -10,6 +10,7 @@ class Entries extends CI_Controller
         parent::__construct();
         adminAuth();
         $this->load->model('entries_model');
+        $this->load->model('admin_job_model');
     }
 
     public function index()
@@ -83,7 +84,7 @@ class Entries extends CI_Controller
 			redirect('admin/entries');
 		}
 	}
-    
+
     public function get_entries_data()
     {
         try {
