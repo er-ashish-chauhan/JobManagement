@@ -38,7 +38,6 @@ class Job extends CI_Controller
 		*/
 	public function manage_job_detail()
 	{
-
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$id = decode($this->input->get("id"));
 
