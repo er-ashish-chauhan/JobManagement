@@ -22,7 +22,7 @@
                                                       <th>Action</th>
                                                       <th>Purchase Order</th>
                                                       <th>Party Name</th>
-                                                      <th>Valid From</th>
+                                                      <th>Remaining Quantity</th>
                                                       <th>Valid upto</th>
                                                       <th>Quantity</th>
                                                       <th>Commodity</th>

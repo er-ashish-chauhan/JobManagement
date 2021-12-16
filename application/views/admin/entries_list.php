@@ -4,8 +4,8 @@
     }
 
     img.entryImage {
-        width: 130px;
-        height: 110px;
+        width: 90px;
+        height: 70px;
         border-radius: 10px;
     }
 </style>

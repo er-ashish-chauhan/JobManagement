@@ -1,7 +1,7 @@
 <style>
     img.entryImage {
-        width: 130px;
-        height: 110px;
+        width: 90px;
+        height: 70px;
         border-radius: 10px;
     }
 </style>
@@ -31,10 +31,11 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>Current Slip No</th>
                                                 <th>Previous Slip</th>
                                                 <th>Current Slip</th>
                                                 <th>Bill</th>
-                                                <th>Entry Type</th>
+                                                <th>Quantity</th>
                                                 <th>Delivery Type</th>
                                                 <th>Created</th>
                                             </tr>

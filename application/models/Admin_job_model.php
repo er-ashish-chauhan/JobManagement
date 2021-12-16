@@ -64,7 +64,8 @@ class Admin_job_model extends CI_Model
 
         ## Fetch records
         $this->db->select("j.id,  j.purchaseOrder, f.firm_name, j.assignToId, j.dealValidFrom, j.dealValidUpto, 
-        j.total_quantity, CONCAT(j.total_quantity,' ',j.quantityType) AS quanity, j.status, commodities.commodity");
+        j.total_quantity, CONCAT(j.total_quantity,' ',j.quantityType) AS quanity, j.status, commodities.commodity, 
+        CONCAT(j.remaining_quantity,' ',j.quantityType) as remaining_quantity");
         $this->db->from("job j");
         $this->db->join("firm f", "j.firmId = f.id", "left");
         $this->db->join("commodities", "j.commodityId = commodities.id", "left");
@@ -97,6 +98,7 @@ class Admin_job_model extends CI_Model
             // link to edit user
             $actionLinks_view = "<a  href='" . base_url('admin/viewJobEntries') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' ><i class=' fa fa-eye'></i></a> ";
             $actionLinks_edit = "<a  href='" . base_url('admin/editBargain') . "/" . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit Bargain' ><i class=' fa fa-edit'></i></a>";
+            $actionLinks_complete = "<a  href='" . base_url('admin/completeBargain') . "/" . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit Bargain' ><i class=' fa fa-check'></i></a>";
             // $actionLinks_edit = "<a  href='" . base_url('admin/editBargain') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit Bargain</a> ";
 
             $newvalidfrom = date('m-d-Y', strtotime($record->dealValidFrom));
@@ -104,10 +106,10 @@ class Admin_job_model extends CI_Model
 
             $data[] = array(
                 $i++,
-                $actionLinks_view . "  " . $actionLinks_edit,
+                $actionLinks_view . "  " . $actionLinks_edit . "  " . $actionLinks_complete,
                 $record->purchaseOrder,
                 $record->firm_name,
-                $newvalidfrom,
+                $record->remaining_quantity,
                 $newvalidto,
                 $record->quanity,
                 $record->commodity,
@@ -189,12 +191,13 @@ class Admin_job_model extends CI_Model
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
-        $this->db->select("jobMeta.id, jobMeta.previousSlip, jobMeta.currentSlip,jobMeta.bill,
-        jobMeta.firmId, jobMeta.commodityId, jobMeta.entryType, jobMeta.deliveryType, jobMeta.created");
+        $this->db->select("jobMeta.id, jobMeta.currentSlipNo, jobMeta.previousSlip, jobMeta.currentSlip,jobMeta.bill,
+        jobMeta.firmId, jobMeta.commodityId, jobMeta.entryType, jobMeta.deliveryType, jobMeta.created, j.quantityType,
+        jobMeta.noOfBags, jobMeta.cNetWeight");
         $this->db->from("jobMeta");
         $this->db->where('jobId', $jobId);
-        $this->db->where('status', 2);
-
+        $this->db->where('jobMeta.status', 2);
+        $this->db->join("job j", "jobMeta.jobId = j.id", "left");
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
         }
@@ -216,7 +219,14 @@ class Admin_job_model extends CI_Model
         // loop to iterate and storing data into array accordingly that is going to display.
         foreach ($records as $record) {
             $id = $record->id;
+            $qty = "1 Truck";
 
+            if($record->quantityType == "qts"){
+                $qty = $record->cNetWeight .' qts';
+            }else if($record->quantityType == "qts"){
+                $qty = $record->noOfBags .' Bags';
+            }
+            
             $previousSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
              href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
 
@@ -228,10 +238,11 @@ class Admin_job_model extends CI_Model
 
             $data[] = array(
                 $i++,
+                $record->currentSlipNo,
                 $previousSlip,
                 $currentSlip,
                 $bill,
-                $record->entryType,
+                $qty,
                 $record->deliveryType,
                 $record->created,
             );

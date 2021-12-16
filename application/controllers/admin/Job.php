@@ -214,4 +214,16 @@ class Job extends CI_Controller
 		}
 		adminviews('editBargain', $this->data_array);
 	}
+
+	public function completeBargain($id)
+	{
+		$response_data =  $this->admin_job_model->updateBargain(["status" => "completed"], ["id" => decode($id)]);
+
+		if ($response_data) {
+			$this->session->set_flashdata("success", 'Bargain updated successfully');
+		} else {
+			$this->session->set_flashdata("error", 'Error while update bargain');
+		}
+		redirect('admin/bargainsListing');
+	}
 }
