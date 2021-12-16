@@ -223,7 +223,7 @@ class Admin_job_model extends CI_Model
 
             if($record->quantityType == "qts"){
                 $qty = $record->cNetWeight .' qts';
-            }else if($record->quantityType == "qts"){
+            }else if($record->quantityType == "bags"){
                 $qty = $record->noOfBags .' Bags';
             }
             
