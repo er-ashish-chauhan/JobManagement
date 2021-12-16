@@ -172,7 +172,7 @@ class Entries extends CI_Controller
         $this->db->join("job j", "jm.commodityId=j.commodityId AND jm.firmId=j.firmId", "left");
         $this->db->join("firm f", "j.firmId=f.id", "left");
         $this->db->join("commodities c", "j.commodityId=c.id", "left");
-        $this->db->where("jm.id", $id);
+        $this->db->where(["jm.id" => $id, "j.status" => "active"]);
         $query =  $this->db->get();
         $result = $query->result();
 
