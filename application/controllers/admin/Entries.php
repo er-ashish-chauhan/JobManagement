@@ -167,7 +167,7 @@ class Entries extends CI_Controller
         $id = $this->input->post('id');
         // $cid = $this->input->post('cid');
 
-        $this->db->select('j.id as jobId, j.purchaseOrder, jm.quantity as total_quantity, j.status, f.firm_name, c.commodity, jm.noOfBags, jm.cNetWeight');
+        $this->db->select('j.id as jobId, j.purchaseOrder, j.total_quantity, j.status, f.firm_name, c.commodity, jm.noOfBags, jm.cNetWeight');
         $this->db->from('jobMeta jm');
         $this->db->join("job j", "jm.commodityId=j.commodityId AND jm.firmId=j.firmId", "left");
         $this->db->join("firm f", "j.firmId=f.id", "left");
