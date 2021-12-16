@@ -19,10 +19,15 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <div class="col-12">
-                                    <span>Purchase Order: - <?php echo $jobDetails->purchaseOrder ?></span><br>
-                                    <span>Broker Name: - <?php echo $jobDetails->brokerName != "" ? $jobDetails->brokerName : "-" ?></span><br>
-                                    <span>Total Quantity: - <?php echo $jobDetails->total_quantity." ". $jobDetails->quantityType?></span>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <span>Purchase Order: - <?php echo $jobDetails->purchaseOrder ?></span><br>
+                                        <span>Broker Name: - <?php echo $jobDetails->brokerName != "" ? $jobDetails->brokerName : "-" ?></span><br>
+                                    </div>
+                                    <div class="col-6">
+                                        <span>Total Quantity: - <?php echo $jobDetails->total_quantity . " " . $jobDetails->quantityType ?></span><br>
+                                        <span>Remaing Quantity: - <?php echo $jobDetails->remaining_quantity . " " . $jobDetails->quantityType ?></span>
+                                    </div>
                                 </div>
                                 <br>
                                 <br>
