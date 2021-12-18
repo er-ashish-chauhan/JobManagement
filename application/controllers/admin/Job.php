@@ -194,10 +194,28 @@ class Job extends CI_Controller
 
 
 		if ($this->input->post()) {
+
+			$entriesSum =  $this->admin_job_model->getJobEntriesDetails(["jobId" => decode($jobId), "status" => 2]);
+			// echo"<prev>";
+			// print_r($entriesSum);
+			// die();
+
 			$dateTime = new DateTime();
+
+			// stdClass Object ( [noOfBags] => 0 [cNetWeight] => 454.23 )
+			$remaingQty = $this->input->post('total_quantity');
+			if ($this->input->post('qtyTpe') == "qts") {
+				$remaingQty = $this->input->post('total_quantity') - $entriesSum->cNetWeight;
+			} elseif ($this->input->post('qtyTpe') == "bags") {
+				$remaingQty = $this->input->post('total_quantity') - $entriesSum->noOfBags;
+			} else {
+				$remaingQty = $this->input->post('total_quantity') - $entriesSum->count;
+			}
+
 			$form_data_arr = array(
 				'total_quantity' => $this->input->post('total_quantity'),
-				"remaining_quantity" => $this->input->post('total_quantity'),
+				'quantityType' => $this->input->post('qtyTpe'),
+				"remaining_quantity" => $remaingQty,
 				"dealValidUpto" => $this->input->post("dealvalid"),
 				"dealValidFrom" => $this->input->post("dealvalidFrom"),
 				"updated" => $dateTime->getTimestamp()

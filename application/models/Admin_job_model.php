@@ -221,12 +221,12 @@ class Admin_job_model extends CI_Model
             $id = $record->id;
             $qty = "1 Truck";
 
-            if($record->quantityType == "qts"){
-                $qty = $record->cNetWeight .' qts';
-            }else if($record->quantityType == "bags"){
-                $qty = $record->noOfBags .' Bags';
+            if ($record->quantityType == "qts") {
+                $qty = $record->cNetWeight . ' qts';
+            } else if ($record->quantityType == "bags") {
+                $qty = $record->noOfBags . ' Bags';
             }
-            
+
             $previousSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
              href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
 
@@ -296,5 +296,16 @@ class Admin_job_model extends CI_Model
         $this->db->update('job', $data);
         $afftectedRow = $this->db->affected_rows();
         return  $afftectedRow;
+    }
+
+    public function getJobEntriesDetails($where)
+    {
+        $this->db->select("COUNT(*) as count");
+        $this->db->select_sum('noOfBags');
+        $this->db->select_sum('cNetWeight');
+        $this->db->from('jobMeta');
+        $this->db->where($where);
+        $query = $this->db->get();
+        return $query->row();
     }
 }

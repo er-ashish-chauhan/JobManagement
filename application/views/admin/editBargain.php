@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group col-sm-2 col-xs-12">
                     <label for="exampleFormControlSelect3">Quantity Type</label>
-                    <select class="form-control" name="qtyTpe" id="qtyTpe" disabled>
+                    <select class="form-control" name="qtyTpe" id="qtyTpe">
                         <option value="">Select Qty Type</option>
                         <option value="qts" <?php echo $bargain->quantityType == "qts" ? "selected" : "" ?>>QTS</option>
                         <option value="bags" <?php echo $bargain->quantityType == "bags" ? "selected" : "" ?>>Bags</option>
