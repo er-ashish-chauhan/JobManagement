@@ -8,16 +8,16 @@
                     <label for="exampleFormControlSelect2">Job Name</label>
                     <input type="text" class="form-control" maxlength="35" id="job_name" name="job_name">
                 </div> -->
-                <input type="hidden" name="job_meta_id" value="<?= $job_meta->id ?? "" ?>" >
+                <input type="hidden" name="job_meta_id" value="<?= $job_meta->id ?? "" ?>">
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect3">Select Firm</label>
-                    <select class="form-control" name="firmId" id="firmId">
+                    <select class="form-control" name="firmId" id="firmId" disabled>
                         <option value="">Select Firm</option>
                         <?php
                         if (!empty($firm_list)) {
                             foreach ($firm_list as $list) {
                         ?>
-                                <option value="<?= $list->id ?>"><?= $list->firm_name ?></option>
+                                <option value="<?= $list->id ?>" <?php echo $list->id == $entries->firmId ? "selected" : "" ?>><?= $list->firm_name ?></option>
                         <?php
                             }
                         }
@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group col-sm-4 col-xs-12">
                     <label for="exampleFormControlSelect2">Total Quantity</label>
-                    <input type="text" class="form-control" maxlength="5" id="total_quantity" name="total_quantity" min="0" value="<?= $job_meta->quantity ?? "" ?>" >
+                    <input type="text" class="form-control" maxlength="5" id="total_quantity" name="total_quantity" min="0" value="">
                 </div>
                 <div class="form-group col-sm-2 col-xs-12">
                     <label for="exampleFormControlSelect3">Quantity Type</label>
@@ -52,13 +52,13 @@
 
                 <div class="form-group col-sm-3 col-xs-12">
                     <label for="exampleFormControlSelect3">Select Commodity</label>
-                    <select class="form-control" name="commodityId" id="commodityId">
+                    <select class="form-control" name="commodityId" id="commodityId" disabled>
                         <option value="">Select Commodity</option>
                         <?php
                         if (!empty($commodities)) {
                             foreach ($commodities as $list) {
                         ?>
-                                <option value="<?= $list->id ?>"><?= $list->commodity ?></option>
+                                <option value="<?= $list->id ?>" <?php echo $list->id == $entries->commodityId ? "selected" : "" ?>><?= $list->commodity ?></option>
 
                         <?php
                             }
@@ -68,10 +68,10 @@
                 </div>
                 <div class="form-group col-sm-3 col-xs-12">
                     <label for="exampleFormControlSelect3">Delivery Type</label>
-                    <select class="form-control" name="deliveryType" id="deliveryType">
+                    <select class="form-control" name="deliveryType" id="deliveryType" disabled>
                         <option value="">Select Delivery Type</option>
-                        <option value="Ex-Mill">Ex-Mill</option>
-                        <option value="FOR">FOR</option>
+                        <option value="Ex-Mill" <?php echo "Ex-Mill" == $entries->deliveryType ? "selected" : "" ?>>Ex-Mill</option>
+                        <option value="FOR" <?php echo "FOR" == $entries->deliveryType ? "selected" : "" ?>>FOR</option>
                     </select>
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">

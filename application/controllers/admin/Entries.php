@@ -20,70 +20,74 @@ class Entries extends CI_Controller
     }
 
     public function manage_bargain_detail()
-	{
-		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-			$id = decode($this->input->get("id"));
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $id = decode($this->input->get("id"));
 
+            $this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Bargain';
 
+            $this->data_array['disabled'] = TRUE;
+            $this->data_array['pageTitle'] = 'Manage Bargain\'s';
+            $this->data_array["btn_name"] = "Add";
 
-			$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Jobs';
-
-			$this->data_array['disabled'] = TRUE;
-			$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Bargain';
-			$this->data_array['pageTitle'] = 'Manage Bargain\'s';
-			$this->data_array["btn_name"] = "Add";
-
-			$this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
-			$this->data_array["commodities"] = $this->admin_job_model->getCommodities();
+            $this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
+            $this->data_array["commodities"] = $this->admin_job_model->getCommodities();
 
             $this->data_array['job_meta'] = $this->db->select("quantity, id")->from('jobMeta')->get()->row();
+            $this->data_array['entries'] = $this->entries_model->getEntryById(["id" => $id]);
 
-			adminviews('make_bargain', $this->data_array);
-		} else if ($_SERVER["REQUEST_METHOD"] == 'POST') {
+            adminviews('make_bargain', $this->data_array);
+        } else if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 
-			$request = $this->input->post();
-			$request = $this->security->xss_clean($request);
-			unset($request['id']);
-
+            $request = $this->input->post();
+            $request = $this->security->xss_clean($request);
+            unset($request['id']);
+         
             $id = $request['job_meta_id'];
+            $entryD = $this->entries_model->getEntryById(["id" => $id]);
+            $checkIfJobExist = $this->admin_job_model->getLastBargain();
 
-			$checkIfJobExist = $this->admin_job_model->getLastBargain();
+            $job_PO_number = str_pad(1, 5, "0", STR_PAD_LEFT);
 
-			$job_PO_number = str_pad(1, 5, "0", STR_PAD_LEFT);
+            if ($checkIfJobExist) {
+                $job_PO_number = str_pad($checkIfJobExist->purchaseOrder + 1, 5, 0, STR_PAD_LEFT);
+            }
 
-			if ($checkIfJobExist) {
-				// $this->session->set_flashdata("error", 'Job already exist in our record with the same firm and commodity.');
-				// redirect('admin/addBargain');
-				$job_PO_number = str_pad($checkIfJobExist->purchaseOrder + 1, 5, 0, STR_PAD_LEFT);
-			}
+            $remainingQty = $request['total_quantity'];
 
-			$form_data_arr = array(
-				"purchaseOrder" => $job_PO_number,
-				"firmId" => $request["firmId"],
-				'total_quantity' => $request['total_quantity'],
-				"price" => $request["qtyPrice"],
-				"commodityId" => $request["commodityId"],
-				"dealValidUpto" => $request["dealvalid"],
-				"dealValidFrom" => $request["dealvalidFrom"],
-				"deliveryType" => $request["deliveryType"],
-				"quantityType" => $request["qtyTpe"],
-				"brokerName" => $request["broker_name"]
-			);
-
-            // delete the record from Job meta
-            $this->db->where("id", $id);
-            $this->db->delete("jobMeta");
-
-			$response_data =  $this->db->insert("job", $form_data_arr);
-
-			if ($response_data) {
-				$this->session->set_flashdata("success", 'Bargain added successfully');
+            if ($request['qtyTpe'] == "qts") {
+				$remainingQty = $request["total_quantity"] - $entryD->cNetWeight;
+			} elseif ($request["qtyTpe"] == "bags") {
+				$remainingQty = $request["total_quantity"] - $entryD->noOfBags;
 			} else {
-				$this->session->set_flashdata("error", 'Error while adding Bargain');
+				$remainingQty = $request["total_quantity"] - 1;
 			}
-			redirect('admin/entries');
-		}
-	}
+
+            $form_data_arr = array(
+                "purchaseOrder" => $job_PO_number,
+                'total_quantity' => $request['total_quantity'],
+                "remaining_quantity" => $remainingQty,
+                "price" => $request["qtyPrice"],
+                "dealValidUpto" => $request["dealvalid"],
+                "dealValidFrom" => $request["dealvalidFrom"],
+                "quantityType" => $request["qtyTpe"],
+                "brokerName" => $request["broker_name"],
+                "deliveryType" => $entryD->deliveryType,
+                "firmId" => $entryD->firmId,
+                "commodityId" => $entryD->commodityId,
+            );
+
+            $response_data =  $this->entries_model->insertBargain($form_data_arr);
+
+            if ($response_data) {
+                $this->entries_model->updatedJobMeta($id, ["jobId" => $response_data, "status" => 2]);
+                $this->session->set_flashdata("success", 'Bargain added successfully');
+            } else {
+                $this->session->set_flashdata("error", 'Error while adding Bargain');
+            }
+            redirect('admin/entries');
+        }
+    }
 
     public function get_entries_data()
     {

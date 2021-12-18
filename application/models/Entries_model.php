@@ -167,6 +167,19 @@ class Entries_model extends CI_Model
         }
     }
 
+    public function getEntryById($where)
+    {
+        $this->db->select("*");
+        $this->db->from("jobMeta");
+        $this->db->where($where);
+        $result = $this->db->get();
+        if ($result->num_rows() > 0) {
+            return $result->row();
+        } else {
+            return null;
+        }
+    }
+
     public function updateJob($jobId, $data)
     {
         $this->db->where('id', $jobId);
@@ -181,5 +194,12 @@ class Entries_model extends CI_Model
         $this->db->update('jobMeta', $data);
         $afftectedRow = $this->db->affected_rows();
         return  $afftectedRow;
+    }
+
+    public function insertBargain($data)
+    {
+        $this->db->insert('job', $data);
+        $afftectedRow = $this->db->affected_rows();
+        return $this->db->insert_id();
     }
 }
