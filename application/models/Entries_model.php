@@ -99,7 +99,7 @@ class Entries_model extends CI_Model
 
             $actionLinks .= "<a  href='" . base_url('admin/entries/manage_bargain_detail?id=') . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit Bargain' >Make Bargain</a>";
 
-            $previousSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
+            $previousSlip = "<a class='previous_img' data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
              href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
 
             $currentSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->currentSlip . "'
