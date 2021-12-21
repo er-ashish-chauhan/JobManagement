@@ -59,7 +59,7 @@ class Admin_firm_model extends CI_Model
         ## Fetch records
         $this->db->select("*");
         $this->db->from("firm");
-
+        $this->db->where("status", 0);
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
         }
@@ -86,7 +86,7 @@ class Admin_firm_model extends CI_Model
         foreach ($records as $record) {
             $id = $record->id;
 
-            $actionLinks = "<a  href='" . base_url('admin/firm/manageParty?id=') . "" . encode($id) . "&action=edit ' class='btn btn-sm btn-flat  btn-primary' title='View job details' ><i class=' fa fa-edit'></i></a> ";
+            $actionLinks = "<a  href='" . base_url('admin/firm/manageParty?id=') . "" . encode($id) . "&action=edit ' class='btn btn-sm btn-flat  btn-primary' title='View job details' ><i class=' fa fa-edit'></i></a> ' ' <a  href='" . base_url('admin/deleteparty/') . "" . encode($id) . "&action=delete ' class='btn btn-sm btn-flat  btn-primary' title='Delete Party' ><i class=' fa fa-trash'></i></a>";
             $date = !empty($record->created) ? date('m/d/Y h:i A', strtotime($record->created)) : "";
             $data[] = array(
                 $i++,
@@ -122,5 +122,13 @@ class Admin_firm_model extends CI_Model
 
         $result = $this->db->get()->row();
         return $result;
+    }
+
+    public function updateParty($where, $data)
+    {
+        $this->db->where($where);
+        $this->db->update('firm', $data);
+        $afftectedRow = $this->db->affected_rows();
+        return  $afftectedRow;
     }
 }

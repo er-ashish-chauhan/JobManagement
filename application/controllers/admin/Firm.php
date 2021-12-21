@@ -77,7 +77,6 @@ class Firm extends CI_Controller
 				$this->data_array['data'] = $this->admin_firm_model->get_firm_to_edit($id);
 				return adminviews('manage_firm', $this->data_array);
 			}
-
 		} else if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 			$request = $this->input->post();
 			$request = $this->security->xss_clean($request);
@@ -115,6 +114,18 @@ class Firm extends CI_Controller
 				redirect('admin/firm');
 			}
 		}
+	}
+
+	public function deleteparty($partyId)
+	{
+		$response_data = $this->admin_firm_model->updateParty(["id" => decode($partyId)], ["status" => 1]);
+
+		if ($response_data) {
+			$this->session->set_flashdata("success", 'Party deleted successfully');
+		} else {
+			$this->session->set_flashdata("error", 'Error while deleting party');
+		}
+		redirect('admin/firm');
 	}
 
 
