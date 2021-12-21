@@ -103,10 +103,10 @@ class Entries_model extends CI_Model
              href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
 
             $currentSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->currentSlip . "'
-             href='javascript:void(0)'><Image alt='Current Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->currentSlip . "' /></a>";
+             href='javascript:void(0)'><Image alt='Current Slip' class='entryImage previous_img' src='" . str_replace("JobManagement/", "", base_url()) . $record->currentSlip . "' /></a>";
 
             $bill = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->bill . "'
-             href='javascript:void(0)'><Image alt='Bill Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->bill . "' /></a>";
+             href='javascript:void(0)'><Image alt='Bill Slip' class='entryImage previous_img' src='" . str_replace("JobManagement/", "", base_url()) . $record->bill . "' /></a>";
 
             $data[] = array(
                 $i++,
