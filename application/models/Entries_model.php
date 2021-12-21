@@ -99,14 +99,14 @@ class Entries_model extends CI_Model
 
             $actionLinks .= "<a  href='" . base_url('admin/entries/manage_bargain_detail?id=') . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit Bargain' >Make Bargain</a>";
 
-            $previousSlip = "<a class='previous_img' data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
+            $previousSlip = "<a id='previous_img' data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
              href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
 
             $currentSlip = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->currentSlip . "'
-             href='javascript:void(0)'><Image alt='Current Slip' class='entryImage previous_img' src='" . str_replace("JobManagement/", "", base_url()) . $record->currentSlip . "' /></a>";
+             href='javascript:void(0)'><Image alt='Current Slip' class='entryImage' id='previous_img' src='" . str_replace("JobManagement/", "", base_url()) . $record->currentSlip . "' /></a>";
 
             $bill = "<a data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->bill . "'
-             href='javascript:void(0)'><Image alt='Bill Slip' class='entryImage previous_img' src='" . str_replace("JobManagement/", "", base_url()) . $record->bill . "' /></a>";
+             href='javascript:void(0)'><Image alt='Bill Slip' class='entryImage' id='previous_img' src='" . str_replace("JobManagement/", "", base_url()) . $record->bill . "' /></a>";
 
             $data[] = array(
                 $i++,
