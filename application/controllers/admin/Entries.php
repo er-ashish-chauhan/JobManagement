@@ -119,11 +119,11 @@ class Entries extends CI_Controller
             if ($jobDetails) {
                 $remaingQty = "";
                 if ($jobDetails->quantityType == "qts") {
-                    $remaingQty =  $jobDetails->total_quantity - $netweight;
+                    $remaingQty =  $jobDetails->remaining_quantity - $netweight;
                 } else if ($jobDetails->quantityType == "bags") {
-                    $remaingQty =  $jobDetails->total_quantity - $noOfBags;
+                    $remaingQty =  $jobDetails->remaining_quantity - $noOfBags;
                 } else {
-                    $remaingQty =  $jobDetails->total_quantity - 1;
+                    $remaingQty =  $jobDetails->remaining_quantity - 1;
                 }
 
                 $this->entries_model->updateJob($jobId, ["remaining_quantity" => $remaingQty]);
