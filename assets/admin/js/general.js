@@ -539,8 +539,18 @@ $(document).on("click", "#rejectEntry", function (e) {
 //   ],
 // });
 
+$(document).ready(function(){
+  // Datapicker 
+  $( ".datepicker" ).datepicker({
+    "dateFormat": "yy-mm-dd",
+    changeYear: true
+ });
+});
+
+// var from_date = "";
+// var to_date = "";
 // code to list entries in ajax datatable
-$("#jobEntriesList").DataTable({
+var jobentry_datatable =  $("#jobEntriesList").DataTable({
   processing: true,
   serverSide: true,
   pageLength: 25,
@@ -555,6 +565,15 @@ $("#jobEntriesList").DataTable({
   dom: 'Bfrtip',
   ajax: {
     url: admin_url + "Job/getJobEntries/" + $("#jobEntriesList").data("jobid"),
+    'data': function(data){
+      // Read values
+      var from_date = $('#search_fromdate').val();
+      var to_date = $('#search_todate').val();
+
+      // Append to data
+      data.searchByFromdate = from_date;
+      data.searchByTodate = to_date;
+   }
   },
   order: [[2, "desc"]],
   columnDefs: [
@@ -577,6 +596,12 @@ $("#jobEntriesList").DataTable({
       action: newExportAction
     },
   ]
+});
+
+// Search button
+$('#btn_search').click(function(){
+  console.log($('#search_fromdate').val());
+  jobentry_datatable.draw();
 });
 
 

@@ -39,3 +39,5 @@
   <!-- Custom js for this page-->
   <script src="<?= base_url('assets/admin/js/dashboard.js'); ?>"></script>
   <script src="<?= base_url('assets/admin/js/Chart.roundedBarCharts.js'); ?>"></script>
+  <!-- jQuery UI JS -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

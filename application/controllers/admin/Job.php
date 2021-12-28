@@ -175,6 +175,8 @@ class Job extends CI_Controller
 		// $id = decode($jobId);
 		try {
 			$postData = $this->input->post();
+			// echo "<pre>";
+			// print_r($postData); die;
 			$data = $this->admin_job_model->getJobEntries($postData, $jobId);
 			echo json_encode($data);
 		} catch (Exception $e) {

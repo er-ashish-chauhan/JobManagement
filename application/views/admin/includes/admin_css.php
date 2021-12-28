@@ -30,3 +30,5 @@
 
 <link rel="stylesheet" href="<?= base_url('assets/admin/css/custom.css'); ?>">
 
+<!-- jQuery UI CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
