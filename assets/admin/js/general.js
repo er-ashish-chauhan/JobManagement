@@ -663,3 +663,9 @@ $(document).on("click", "#approve", function (e) {
   });
 
 });
+
+$(document).on("click", ".csvExportButton", function (e) {
+  
+  console.log("csv clicked");
+
+});

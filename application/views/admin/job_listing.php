@@ -6,6 +6,9 @@
                   <div class="col-md-12">
                       <h4 style="display:inline;" class="card-title"><?= $pageTitle = "Manage Job" ?></h4>
                   </div>
+                  <div>
+                   <a href="javascript:void(0)" class="csvExportButton btn btn-primary" >Export as CSV</a>
+                  </div>
               </div>
               <div class="row">
                   <div class="col-md-12 grid-margin stretch-card">
