@@ -663,3 +663,16 @@ $(document).on("click", "#approve", function (e) {
   });
 
 });
+
+$(document).on("click", ".csvExportButton", function (e) {
+  $.ajax({
+    url: admin_url + "exportJobs",
+    method: "post",
+    data: {
+      csv: true
+    },
+    success: (data) => {
+      // location.reload();
+    },
+  });
+});

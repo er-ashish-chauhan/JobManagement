@@ -10,7 +10,10 @@
                   <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
                           <div class="card-body">
-
+                              <div class="exportBtnContainer" style="margin-bottom: 20px;">
+                                  <a href="<?php echo base_url("admin/exportJobs"); ?>" class="csv_ExportButton btn btn-primary">Export Bargain as CSV</a>
+                                  <a href="<?php echo base_url("admin/exportAllEntries"); ?>" class="csv_ExportButton btn btn-primary">Export Entries as CSV</a>
+                              </div>
                               <div class="row">
                                   <div class="col-12">
 
@@ -27,7 +30,6 @@
                                                       <th>Quantity</th>
                                                       <th>Commodity</th>
                                                       <th>Status</th>
-
                                                   </tr>
                                               </thead>
                                           </table>

@@ -249,6 +249,72 @@ class Job extends CI_Controller
 
 	public function export_jobs()
 	{
-		die();
+		// if ($this->input->post('csv')) {
+		$this->load->dbutil();
+		$this->load->helper('file');
+		$this->load->helper('download');
+		$delimiter = ",";
+		$newline = "\r\n";
+		$filename = "Bargains.csv";
+		$query = "SELECT `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
+		`commodities`.`commodity` as Commodity,`job`.`brokerName` as BrokerName, 
+		`job`.`total_quantity` as TotalQuantity, `job`.`remaining_quantity` as RemainingQuantity,
+		`job`.`quantityType` as QuantityType, `job`.`dealValidUpto` as DealValidUpto,
+		`job`.`deliveryType` as DeliveryType, `job`.`status` as BargainStatus
+		from `job` LEFT JOIN firm ON firm.id = job.firmId
+		LEFT JOIN commodities ON commodities.id = job.commodityId";
+		$result = $this->db->query($query);
+		$data = $this->dbutil->csv_from_result($result, $delimiter, $newline);
+		force_download($filename, $data);
+		// }
+	}
+
+	public function exportApprovedEntries($jobId)
+	{
+		$job_id = decode($jobId);
+		$this->load->dbutil();
+		$this->load->helper('file');
+		$this->load->helper('download');
+		$delimiter = ",";
+		$newline = "\r\n";
+		$filename = "Entries.csv";
+		$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`remaining_quantity`,' ', `job`.`quantityType`,', ', `job`.`price`,', ',`commodities`.`commodity`) as BargainDetaiils,
+		`jobMeta`.`recordCreated` as EntryDate,
+		`jobMeta`.`truckNo` as TruckNo,
+		`jobMeta`.`cNetWeight` as Quantity_in_qts,
+		`jobMeta`.`noOfBags` as Quantity_in_bags,
+		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
+		`firm`.`firm_name` as FirmName
+		from `jobMeta` LEFT JOIN firm ON firm.id = jobMeta.firmId
+		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
+		LEFT JOIN job ON job.id = jobMeta.jobId
+		WHERE `jobMeta`.`jobId` = $job_id AND `jobMeta`.`status` = 2";
+		$result = $this->db->query($query);
+		$data = $this->dbutil->csv_from_result($result, $delimiter, $newline);
+		force_download($filename, $data);
+	}
+
+	public function exportAllEntries()
+	{
+		$this->load->dbutil();
+		$this->load->helper('file');
+		$this->load->helper('download');
+		$delimiter = ",";
+		$newline = "\r\n";
+		$filename = "Entries.csv";
+		$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`remaining_quantity`,' ', `job`.`quantityType`,', ', `job`.`price`,', ',`commodities`.`commodity`) as BargainDetaiils,
+		`jobMeta`.`recordCreated` as EntryDate,
+		`jobMeta`.`truckNo` as TruckNo,
+		`jobMeta`.`cNetWeight` as Quantity_in_qts,
+		`jobMeta`.`noOfBags` as Quantity_in_bags,
+		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
+		`firm`.`firm_name` as FirmName
+		from `jobMeta` LEFT JOIN firm ON firm.id = jobMeta.firmId
+		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
+		LEFT JOIN job ON job.id = jobMeta.jobId
+		WHERE `jobMeta`.`status` = 2";
+		$result = $this->db->query($query);
+		$data = $this->dbutil->csv_from_result($result, $delimiter, $newline);
+		force_download($filename, $data);
 	}
 }
