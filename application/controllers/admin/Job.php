@@ -246,4 +246,9 @@ class Job extends CI_Controller
 		}
 		redirect('admin/bargainsListing');
 	}
+
+	public function export_jobs()
+	{
+		die();
+	}
 }

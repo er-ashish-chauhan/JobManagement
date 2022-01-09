@@ -59,6 +59,7 @@ $route['admin/addBargain'] = 'admin/Job/manage_job_detail';
 $route['admin/bargainsListing'] = 'admin/Job';
 $route['admin/editBargain/(:any)'] = 'admin/Job/editBargain/$1';
 $route['admin/viewJobEntries/(:any)'] = 'admin/Job/view_job_detail/$1';
+$route['admin/exportJobs'] = 'admin/Job/export_jobs';
 $route['admin/completeBargain/(:any)'] = 'admin/Job/completeBargain/$1';
 $route['admin/deleteparty/(:any)'] = 'admin/Firm/deleteparty/$1';
 // $route['admin/job'] = 'admin/coach_video';

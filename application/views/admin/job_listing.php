@@ -1,7 +1,6 @@
       <!-- partial -->
       <div class="main-panel">
           <div class="content-wrapper">
-
               <div class="row">
                   <div class="col-md-12">
                       <h4 style="display:inline;" class="card-title"><?= $pageTitle = "Manage Job" ?></h4>
@@ -11,10 +10,11 @@
                   <div class="col-md-12 grid-margin stretch-card">
                       <div class="card">
                           <div class="card-body">
+
                               <div class="row">
                                   <div class="col-12">
-                                      <div class="table-responsive">
 
+                                      <div class=" table-responsive">
                                           <table id="job_listing" class="display expandable-table" style="width:100%">
                                               <thead>
                                                   <tr>

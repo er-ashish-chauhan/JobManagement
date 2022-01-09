@@ -17,14 +17,14 @@ function alert_msg(type, msg) {
 // code to export all rows from datatable record
 var oldExportAction = function (self, e, dt, button, config) {
   if (button[0].className.indexOf('buttons-excel') >= 0) {
-      if ($.fn.dataTable.ext.buttons.excelHtml5.available(dt, config)) {
-          $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config);
-      }
-      else {
-          $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-      }
+    if ($.fn.dataTable.ext.buttons.excelHtml5.available(dt, config)) {
+      $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config);
+    }
+    else {
+      $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+    }
   } else if (button[0].className.indexOf('buttons-print') >= 0) {
-      $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+    $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
   }
 };
 
@@ -33,24 +33,24 @@ var newExportAction = function (e, dt, button, config) {
   var oldStart = dt.settings()[0]._iDisplayStart;
 
   dt.one('preXhr', function (e, s, data) {
-      // Just this once, load all data from the server...
-      data.start = 0;
-      data.length = 2147483647;
+    // Just this once, load all data from the server...
+    data.start = 0;
+    data.length = 2147483647;
 
-      dt.one('preDraw', function (e, settings) {
-          // Call the original action function 
-          oldExportAction(self, e, dt, button, config);
-          dt.one('preXhr', function (e, s, data) {
-              // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-              // Set the property to what it was before exporting.
-              settings._iDisplayStart = oldStart;
-              data.start = oldStart;
-          });
-          // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
-          setTimeout(dt.ajax.reload, 0);
-          // Prevent rendering of the full data to the DOM
-          return false;
+    dt.one('preDraw', function (e, settings) {
+      // Call the original action function 
+      oldExportAction(self, e, dt, button, config);
+      dt.one('preXhr', function (e, s, data) {
+        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+        // Set the property to what it was before exporting.
+        settings._iDisplayStart = oldStart;
+        data.start = oldStart;
       });
+      // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+      setTimeout(dt.ajax.reload, 0);
+      // Prevent rendering of the full data to the DOM
+      return false;
+    });
   });
 
   // Requery the server with the new one-time export settings
@@ -539,18 +539,18 @@ $(document).on("click", "#rejectEntry", function (e) {
 //   ],
 // });
 
-$(document).ready(function(){
+$(document).ready(function () {
   // Datapicker 
-  $( ".datepicker" ).datepicker({
+  $(".datepicker").datepicker({
     "dateFormat": "yy-mm-dd",
     changeYear: true
- });
+  });
 });
 
 // var from_date = "";
 // var to_date = "";
 // code to list entries in ajax datatable
-var jobentry_datatable =  $("#jobEntriesList").DataTable({
+var jobentry_datatable = $("#jobEntriesList").DataTable({
   processing: true,
   serverSide: true,
   pageLength: 25,
@@ -565,7 +565,7 @@ var jobentry_datatable =  $("#jobEntriesList").DataTable({
   dom: 'Bfrtip',
   ajax: {
     url: admin_url + "Job/getJobEntries/" + $("#jobEntriesList").data("jobid"),
-    'data': function(data){
+    'data': function (data) {
       // Read values
       var from_date = $('#search_fromdate').val();
       var to_date = $('#search_todate').val();
@@ -573,7 +573,7 @@ var jobentry_datatable =  $("#jobEntriesList").DataTable({
       // Append to data
       data.searchByFromdate = from_date;
       data.searchByTodate = to_date;
-   }
+    }
   },
   order: [[2, "desc"]],
   columnDefs: [
@@ -599,7 +599,7 @@ var jobentry_datatable =  $("#jobEntriesList").DataTable({
 });
 
 // Search button
-$('#btn_search').click(function(){
+$('#btn_search').click(function () {
   console.log($('#search_fromdate').val());
   jobentry_datatable.draw();
 });

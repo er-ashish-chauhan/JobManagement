@@ -32,17 +32,17 @@
                                 <br>
                                 <br>
                                 <div class="row">
-                                <div class="col-sm-2" >
-                                </div>
-                                <div class="col-sm-3" >
-                                <label for="">From</label>
-                                <input type='text' id='search_fromdate' class="datepicker" placeholder='From date' autocomplete="off">
-                                </div>
-                                <div class="col-sm-3" >
-                                <label for="">To</label>
-                                <input type='text' id='search_todate' class="datepicker" placeholder='To date' autocomplete="off">
-                                </div>
-                                <input type='button' id="btn_search" value="Search" style="margin-top:20px;" >
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="">From</label>
+                                        <input type='text' id='search_fromdate' class="datepicker" placeholder='From date' autocomplete="off">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label for="">To</label>
+                                        <input type='text' id='search_todate' class="datepicker" placeholder='To date' autocomplete="off">
+                                    </div>
+                                    <input type='button' id="btn_search" value="Search" style="margin-top:20px;">
 
                                 </div>
                                 <div class="table-responsive">
