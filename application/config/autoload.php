@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('form_validation','encryption','session','database');
+$autoload['libraries'] = array('form_validation','encryption','session','database', 'pdf');
 
 /*
 | -------------------------------------------------------------------
@@ -133,3 +133,4 @@ $autoload['language'] = array('admin');
 |	$autoload['model'] = array('first_model' => 'first');
 */
 $autoload['model'] = array();
+$config['composer_autoload'] = 'vendor/autoload.php';

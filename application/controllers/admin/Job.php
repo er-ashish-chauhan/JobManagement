@@ -1,7 +1,13 @@
 <?php
+
+use Mpdf\Mpdf;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 // include_once('pathto/getid3.php');
 include_once APPPATH . 'third_party/Getid3/getid3/getid3.php';
+include_once APPPATH . 'third_party/mpdf/mpdf/mpdf.php';
+// include_once FCPATH . 'vendor/autoload.php';
+
 class Job extends CI_Controller
 {
 	private $pageData = array();
@@ -10,6 +16,7 @@ class Job extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+		ob_clean();
 		adminAuth();
 		$this->load->model('admin_job_model');
 	}
@@ -296,13 +303,17 @@ class Job extends CI_Controller
 
 	public function exportAllEntries()
 	{
+		$mpdf = new \Mpdf();
+		$mpdf->debug = true;
+
 		$this->load->dbutil();
 		$this->load->helper('file');
 		$this->load->helper('download');
 		$delimiter = ",";
 		$newline = "\r\n";
 		$filename = "Entries.csv";
-		$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`remaining_quantity`,' ', `job`.`quantityType`,', ', `job`.`price`,', ',`commodities`.`commodity`) as BargainDetaiils,
+		$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', ', `job`.`price`,', ',`commodities`.`commodity`) as BargainDetaiils,
+		`job`.`id` as `bargainId`,
 		`jobMeta`.`recordCreated` as EntryDate,
 		`jobMeta`.`truckNo` as TruckNo,
 		`jobMeta`.`cNetWeight` as Quantity_in_qts,
@@ -314,7 +325,27 @@ class Job extends CI_Controller
 		LEFT JOIN job ON job.id = jobMeta.jobId
 		WHERE `jobMeta`.`status` = 2";
 		$result = $this->db->query($query);
-		$data = $this->dbutil->csv_from_result($result, $delimiter, $newline);
-		force_download($filename, $data);
+		$query_result = $result->result();
+		$entries = array();
+		$bargainIds = '';
+
+		foreach ($query_result as $list) {
+			if ($bargainIds == $list->bargainId) {
+				$list->BargainDetaiils = "";
+				array_push($entries, $list);
+			} else {
+				array_push($entries, $list);
+			}
+			$bargainIds = $list->bargainId;
+		}
+
+		$data["entries"]  = $entries;
+
+		$html = $this->load->view('pdfViews/entriesList', $data, true);
+		$mpdf->WriteHTML($html);
+		ob_clean();
+		$mpdf->Output("entriesReport.pdf", "D");
+		// $data = $this->dbutil->csv_from_result($result, $delimiter, $newline);
+		// force_download($filename, $data);
 	}
 }
