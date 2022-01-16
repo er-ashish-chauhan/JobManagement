@@ -316,7 +316,7 @@ class Job extends CI_Controller
 		`job`.`id` as `bargainId`,
 		`jobMeta`.`recordCreated` as EntryDate,
 		`jobMeta`.`truckNo` as TruckNo,
-		`jobMeta`.`kantaSlipNo` as kantaSlipNo,
+		`jobMeta`.`currentSlipNo` as kantaSlipNo,
 		`jobMeta`.`cNetWeight` as Quantity_in_qts,
 		`jobMeta`.`noOfBags` as Quantity_in_bags,
 		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,

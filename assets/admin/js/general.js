@@ -314,12 +314,12 @@ $("#job_listing").DataTable({
     [10, 25, 50, -1],
     [10, 25, 50, "All"],
   ],
-  buttons: [
-    {
-      extend: 'excel',
-      action: newExportAction
-    },
-  ]
+  // buttons: [
+  //   {
+  //     extend: 'excel',
+  //     action: newExportAction
+  //   },
+  // ]
 });
 
 
