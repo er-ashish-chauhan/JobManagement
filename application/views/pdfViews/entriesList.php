@@ -30,6 +30,7 @@
         <tr>
             <th>Bargain Detaiils</th>
             <th>Entry Date</th>
+            <th>Invoice No</th>
             <th>Truck No</th>
             <th>Quantity (qts)</th>
             <th>Quantity (bags)</th>
@@ -41,6 +42,7 @@
                 <tr>
                     <td>" . $value->BargainDetaiils . "</td>
                     <td>" . $value->EntryDate . "</td>
+                    <td>" . $value->kantaSlipNo . "</td>
                     <td>" . $value->TruckNo . "</td>
                     <td>" . $value->Quantity_in_qts . "</td>
                     <td>" . $value->Quantity_in_bags . "</td>

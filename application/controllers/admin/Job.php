@@ -312,10 +312,11 @@ class Job extends CI_Controller
 		$delimiter = ",";
 		$newline = "\r\n";
 		$filename = "Entries.csv";
-		$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', ', `job`.`price`,', ',`commodities`.`commodity`) as BargainDetaiils,
+		$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`job`.`brokerName`) as BargainDetaiils,
 		`job`.`id` as `bargainId`,
 		`jobMeta`.`recordCreated` as EntryDate,
 		`jobMeta`.`truckNo` as TruckNo,
+		`jobMeta`.`kantaSlipNo` as kantaSlipNo,
 		`jobMeta`.`cNetWeight` as Quantity_in_qts,
 		`jobMeta`.`noOfBags` as Quantity_in_bags,
 		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
