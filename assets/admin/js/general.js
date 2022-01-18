@@ -16,46 +16,46 @@ function alert_msg(type, msg) {
 
 // code to export all rows from datatable record
 var oldExportAction = function (self, e, dt, button, config) {
-  if (button[0].className.indexOf('buttons-excel') >= 0) {
-    if ($.fn.dataTable.ext.buttons.excelHtml5.available(dt, config)) {
-      $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config);
-    }
-    else {
-      $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
-    }
-  } else if (button[0].className.indexOf('buttons-print') >= 0) {
-    $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
-  }
+  // if (button[0].className.indexOf('buttons-excel') >= 0) {
+  //   if ($.fn.dataTable.ext.buttons.excelHtml5.available(dt, config)) {
+  //     $.fn.dataTable.ext.buttons.excelHtml5.action.call(self, e, dt, button, config);
+  //   }
+  //   else {
+  //     $.fn.dataTable.ext.buttons.excelFlash.action.call(self, e, dt, button, config);
+  //   }
+  // } else if (button[0].className.indexOf('buttons-print') >= 0) {
+  //   $.fn.dataTable.ext.buttons.print.action(e, dt, button, config);
+  // }
 };
 
-var newExportAction = function (e, dt, button, config) {
-  var self = this;
-  var oldStart = dt.settings()[0]._iDisplayStart;
+// var newExportAction = function (e, dt, button, config) {
+//   var self = this;
+//   var oldStart = dt.settings()[0]._iDisplayStart;
 
-  dt.one('preXhr', function (e, s, data) {
-    // Just this once, load all data from the server...
-    data.start = 0;
-    data.length = 2147483647;
+//   dt.one('preXhr', function (e, s, data) {
+//     // Just this once, load all data from the server...
+//     data.start = 0;
+//     data.length = 2147483647;
 
-    dt.one('preDraw', function (e, settings) {
-      // Call the original action function 
-      oldExportAction(self, e, dt, button, config);
-      dt.one('preXhr', function (e, s, data) {
-        // DataTables thinks the first item displayed is index 0, but we're not drawing that.
-        // Set the property to what it was before exporting.
-        settings._iDisplayStart = oldStart;
-        data.start = oldStart;
-      });
-      // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
-      setTimeout(dt.ajax.reload, 0);
-      // Prevent rendering of the full data to the DOM
-      return false;
-    });
-  });
+//     dt.one('preDraw', function (e, settings) {
+//       // Call the original action function 
+//       oldExportAction(self, e, dt, button, config);
+//       dt.one('preXhr', function (e, s, data) {
+//         // DataTables thinks the first item displayed is index 0, but we're not drawing that.
+//         // Set the property to what it was before exporting.
+//         settings._iDisplayStart = oldStart;
+//         data.start = oldStart;
+//       });
+//       // Reload the grid with the original page. Otherwise, API functions like table.cell(this) don't work properly.
+//       setTimeout(dt.ajax.reload, 0);
+//       // Prevent rendering of the full data to the DOM
+//       return false;
+//     });
+//   });
 
-  // Requery the server with the new one-time export settings
-  dt.ajax.reload();
-};
+//   // Requery the server with the new one-time export settings
+//   dt.ajax.reload();
+// };
 
 
 $("#firm_listing").DataTable({
@@ -314,12 +314,12 @@ $("#job_listing").DataTable({
     [10, 25, 50, -1],
     [10, 25, 50, "All"],
   ],
-  // buttons: [
-  //   {
-  //     extend: 'excel',
-  //     action: newExportAction
-  //   },
-  // ]
+  buttons: [
+    // {
+    //   extend: 'excel',
+    //   action: newExportAction
+    // },
+  ]
 });
 
 
@@ -436,13 +436,13 @@ $("#entries_list").DataTable({
     { orderable: false, targets: [0, 1] },
     { targets: 2, name: "firm.firm_name" },
     { targets: 3, name: "commodities.commodity" },
-    { targets: 4, name: "jobMeta.previousSlip" },
-    { targets: 5, name: "jobMeta.currentSlip" },
-    { targets: 6, name: "jobMeta.bill" },
-    { targets: 7, name: "jobMeta.entryType" },
-    { targets: 8, name: "jobMeta.deliveryType" },
-    { targets: 9, name: "jobMeta.cNetWeight" },
-    { targets: 10, name: "jobMeta.created" },
+    // { targets: 4, name: "jobMeta.previousSlip" },
+    // { targets: 5, name: "jobMeta.currentSlip" },
+    // { targets: 6, name: "jobMeta.bill" },
+    { targets: 4, name: "jobMeta.entryType" },
+    { targets: 5, name: "jobMeta.deliveryType" },
+    { targets: 6, name: "jobMeta.cNetWeight" },
+    { targets: 7, name: "jobMeta.created" },
   ],
   lengthMenu: [
     [10, 25, 50, -1],
@@ -590,12 +590,12 @@ var jobentry_datatable = $("#jobEntriesList").DataTable({
     [10, 25, 50, -1],
     [10, 25, 50, "All"],
   ],
-  // buttons: [
-  //   {
-  //     extend: 'excel',
-  //     action: newExportAction
-  //   },
-  // ]
+  buttons: [
+    // {
+    //   extend: 'excel',
+    //   action: newExportAction
+    // },
+  ]
 });
 
 // Search button

@@ -34,9 +34,9 @@
                                                 <th>Action</th>
                                                 <th>Party</th>
                                                 <th>Commodity</th>
-                                                <th>Previous Slip</th>
+                                                <!-- <th>Previous Slip</th>
                                                 <th>Current Slip</th>
-                                                <th>Bill Slip</th>
+                                                <th>Bill Slip</th> -->
                                                 <th>Entry Type</th>
                                                 <th>Delivery Type</th>
                                                 <th>Net Weight</th>

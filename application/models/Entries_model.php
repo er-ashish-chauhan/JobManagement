@@ -92,7 +92,7 @@ class Entries_model extends CI_Model
         foreach ($records as $record) {
             $id = $record->id;
 
-            $actionLinks = "<a data-id='" . $id . "' id='showentrymodel' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' data-toggle='modal' data-target='#entriesModal
+            $actionLinks = "<a data-id='" . $id . "' id='' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' data-toggle='modal' data-target='' title='View Entry'>View</a> <a data-id='" . $id . "' id='showentrymodel' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' data-toggle='modal' data-target='#entriesModal
             ' title='Approve'>Approve</a> ";
 
             $actionLinks .= "<a data-id='" . $id . "' id='rejectEntry' href='javascript:void(0)' class='btn btn-sm btn-flat  btn-danger' title='Reject'>Reject</a> ";
@@ -113,9 +113,9 @@ class Entries_model extends CI_Model
                 $actionLinks,
                 $record->firm_name,
                 $record->commodity,
-                $previousSlip,
-                $currentSlip,
-                $bill,
+                // $previousSlip,
+                // $currentSlip,
+                // $bill,
                 $record->entryType,
                 $record->deliveryType,
                 $record->cNetWeight,

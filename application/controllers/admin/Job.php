@@ -301,18 +301,51 @@ class Job extends CI_Controller
 		force_download($filename, $data);
 	}
 
+	public function bargainListFilters()
+	{
+		$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Apply Filters';
+		$this->data_array['pageTitle'] = 'Apply Filters';
+
+		$this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
+		$this->data_array["commodities"] = $this->admin_job_model->getCommodities();
+
+		adminviews('pdfFilters', $this->data_array);
+	}
+
 	public function exportAllEntries()
 	{
-		$mpdf = new \Mpdf();
-		$mpdf->debug = true;
+		if ($this->input->post()) {
+			$firmId = $this->input->post("bFirm");
+			$commodityId = $this->input->post("bCommodity");
+			$status = $this->input->post("bStatus");
+			$selectedDateFrom = $this->input->post("bSelectedDate");
+			$selectedDateto = $this->input->post("bSelectedDateTo");
 
-		$this->load->dbutil();
-		$this->load->helper('file');
-		$this->load->helper('download');
-		$delimiter = ",";
-		$newline = "\r\n";
-		$filename = "Entries.csv";
-		$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`job`.`brokerName`) as BargainDetaiils,
+			$where = "WHERE `job`.`status` = '$status'";
+			if ($selectedDateFrom != "") {
+				$where .= "AND `job`.`created` >= $selectedDateFrom";
+			}
+			if ($selectedDateto != "") {
+				$where .= "  AND `job`.`created` <= $selectedDateto";
+			}
+			if ($firmId != "") {
+				$where .= " AND `firm`.`id` = $firmId";
+			}
+			if ($commodityId != "") {
+				$where .= " AND `commodities`.`id` = $firmId";
+			}
+
+
+			$mpdf = new \Mpdf();
+			$mpdf->debug = true;
+
+			$this->load->dbutil();
+			$this->load->helper('file');
+			$this->load->helper('download');
+			$delimiter = ",";
+			$newline = "\r\n";
+			$filename = "Entries.csv";
+			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`job`.`brokerName`) as BargainDetaiils,
 		`job`.`id` as `bargainId`,
 		`jobMeta`.`recordCreated` as EntryDate,
 		`jobMeta`.`truckNo` as TruckNo,
@@ -324,29 +357,28 @@ class Job extends CI_Controller
 		from `jobMeta` LEFT JOIN firm ON firm.id = jobMeta.firmId
 		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
 		LEFT JOIN job ON job.id = jobMeta.jobId
-		WHERE `jobMeta`.`status` = 2";
-		$result = $this->db->query($query);
-		$query_result = $result->result();
-		$entries = array();
-		$bargainIds = '';
+		$where";
+			$result = $this->db->query($query);
+			$query_result = $result->result();
+			$entries = array();
+			$bargainIds = '';
 
-		foreach ($query_result as $list) {
-			if ($bargainIds == $list->bargainId) {
-				$list->BargainDetaiils = "";
-				array_push($entries, $list);
-			} else {
-				array_push($entries, $list);
+			foreach ($query_result as $list) {
+				if ($bargainIds == $list->bargainId) {
+					$list->BargainDetaiils = "";
+					array_push($entries, $list);
+				} else {
+					array_push($entries, $list);
+				}
+				$bargainIds = $list->bargainId;
 			}
-			$bargainIds = $list->bargainId;
+
+			$data["entries"]  = $entries;
+
+			$html = $this->load->view('pdfViews/entriesList', $data, true);
+			$mpdf->WriteHTML($html);
+			ob_clean();
+			$mpdf->Output("entriesReport.pdf", "D");
 		}
-
-		$data["entries"]  = $entries;
-
-		$html = $this->load->view('pdfViews/entriesList', $data, true);
-		$mpdf->WriteHTML($html);
-		ob_clean();
-		$mpdf->Output("entriesReport.pdf", "D");
-		// $data = $this->dbutil->csv_from_result($result, $delimiter, $newline);
-		// force_download($filename, $data);
 	}
 }
