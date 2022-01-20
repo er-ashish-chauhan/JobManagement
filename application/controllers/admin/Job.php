@@ -322,7 +322,7 @@ class Job extends CI_Controller
 			$selectedDateto = $this->input->post("bSelectedDateTo") != "" ?
 				$this->input->post("bSelectedDateTo") : date("Y-m-d h:i:s");
 
-			$where = "WHERE `job`.`created` >= $selectedDateto";
+			$where = "WHERE `job`.`created` >= '$selectedDateto'";
 			if ($status != "") {
 				$where .= " AND `job`.`status` = '$status'";
 			}
