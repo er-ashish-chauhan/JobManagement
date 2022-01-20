@@ -39,7 +39,7 @@
                     <label for="exampleFormControlSelect3">Filter By Status</label>
                     <select class="form-control" name="bStatus" id="bStatus">
                         <option value="">Select Status</option>
-                        <option value="active" selected>Active</option>
+                        <option value="active">Active</option>
                         <option value="completed">Completed</option>
                         <option value="cancelled">Cancelled</option>
                         <option value="expired">Expired</option>

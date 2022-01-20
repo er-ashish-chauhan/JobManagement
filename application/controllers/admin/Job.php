@@ -319,14 +319,15 @@ class Job extends CI_Controller
 			$commodityId = $this->input->post("bCommodity");
 			$status = $this->input->post("bStatus");
 			$selectedDateFrom = $this->input->post("bSelectedDate");
-			$selectedDateto = $this->input->post("bSelectedDateTo");
+			$selectedDateto = $this->input->post("bSelectedDateTo") == "" ?
+				$this->input->post("bSelectedDateTo") : date("Y-m-d h:i:sa");
 
-			$where = "WHERE `job`.`status` = '$status'";
-			if ($selectedDateFrom != "") {
-				$where .= "AND `job`.`created` >= $selectedDateFrom";
+			$where = "WHERE `job`.`created` >= $selectedDateto";
+			if ($status != "") {
+				$where .= " AND `job`.`status` = '$status'";
 			}
-			if ($selectedDateto != "") {
-				$where .= "  AND `job`.`created` <= $selectedDateto";
+			if ($selectedDateFrom != "") {
+				$where .= " AND `job`.`created` <= $selectedDateFrom";
 			}
 			if ($firmId != "") {
 				$where .= " AND `firm`.`id` = $firmId";
@@ -334,7 +335,6 @@ class Job extends CI_Controller
 			if ($commodityId != "") {
 				$where .= " AND `commodities`.`id` = $commodityId";
 			}
-
 
 			$mpdf = new \Mpdf();
 			$mpdf->debug = true;
