@@ -182,7 +182,7 @@ class Admin_job_model extends CI_Model
         // Date filter
         if ($searchByFromdate != '' && $searchByTodate != '') {
             $daterange_condition = "(jobMeta.created between '" . $searchByFromdate . "' and '" . $searchByTodate . "' ) ";
-        $this->db->where($daterange_condition);
+            $this->db->where($daterange_condition);
         }
         $query = $this->db->get();
         $records = $query->result();
@@ -195,7 +195,7 @@ class Admin_job_model extends CI_Model
         // Date filter
         if ($searchByFromdate != '' && $searchByTodate != '') {
             $daterange_condition = "(jobMeta.created between '" . $searchByFromdate . "' and '" . $searchByTodate . "' ) ";
-        $this->db->where($daterange_condition);
+            $this->db->where($daterange_condition);
         }
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
@@ -215,7 +215,7 @@ class Admin_job_model extends CI_Model
         // Date filter
         if ($searchByFromdate != '' && $searchByTodate != '') {
             $daterange_condition = "(jobMeta.created between '" . $searchByFromdate . "' and '" . $searchByTodate . "' ) ";
-        $this->db->where($daterange_condition);
+            $this->db->where($daterange_condition);
         }
         $this->db->join("job j", "jobMeta.jobId = j.id", "left");
         if ($searchQuery != '') {
@@ -327,5 +327,17 @@ class Admin_job_model extends CI_Model
         $this->db->where($where);
         $query = $this->db->get();
         return $query->row();
+    }
+
+    public function getPurchaseOrders()
+    {
+        $this->db->select('purchaseOrder');
+        $this->db->from("job");
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return null;
+        }
     }
 }

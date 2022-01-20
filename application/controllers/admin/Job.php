@@ -308,6 +308,7 @@ class Job extends CI_Controller
 
 		$this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
 		$this->data_array["commodities"] = $this->admin_job_model->getCommodities();
+		$this->data_array["purchaseOrders"] = $this->admin_job_model->getPurchaseOrders();
 
 		adminviews('pdfFilters', $this->data_array);
 	}
@@ -318,6 +319,8 @@ class Job extends CI_Controller
 			$firmId = $this->input->post("bFirm");
 			$commodityId = $this->input->post("bCommodity");
 			$status = $this->input->post("bStatus");
+			$poFrom = $this->input->post("poFrom");
+			$poTo = $this->input->post("poTo");
 			$selectedDateFrom = $this->input->post("bSelectedDate") ? date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDate"))) : "";
 			$selectedDateto = $this->input->post("bSelectedDateTo") != "" ?
 				date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDateTo"))) : date("Y-m-d h:i:s");
@@ -334,6 +337,12 @@ class Job extends CI_Controller
 			}
 			if ($commodityId != "") {
 				$where .= " AND `commodities`.`id` = $commodityId";
+			}
+			if ($poFrom != "") {
+				$where .= " AND `job`.`purchaseOrder` >= $poFrom";
+			}
+			if ($poTo != "") {
+				$where .= " AND `job`.`purchaseOrder` <= $poTo";
 			}
 
 			$mpdf = new \Mpdf();

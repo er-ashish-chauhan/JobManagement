@@ -58,6 +58,40 @@
                     <input type="date" class="form-control" id="bSelectedDateTo" name="bSelectedDateTo">
                 </div>
             </div>
+            <label for="exampleFormControlSelect2">Filter By Purchase Order</label>
+            <hr />
+            <div class="row">
+                <div class="form-group col-sm-6 col-xs-12">
+                    <label for="exampleFormControlSelect2">PO From</label>
+                    <select class="form-control" name="poFrom" id="poFrom">
+                        <option value="">Select Purchase Order</option>
+                        <?php
+                        if (!empty($purchaseOrders)) {
+                            foreach ($purchaseOrders as $list) {
+                        ?>
+                                <option value="<?= $list->purchaseOrder ?>"><?= $list->purchaseOrder ?></option>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6 col-xs-12">
+                    <label for="exampleFormControlSelect2">PO To</label>
+                    <select class="form-control" name="poTo" id="poTo">
+                        <option value="">Select Purchase Order</option>
+                        <?php
+                        if (!empty($purchaseOrders)) {
+                            foreach ($purchaseOrders as $list) {
+                        ?>
+                                <option value="<?= $list->purchaseOrder ?>"><?= $list->purchaseOrder ?></option>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
             <!-- /.card-body -->
             <div class="card-footer">
                 <a href="<?= base_url('admin/job'); ?>" class="btn btn-warning step-back float-left admin-cancel-btn" title="Cancel">Cancel</a>

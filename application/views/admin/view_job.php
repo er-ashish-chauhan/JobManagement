@@ -32,7 +32,7 @@
                                         <span>Remaing Quantity: - <?php echo $jobDetails->remaining_quantity . " " . $jobDetails->quantityType ?></span>
                                     </div>
                                 </div>
-                                <br>
+                                <!-- <br>
                                 <br>
                                 <div class="row">
                                     <div class="col-sm-2">
@@ -47,7 +47,7 @@
                                     </div>
                                     <input type='button' id="btn_search" value="Search" style="margin-top:20px;">
 
-                                </div>
+                                </div> -->
                                 <div class="table-responsive">
                                     <table id="jobEntriesList" data-jobid="<?php echo decode($jobId) ?>" class="display expandable-table" style="width:100%">
                                         <thead>
