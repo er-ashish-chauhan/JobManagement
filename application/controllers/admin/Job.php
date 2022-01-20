@@ -327,7 +327,7 @@ class Job extends CI_Controller
 				$where .= " AND `job`.`status` = '$status'";
 			}
 			if ($selectedDateFrom != "") {
-				$where .= " AND `job`.`created` <= '$selectedDateFrom'";
+				$where .= " AND `job`.`created` >= $selectedDateFrom";
 			}
 			if ($firmId != "") {
 				$where .= " AND `firm`.`id` = $firmId";
