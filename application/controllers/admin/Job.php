@@ -332,7 +332,7 @@ class Job extends CI_Controller
 				$where .= " AND `firm`.`id` = $firmId";
 			}
 			if ($commodityId != "") {
-				$where .= " AND `commodities`.`id` = $firmId";
+				$where .= " AND `commodities`.`id` = $commodityId";
 			}
 
 
