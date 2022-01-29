@@ -92,7 +92,9 @@ class Entries_model extends CI_Model
         foreach ($records as $record) {
             $id = $record->id;
 
-            $actionLinks = "<a data-id='" . $id . "' id='' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' data-toggle='modal' data-target='' title='View Entry'>View</a> <a data-id='" . $id . "' id='showentrymodel' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' data-toggle='modal' data-target='#entriesModal
+            $actionLinks = "<a href='" . base_url('admin/entries/view_entries?id=') . encode($id) . " '  class='btn btn-sm btn-flat btn-primary' title='View Entry'>View</a>"; 
+
+            $actionLinks .= " <a data-id='" . $id . "' id='showentrymodel' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' data-toggle='modal' data-target='#entriesModal
             ' title='Approve'>Approve</a> ";
 
             $actionLinks .= "<a data-id='" . $id . "' id='rejectEntry' href='javascript:void(0)' class='btn btn-sm btn-flat  btn-danger' title='Reject'>Reject</a> ";
@@ -201,5 +203,25 @@ class Entries_model extends CI_Model
         $this->db->insert('job', $data);
         $afftectedRow = $this->db->affected_rows();
         return $this->db->insert_id();
+    }
+
+    public function viewEntriesDetail($id)
+    {
+        $this->db->select("jobMeta.id, jobMeta.previousSlip, jobMeta.currentSlip,jobMeta.bill,
+        jobMeta.firmId, jobMeta.commodityId, jobMeta.entryType, jobMeta.deliveryType, jobMeta.created,commodities.commodity, firm.firm_name, jobMeta.cNetWeight");
+        $this->db->from("jobMeta");
+        $this->db->where('jobMeta.id', $id);
+        $this->db->join('firm', 'firm.id = jobMeta.firmId', 'left');
+        $this->db->join('commodities', 'commodities.id = jobMeta.commodityId', 'left');
+        return $this->db->get()->row();
+    }
+
+    public function updateEditEntries($data, $id)
+    {
+        // echo "id: ".$id;
+        // echo "<pre>";
+        // print_r($data); die;
+       $this->db->where('id', $id);
+      return $this->db->update('jobMeta', $data);
     }
 }

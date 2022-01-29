@@ -204,4 +204,81 @@ class Entries extends CI_Controller
 
         echo $data;
     }
+
+    public function view_entries()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+
+            $id = decode($this->input->get("id"));
+
+            $this->data_array['title'] = lang("BRAND_NAME") . ' Admin | View Entry';
+
+            $this->data_array['pageTitle'] = 'View Bargain\'s';
+            $this->data_array["btn_name"] = "Add";
+
+            $this->data_array['entry_details'] = $this->entries_model->viewEntriesDetail($id);
+            adminviews('view_entries', $this->data_array);
+            
+        } 
+    }
+
+    public function edit_entries_detail()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $id = decode($this->input->get("id"));
+
+            $this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Bargain';
+
+            $this->data_array['pageTitle'] = 'Manage Bargain\'s';
+            $this->data_array["btn_name"] = "Add";
+
+            $this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
+            $this->data_array["commodities"] = $this->admin_job_model->getCommodities();
+
+            $this->data_array['entries'] = $this->entries_model->getEntryById(["id" => $id]);
+            $this->data_array['entry_details'] = $this->entries_model->viewEntriesDetail($id);
+
+            adminviews('edit_entries', $this->data_array);
+        } else if ($_SERVER["REQUEST_METHOD"] == 'POST') {
+
+            $request = $this->input->post();
+            $request = $this->security->xss_clean($request);
+
+            $id = $request['job_meta_id'];
+            unset($request['job_meta_id']);
+
+            $form_data_arr = array(
+                'firmId' => $request['firmId'],
+                "commodityId" => $request["commodityId"],
+                "entryType" => $request["entryType"],
+                "deliveryType" => $request["deliveryType"],
+                "cNetWeight" => $request["cNetWeight"],
+            );
+
+            if(!empty($_FILES['bill']['name']))
+            {
+                $form_data_arr['bill'] = "jobMgmtApis/uploads/".$_FILES['bill']['name'];
+            }
+
+            if(!empty($_FILES['previousSlip']['name']))
+            {
+                $form_data_arr['previousSlip'] = "jobMgmtApis/uploads/".$_FILES['previousSlip']['name'];
+            }
+
+            if(!empty($_FILES['currentSlip']['name']))
+            {
+                $form_data_arr['currentSlip'] = "jobMgmtApis/uploads/".$_FILES['currentSlip']['name'];
+            }
+
+            $response_data =  $this->entries_model->updateEditEntries($form_data_arr, $id);
+
+            if ($response_data) {
+                $this->entries_model->updatedJobMeta($id, ["jobId" => $response_data, "status" => 2]);
+                $this->session->set_flashdata("success", 'Entries updated successfully');
+            } else {
+                $this->session->set_flashdata("error", 'Error while updating Entries');
+            }
+            redirect('admin/entries');
+        }
+    }
 }
