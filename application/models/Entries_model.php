@@ -218,10 +218,7 @@ class Entries_model extends CI_Model
 
     public function updateEditEntries($data, $id)
     {
-        // echo "id: ".$id;
-        // echo "<pre>";
-        // print_r($data); die;
-       $this->db->where('id', $id);
-      return $this->db->update('jobMeta', $data);
+             $this->db->where('id', $id);
+            return $this->db->update('jobMeta', $data);
     }
 }
