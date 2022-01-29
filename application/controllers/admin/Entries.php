@@ -248,6 +248,7 @@ class Entries extends CI_Controller
             unset($request['job_meta_id']);
 
             $form_data_arr = array(
+                'status' => 1,
                 'firmId' => $request['firmId'],
                 "commodityId" => $request["commodityId"],
                 "entryType" => $request["entryType"],
