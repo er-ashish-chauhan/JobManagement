@@ -253,6 +253,15 @@ class Entries extends CI_Controller
                 "entryType" => $request["entryType"],
                 "deliveryType" => $request["deliveryType"],
                 "cNetWeight" => $request["cNetWeight"],
+                "cTareWeight" => $request["cTareWeight"],
+                "noOfBags" => $request["noOfBags"],
+                "truckNo" => $request["truckNo"],
+                "kantaSlipNo" => $request["kantaSlipNo"],
+                "quantity" => $request["quantity"],
+                "previousSlipNo" => $request["previousSlipNo"],
+                "currentSlipNo" => $request["currentSlipNo"],
+                "billNo" => $request["billNo"],
+                "cGrossWeight" => $request["cGrossWeight"],
             );
 
             if(!empty($_FILES['bill']['name']))
@@ -268,6 +277,11 @@ class Entries extends CI_Controller
             if(!empty($_FILES['currentSlip']['name']))
             {
                 $form_data_arr['currentSlip'] = "jobMgmtApis/uploads/".$_FILES['currentSlip']['name'];
+            }
+
+            if(!empty($_FILES['kantaSlip']['name']))
+            {
+                $form_data_arr['kantaSlip'] = "jobMgmtApis/uploads/".$_FILES['kantaSlip']['name'];
             }
 
             $response_data =  $this->entries_model->updateEditEntries($form_data_arr, $id);

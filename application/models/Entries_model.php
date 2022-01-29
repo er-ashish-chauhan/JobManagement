@@ -207,8 +207,7 @@ class Entries_model extends CI_Model
 
     public function viewEntriesDetail($id)
     {
-        $this->db->select("jobMeta.id, jobMeta.previousSlip, jobMeta.currentSlip,jobMeta.bill,
-        jobMeta.firmId, jobMeta.commodityId, jobMeta.entryType, jobMeta.deliveryType, jobMeta.created,commodities.commodity, firm.firm_name, jobMeta.cNetWeight");
+        $this->db->select("jobMeta.*,commodities.commodity, firm.firm_name, jobMeta.cNetWeight");
         $this->db->from("jobMeta");
         $this->db->where('jobMeta.id', $id);
         $this->db->join('firm', 'firm.id = jobMeta.firmId', 'left');
