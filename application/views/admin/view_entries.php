@@ -53,17 +53,17 @@ if (!empty($entry_details)) {
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <h4>Bill-Image:</h4>
-                    <img src="<?php str_replace("JobManagement/", "", base_url()) . $bill ?>" alt="Bill-img">
+                    <img src="<?= str_replace("JobManagement/", "", base_url()) . $bill ?>" alt="Bill-img">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-sm-6 col-xs-12">
                     <h4>Previous-Slip:</h4>
-                    <img src="<?php str_replace("JobManagement/", "", base_url()) . $previousSlip ?>" alt="previous-slip">
+                    <img src="<?= str_replace("JobManagement/", "", base_url()) . $previousSlip ?>" alt="previous-slip">
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <h4>Current-Slip</h4>
-                    <img src="<?php str_replace("JobManagement/", "", base_url()) . $currentSlip ?>" alt="current-slip">
+                    <img src="<?= str_replace("JobManagement/", "", base_url()) . $currentSlip ?>" alt="current-slip">
                 </div>
             </div>
             <!-- /.card-body -->
