@@ -54,9 +54,9 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Actions</th>
+                                                <th>Current Slip No</th>
                                                 <th>Party</th>
                                                 <th>Commodity</th>
-                                                <th>Current Slip No</th>
                                                 <th>Quantity</th>
                                                 <th>Delivery Type</th>
                                                 <th>Created</th>
