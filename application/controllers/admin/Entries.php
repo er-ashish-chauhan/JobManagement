@@ -42,8 +42,9 @@ class Entries extends CI_Controller
             $request = $this->input->post();
             $request = $this->security->xss_clean($request);
             unset($request['id']);
-         
+
             $id = $request['job_meta_id'];
+        
             $entryD = $this->entries_model->getEntryById(["id" => $id]);
             $checkIfJobExist = $this->admin_job_model->getLastBargain();
 
@@ -56,12 +57,12 @@ class Entries extends CI_Controller
             $remainingQty = $request['total_quantity'];
 
             if ($request['qtyTpe'] == "qts") {
-				$remainingQty = $request["total_quantity"] - $entryD->cNetWeight;
-			} elseif ($request["qtyTpe"] == "bags") {
-				$remainingQty = $request["total_quantity"] - $entryD->noOfBags;
-			} else {
-				$remainingQty = $request["total_quantity"] - 1;
-			}
+                $remainingQty = $request["total_quantity"] - $entryD->cNetWeight;
+            } elseif ($request["qtyTpe"] == "bags") {
+                $remainingQty = $request["total_quantity"] - $entryD->noOfBags;
+            } else {
+                $remainingQty = $request["total_quantity"] - 1;
+            }
 
             $form_data_arr = array(
                 "purchaseOrder" => $job_PO_number,
@@ -80,6 +81,7 @@ class Entries extends CI_Controller
             $response_data =  $this->entries_model->insertBargain($form_data_arr);
 
             if ($response_data) {
+                
                 $this->entries_model->updatedJobMeta($id, ["jobId" => $response_data, "status" => 2]);
                 $this->session->set_flashdata("success", 'Bargain added successfully');
             } else {
@@ -218,8 +220,7 @@ class Entries extends CI_Controller
 
             $this->data_array['entry_details'] = $this->entries_model->viewEntriesDetail($id);
             adminviews('view_entries', $this->data_array);
-            
-        } 
+        }
     }
 
     public function edit_entries_detail()
@@ -248,7 +249,7 @@ class Entries extends CI_Controller
             unset($request['job_meta_id']);
 
             $form_data_arr = array(
-                'status' => 1,
+                // 'status' => 1,
                 'firmId' => $request['firmId'],
                 "commodityId" => $request["commodityId"],
                 "entryType" => $request["entryType"],
@@ -265,30 +266,26 @@ class Entries extends CI_Controller
                 "cGrossWeight" => $request["cGrossWeight"],
             );
 
-            if(!empty($_FILES['bill']['name']))
-            {
-                $form_data_arr['bill'] = "jobMgmtApis/uploads/".$_FILES['bill']['name'];
+            if (!empty($_FILES['bill']['name'])) {
+                $form_data_arr['bill'] = "jobMgmtApis/uploads/" . $_FILES['bill']['name'];
             }
 
-            if(!empty($_FILES['previousSlip']['name']))
-            {
-                $form_data_arr['previousSlip'] = "jobMgmtApis/uploads/".$_FILES['previousSlip']['name'];
+            if (!empty($_FILES['previousSlip']['name'])) {
+                $form_data_arr['previousSlip'] = "jobMgmtApis/uploads/" . $_FILES['previousSlip']['name'];
             }
 
-            if(!empty($_FILES['currentSlip']['name']))
-            {
-                $form_data_arr['currentSlip'] = "jobMgmtApis/uploads/".$_FILES['currentSlip']['name'];
+            if (!empty($_FILES['currentSlip']['name'])) {
+                $form_data_arr['currentSlip'] = "jobMgmtApis/uploads/" . $_FILES['currentSlip']['name'];
             }
 
-            if(!empty($_FILES['kantaSlip']['name']))
-            {
-                $form_data_arr['kantaSlip'] = "jobMgmtApis/uploads/".$_FILES['kantaSlip']['name'];
+            if (!empty($_FILES['kantaSlip']['name'])) {
+                $form_data_arr['kantaSlip'] = "jobMgmtApis/uploads/" . $_FILES['kantaSlip']['name'];
             }
 
-            $response_data =  $this->entries_model->updateEditEntries($form_data_arr, $id);
+            $response_data =  $this->entries_model->updatedJobMeta($id, $form_data_arr);
 
             if ($response_data) {
-                $this->entries_model->updatedJobMeta($id, ["jobId" => $response_data, "status" => 2]);
+                // $this->entries_model->updatedJobMeta($id, ["jobId" => $response_data, "status" => 2]);
                 $this->session->set_flashdata("success", 'Entries updated successfully');
             } else {
                 $this->session->set_flashdata("error", 'Error while updating Entries');

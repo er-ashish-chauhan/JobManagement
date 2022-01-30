@@ -8,7 +8,7 @@
                     <label for="exampleFormControlSelect2">Job Name</label>
                     <input type="text" class="form-control" maxlength="35" id="job_name" name="job_name">
                 </div> -->
-                <input type="hidden" name="job_meta_id" value="<?= $job_meta->id ?? "" ?>">
+                <input type="hidden" name="job_meta_id" value="<?= $entries->id ?? "" ?>">
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect3">Select Firm</label>
                     <select class="form-control" name="firmId" id="firmId" disabled>

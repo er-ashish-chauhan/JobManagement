@@ -92,7 +92,7 @@ class Entries_model extends CI_Model
         foreach ($records as $record) {
             $id = $record->id;
 
-            $actionLinks = "<a href='" . base_url('admin/entries/view_entries?id=') . encode($id) . " '  class='btn btn-sm btn-flat btn-primary' title='View Entry'>View</a>"; 
+            $actionLinks = "<a href='" . base_url('admin/entries/view_entries?id=') . encode($id) . " '  class='btn btn-sm btn-flat btn-primary' title='View Entry'>View</a>";
 
             $actionLinks .= " <a data-id='" . $id . "' id='showentrymodel' href='javascript:void(0)'  class='btn btn-sm btn-flat  btn-primary' data-toggle='modal' data-target='#entriesModal
             ' title='Approve'>Approve</a> ";
@@ -201,7 +201,7 @@ class Entries_model extends CI_Model
     public function insertBargain($data)
     {
         $this->db->insert('job', $data);
-        $afftectedRow = $this->db->affected_rows();
+        // $afftectedRow = $this->db->affected_rows();
         return $this->db->insert_id();
     }
 
@@ -217,7 +217,7 @@ class Entries_model extends CI_Model
 
     public function updateEditEntries($data, $id)
     {
-             $this->db->where('id', $id);
-            return $this->db->update('jobMeta', $data);
+        $this->db->where('id', $id);
+        return $this->db->update('jobMeta', $data);
     }
 }
