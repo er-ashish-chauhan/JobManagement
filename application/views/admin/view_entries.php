@@ -62,11 +62,15 @@ if (!empty($entry_details)) {
                 </div>
                 <div class="form-group col-sm-4 col-xs-12">
                     <h4>Current-Slip</h4>
-                    <img src="<?= str_replace("JobManagement/", "", base_url()) . $currentSlip ?>" alt="current-slip" style="height: 150px;width: 150px;">
+                    <a class='previous_img' data-imageurl=<?= str_replace("JobManagement/", "", base_url()) . $currentSlip ?> href='javascript:void(0)'>
+                        <img src="<?= str_replace("JobManagement/", "", base_url()) . $currentSlip ?>" alt="current-slip" style="height: 150px;width: 150px;">
+                    </a>
                 </div>
                 <div class="form-group col-sm-4 col-xs-12">
                     <h4>Bill-Image:</h4>
-                    <img src="<?= str_replace("JobManagement/", "", base_url()) . $bill ?>" alt="Bill-img" style="height: 150px;width: 150px;">
+                    <a class='previous_img' data-imageurl=<?= str_replace("JobManagement/", "", base_url()) . $bill ?> href='javascript:void(0)'>
+                        <img src="<?= str_replace("JobManagement/", "", base_url()) . $bill ?>" alt="Bill-img" style="height: 150px;width: 150px;">
+                    </a>
                 </div>
             </div>
             <!-- /.card-body -->
@@ -78,3 +82,13 @@ if (!empty($entry_details)) {
         </form>
     </div>
     <!-- content-wrapper ends -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        $(document).on('click', '.previous_img', function() {
+            console.log("img clicked");
+            $('.imagepreview').attr('src', $(this).find('img').attr('src'));
+            $('#imagemodal').modal('show');
+        });
+    </script>
