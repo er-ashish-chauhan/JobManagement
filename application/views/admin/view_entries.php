@@ -56,7 +56,7 @@ if (!empty($entry_details)) {
             <div class="row">
                 <div class="form-group col-sm-4 col-xs-12">
                     <h4>Previous-Slip:</h4>
-                    <a class='previous_img' data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $previousSlip . "' href='javascript:void(0)'>
+                    <a class='previous_img' data-imageurl=<?= str_replace("JobManagement/", "", base_url()) . $previousSlip ?> href='javascript:void(0)'>
                         <img src="<?= str_replace("JobManagement/", "", base_url()) . $previousSlip ?>" alt="previous-slip" style="height: 150px;width: 150px;">
                     </a>
                 </div>
