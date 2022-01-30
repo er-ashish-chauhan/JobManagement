@@ -208,8 +208,10 @@ class Admin_job_model extends CI_Model
         ## Fetch records
         $this->db->select("jobMeta.id, jobMeta.currentSlipNo, jobMeta.previousSlip, jobMeta.currentSlip,jobMeta.bill,
         jobMeta.firmId, jobMeta.commodityId, jobMeta.entryType, jobMeta.deliveryType, jobMeta.created, j.quantityType,
-        jobMeta.noOfBags, jobMeta.cNetWeight");
+        jobMeta.noOfBags, jobMeta.cNetWeight, firm.firm_name, commodities.commodity");
         $this->db->from("jobMeta");
+        $this->db->join('firm', 'firm.id = jobMeta.firmId', 'left');
+        $this->db->join('commodities', 'commodities.id = jobMeta.commodityId', 'left');
         $this->db->where('jobId', $jobId);
         $this->db->where('jobMeta.status', 2);
         // Date filter
@@ -247,6 +249,8 @@ class Admin_job_model extends CI_Model
                 $qty = $record->noOfBags . ' Bags';
             }
 
+            $actionLinks = "<a href='" . base_url('admin/entries/view_entries?id=') . encode($id) . " '  class='btn btn-sm btn-flat btn-primary' title='View Entry'>View</a>";
+
             $previousSlip = "<a class='previous_img' data-imageurl='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "'
              href='javascript:void(0)'><Image alt='Previous Slip' class='entryImage' src='" . str_replace("JobManagement/", "", base_url()) . $record->previousSlip . "' /></a>";
 
@@ -258,10 +262,13 @@ class Admin_job_model extends CI_Model
 
             $data[] = array(
                 $i++,
+                // $previousSlip,
+                // $currentSlip,
+                $actionLinks,
                 $record->currentSlipNo,
-                $previousSlip,
-                $currentSlip,
-                $bill,
+                $record->firm_name,
+                $record->commodity,
+                // $bill,
                 $qty,
                 $record->deliveryType,
                 $record->created,

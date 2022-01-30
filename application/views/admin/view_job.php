@@ -53,10 +53,10 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
+                                                <th>Actions</th>
+                                                <th>Party</th>
+                                                <th>Commodity</th>
                                                 <th>Current Slip No</th>
-                                                <th>Previous Slip</th>
-                                                <th>Current Slip</th>
-                                                <th>Bill</th>
                                                 <th>Quantity</th>
                                                 <th>Delivery Type</th>
                                                 <th>Created</th>
