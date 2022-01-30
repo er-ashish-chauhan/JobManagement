@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <h4>Bill-Image:</h4>
-                    <img src="<?= $bill ?>" alt="Bill-img">
+                    <img src="<?= str_replace("JobManagement/", "", base_url()) . $bill ?>" alt="Bill-img">
                 </div>
             </div>
             <div class="row">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <h4>Current-Slip</h4>
-                    <img src="<?= $currentSlip ?>" alt="current-slip">
+                    <img src="<?= str_replace("JobManagement/", "", base_url()) . $currentSlip ?>" alt="current-slip">
                 </div>
             </div>
             <!-- /.card-body -->
