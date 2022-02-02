@@ -30,10 +30,12 @@
         <tr>
             <th>Bargain Detaiils</th>
             <th>Entry Date</th>
-            <th>Invoice No</th>
+            <th>Inward no No</th>
             <th>Truck No</th>
             <th>Quantity (qts)</th>
             <th>Quantity (bags)</th>
+            <th>Party</th>
+            <th>Party Location</th>
             <th>Firm</th>
         </tr>
         <?php
@@ -47,6 +49,8 @@
                     <td>" . $value->Quantity_in_qts . "</td>
                     <td>" . $value->Quantity_in_bags . "</td>
                     <td>" . $value->FirmName . "</td>
+                    <td>" . $value->FirmAddress . "</td>
+                    <td>" . $value->userFirm . "</td>
                  </tr>";
         }
         ?>

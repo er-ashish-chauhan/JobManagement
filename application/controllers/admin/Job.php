@@ -351,9 +351,6 @@ class Job extends CI_Controller
 			$this->load->dbutil();
 			$this->load->helper('file');
 			$this->load->helper('download');
-			$delimiter = ",";
-			$newline = "\r\n";
-			$filename = "Entries.csv";
 			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`job`.`brokerName`) as BargainDetaiils,
 		`job`.`id` as `bargainId`,
 		`jobMeta`.`recordCreated` as EntryDate,
@@ -362,10 +359,13 @@ class Job extends CI_Controller
 		`jobMeta`.`cNetWeight` as Quantity_in_qts,
 		`jobMeta`.`noOfBags` as Quantity_in_bags,
 		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
-		`firm`.`firm_name` as FirmName
+		`firm`.`firm_name` as FirmName,
+		`firm`.`address` as FirmAddress,
+		`users`.`coFirm` as userFirm
 		from `jobMeta` LEFT JOIN firm ON firm.id = jobMeta.firmId
 		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
 		LEFT JOIN job ON job.id = jobMeta.jobId
+		LEFT JOIN users ON users.id = jobMeta.addedBy
 		$where";
 			$result = $this->db->query($query);
 			$query_result = $result->result();
