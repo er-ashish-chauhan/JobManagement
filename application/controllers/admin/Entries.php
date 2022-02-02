@@ -259,7 +259,6 @@ class Entries extends CI_Controller
                 "noOfBags" => $request["noOfBags"],
                 "truckNo" => $request["truckNo"],
                 "kantaSlipNo" => $request["kantaSlipNo"],
-                "quantity" => $request["quantity"],
                 "previousSlipNo" => $request["previousSlipNo"],
                 "currentSlipNo" => $request["currentSlipNo"],
                 "billNo" => $request["billNo"],

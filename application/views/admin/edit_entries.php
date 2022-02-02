@@ -4,12 +4,11 @@ $deliveryType = "";
 $commodity = "";
 $firm_name = "";
 $cNetWeight = "";
-$bill ="";
+$bill = "";
 $previousSlip = "";
 $currentSlip = "";
 $id = "";
 
-$quantity = "";
 $previousSlipNo = "";
 $currentSlipNo = "";
 $billNo = "";
@@ -19,124 +18,110 @@ $noOfBags = "";
 $truckNo = "";
 $kantaSlipNo = "";
 
-if(!empty($entry_details))
-{
-    $entryType = $entry_details->entryType;
-    $deliveryType = $entry_details->deliveryType;
-    $commodity = $entry_details->commodity;
-    $firm_name = $entry_details->firm_name;
-    $cNetWeight = $entry_details->cNetWeight;
-    $id = $entry_details->id;
-    //images
-    $quantity = $entry_details->quantity;
-    $previousSlipNo = $entry_details->previousSlipNo;
-    $currentSlipNo = $entry_details->currentSlipNo;
-    $billNo = $entry_details->billNo;
-    $cGrossWeight = $entry_details->cGrossWeight;
-    $cTareWeight = $entry_details->cTareWeight;
-    $noOfBags = $entry_details->noOfBags;
-    $truckNo = $entry_details->truckNo;
-    $kantaSlipNo = $entry_details->kantaSlipNo;
-
+if (!empty($entry_details)) {
+  $entryType = $entry_details->entryType;
+  $deliveryType = $entry_details->deliveryType;
+  $commodity = $entry_details->commodity;
+  $firm_name = $entry_details->firm_name;
+  $cNetWeight = $entry_details->cNetWeight;
+  $id = $entry_details->id;
+  //images
+  $previousSlipNo = $entry_details->previousSlipNo;
+  $currentSlipNo = $entry_details->currentSlipNo;
+  $billNo = $entry_details->billNo;
+  $cGrossWeight = $entry_details->cGrossWeight;
+  $cTareWeight = $entry_details->cTareWeight;
+  $noOfBags = $entry_details->noOfBags;
+  $truckNo = $entry_details->truckNo;
+  $kantaSlipNo = $entry_details->kantaSlipNo;
 }
 ?>
 
 <!-- partial -->
 <div class="main-panel">
   <div class="content-wrapper">
-    <form action="<?= base_url('admin/entries/edit_entries_detail'); ?>" method="post" id=""
-      enctype="multipart/form-data">
+    <form action="<?= base_url('admin/entries/edit_entries_detail'); ?>" method="post" id="" enctype="multipart/form-data">
 
       <div class="row">
         <input type="hidden" name="job_meta_id" value="<?= $id ?? "" ?>">
-        <div class="form-group col-sm-6 col-xs-12">
+        <div class="form-group col-sm-3 col-xs-12">
           <label for="exampleFormControlSelect3">Select Firm</label>
           <select class="form-control" name="firmId" id="firmId">
             <option value="">Select Firm</option>
             <?php
-                 if ( isset($firm_list) && !empty($firm_list)) {
-                            foreach ($firm_list as $list) {
-                        ?>
-            <option value="<?= $list->id ?>" <?php echo $list->id == $entries->firmId ? "selected" : "" ?>>
-              <?= $list->firm_name ?></option>
+            if (isset($firm_list) && !empty($firm_list)) {
+              foreach ($firm_list as $list) {
+            ?>
+                <option value="<?= $list->id ?>" <?php echo $list->id == $entries->firmId ? "selected" : "" ?>>
+                  <?= $list->firm_name ?></option>
             <?php
-                            }
-                        }
-                        ?>
+              }
+            }
+            ?>
           </select>
         </div>
-        <div class="form-group col-sm-6 col-xs-12">
+        <div class="form-group col-sm-3 col-xs-12">
           <label for="exampleFormControlSelect3">Select Commodity</label>
           <select class="form-control" name="commodityId" id="commodityId">
             <option value="">Select Commodity</option>
             <?php
-                        if ( isset($commodities) && !empty($commodities)) {
-                            foreach ($commodities as $list) {
-                        ?>
-            <option value="<?= $list->id ?>" <?php echo $list->id == $entries->commodityId ? "selected" : "" ?>>
-              <?= $list->commodity ?></option>
+            if (isset($commodities) && !empty($commodities)) {
+              foreach ($commodities as $list) {
+            ?>
+                <option value="<?= $list->id ?>" <?php echo $list->id == $entries->commodityId ? "selected" : "" ?>>
+                  <?= $list->commodity ?></option>
             <?php
-                            }
-                        }
-                        ?>
+              }
+            }
+            ?>
+          </select>
+        </div>
+        <div class="form-group col-sm-3 col-xs-12">
+          <label for="exampleFormControlSelect2">Select Entry Type</label>
+          <!-- <input type="text" class="form-control" maxlength="5" id="entryType" name="entryType" min="0" value="<?= $entryType ?>"> -->
+          <select class="form-control" name="entryType" id="entryType">
+            <option value="">Select Entry Type</option>
+            <option value="IN" <?php echo $entryType == "IN" ? "selected" : "" ?>>IN</option>
+            <option value="IN" <?php echo $entryType == "OUT" ? "selected" : "" ?>>OUT</option>
           </select>
         </div>
 
-      </div>
-      <div class="row">
-        <div class="form-group col-sm-6 col-xs-12">
-          <label for="exampleFormControlSelect2">Entry Type</label>
-          <input type="text" class="form-control" maxlength="5" id="entryType" name="entryType" min="0"
-            value="<?= $entryType ?>">
-        </div>
-        <div class="form-group col-sm-6 col-xs-12">
-          <label for="exampleFormControlSelect3">Delivery Type</label>
-          <input type="text" class="form-control" maxlength="5" id="deliveryType" name="deliveryType"
-            value="<?= $deliveryType ?>">
+        <div class="form-group col-sm-3 col-xs-12">
+          <label for="exampleFormControlSelect3">Select Delivery Type</label>
+          <!-- <input type="text" class="form-control" maxlength="5" id="deliveryType" name="deliveryType" value="<?= $deliveryType ?>"> -->
+          <select class="form-control" name="deliveryType" id="deliveryType">
+            <option value="">Select Entry Type</option>
+            <option value="IN" <?php echo $deliveryType == "FOR" ? "selected" : "" ?>>FOR</option>
+            <option value="IN" <?php echo $deliveryType == "Ex-Mill" ? "selected" : "" ?>>Ex-Mill</option>
+          </select>
         </div>
       </div>
       <div class="row">
-        <div class="form-group col-sm-6 col-xs-12">
+        <div class="form-group col-sm-4 col-xs-12">
           <label for="exampleFormControlSelect2">Gross weight</label>
-          <input type="text" class="form-control" maxlength="5" id="cGrossWeight" name="cGrossWeight"
-            value="<?= $cGrossWeight ?>">
+          <input type="number" class="form-control" maxlength="6" id="cGrossWeight" name="cGrossWeight" value="<?= $cGrossWeight ?>" min='1'>
         </div>
-        <div class="form-group col-sm-6 col-xs-12">
+        <div class="form-group col-sm-4 col-xs-12">
           <label for="exampleFormControlSelect3">Tare weight</label>
-          <input type="text" class="form-control" maxlength="5" id="cTareWeight" name="cTareWeight"
-            value="<?= $cTareWeight ?>">
+          <input type="number" class="form-control" maxlength="6" id="cTareWeight" name="cTareWeight" value="<?= $cTareWeight ?>" min='1'>
+        </div>
+        <div class="form-group col-sm-4 col-xs-12">
+          <label for="exampleFormControlSelect2">Net Weight</label>
+          <input type="number" class="form-control" maxlength="6" id="cNetWeight" name="cNetWeight" value="<?= $cNetWeight ?>" disabled>
         </div>
       </div>
 
 
       <div class="row">
-        <div class="form-group col-sm-6 col-xs-12">
-          <label for="exampleFormControlSelect2">Net Weight</label>
-          <input type="text" class="form-control" maxlength="5" id="cNetWeight" name="cNetWeight"
-            value="<?= $cNetWeight ?>">
-        </div>
-
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">No of Bags</label>
-          <input type="text" class="form-control" maxlength="5" id="noOfBags" name="noOfBags"
-            value="<?= $noOfBags ?>">
+          <input type="text" class="form-control" maxlength="5" id="noOfBags" name="noOfBags" value="<?= $noOfBags ?>">
         </div>
-      </div>
-
-      <div class="row">
-        <div class="form-group col-sm-6 col-xs-12">
-          <label for="exampleFormControlSelect2">Quantity</label>
-          <input type="text" class="form-control" maxlength="5" id="quantity" name="quantity"
-            value="<?= $quantity ?>">
-        </div>
-
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Truck No</label>
-          <input type="text" class="form-control" maxlength="5" id="truckNo" name="truckNo"
-            value="<?= $truckNo ?>">
+          <input type="text" class="form-control" maxlength="5" id="truckNo" name="truckNo" value="<?= $truckNo ?>">
         </div>
       </div>
-
 
       <div class="row">
         <div class="form-group col-sm-6 col-xs-12">
@@ -146,8 +131,7 @@ if(!empty($entry_details))
               <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01" name="bill">
+              <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="bill">
               <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
             </div>
           </div>
@@ -155,8 +139,7 @@ if(!empty($entry_details))
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Bill No</label>
-          <input type="text" class="form-control" maxlength="5" id="billNo" name="billNo"
-            value="<?= $billNo ?>">
+          <input type="text" class="form-control" maxlength="5" id="billNo" name="billNo" value="<?= $billNo ?>">
         </div>
       </div>
 
@@ -170,8 +153,7 @@ if(!empty($entry_details))
               <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01" name="previousSlip">
+              <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="previousSlip">
               <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
             </div>
           </div>
@@ -179,8 +161,7 @@ if(!empty($entry_details))
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Previous Slip No</label>
-          <input type="text" class="form-control" maxlength="5" id="previousSlipNo" name="previousSlipNo"
-            value="<?= $previousSlipNo ?>">
+          <input type="text" class="form-control" maxlength="5" id="previousSlipNo" name="previousSlipNo" value="<?= $previousSlipNo ?>">
         </div>
 
       </div>
@@ -193,8 +174,7 @@ if(!empty($entry_details))
               <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01" name="currentSlip">
+              <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="currentSlip">
               <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
             </div>
           </div>
@@ -202,8 +182,7 @@ if(!empty($entry_details))
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Current Slip No</label>
-          <input type="text" class="form-control" maxlength="5" id="currentSlipNo" name="currentSlipNo"
-            value="<?= $currentSlipNo ?>">
+          <input type="text" class="form-control" maxlength="5" id="currentSlipNo" name="currentSlipNo" value="<?= $currentSlipNo ?>">
         </div>
       </div>
 
@@ -215,8 +194,7 @@ if(!empty($entry_details))
               <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
             </div>
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="inputGroupFile01"
-                aria-describedby="inputGroupFileAddon01" name="kantaSlip">
+              <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="kantaSlip">
               <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
             </div>
           </div>
@@ -224,16 +202,37 @@ if(!empty($entry_details))
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Kanta Slip No</label>
-          <input type="text" class="form-control" maxlength="5" id="kantaSlipNo" name="kantaSlipNo"
-            value="<?= $kantaSlipNo ?>">
+          <input type="text" class="form-control" maxlength="5" id="kantaSlipNo" name="kantaSlipNo" value="<?= $kantaSlipNo ?>">
         </div>
       </div>
       <!-- /.card-body -->
       <div class="card-footer">
-        <a href="<?= base_url('admin/entries'); ?>" class="btn btn-warning step-back float-left admin-cancel-btn"
-          title="Cancel">Back</a>
+        <a href="<?= base_url('admin/entries'); ?>" class="btn btn-warning step-back float-left admin-cancel-btn" title="Cancel">Back</a>
         <button type="submit" class="btn btn-success btn-flat ml-1" title="Add">Update</button>
       </div>
     </form>
   </div>
   <!-- content-wrapper ends -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    $(document).on('change', '#cGrossWeight', function() {
+      let grossWeight = parseFloat($("#cGrossWeight").val());
+      let tareWeight = parseFloat($("#cTareWeight").val());
+      console.log(typeof tareWeight, "typeof tareWeight")
+      if (typeof tareWeight == 'number' && !isNaN(tareWeight)) {
+        const netWeight = parseFloat(grossWeight - tareWeight);
+        $("#cNetWeight").val(netWeight.toFixed(2));
+      }
+
+    });
+    $(document).on('change', '#cTareWeight', function() {
+      let grossWeight = parseFloat($("#cGrossWeight").val());
+      console.log(grossWeight, "cGrossWeight");
+      let tareWeight = parseFloat($("#cTareWeight").val());
+      if (typeof grossWeight == 'number' && !isNaN(grossWeight)) {
+        const netWeight = parseFloat(grossWeight - tareWeight);
+        $("#cNetWeight").val(netWeight.toFixed(2));
+      }
+
+    });
+  </script>
