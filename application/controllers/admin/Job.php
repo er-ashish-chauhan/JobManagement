@@ -308,6 +308,9 @@ class Job extends CI_Controller
 
 		$this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
 		$this->data_array["commodities"] = $this->admin_job_model->getCommodities();
+		$this->data_array["brokers"] = $this->admin_job_model->getBrokers();
+		// echo "<pre>";
+		// print_r($this->data_array["brokers"]); die;
 		$this->data_array["purchaseOrders"] = $this->admin_job_model->getPurchaseOrders();
 
 		adminviews('pdfFilters', $this->data_array);

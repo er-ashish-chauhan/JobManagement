@@ -678,3 +678,38 @@ $(document).on("click", ".csvExportButton", function (e) {
     },
   });
 });
+
+// code for export page action
+$(document).on("change", ".pdf-filter-list", function(){
+
+  selectVal = $(this).val();
+  if(selectVal == 'firm_f')
+  {
+    $(".pdf-firm-list").show();
+    $(".date-fields").show();
+    $(".pdf-broker-list").hide();
+    $(".pdf-status-list").hide();
+  }
+  else if(selectVal == 'date_f')
+  {
+    $(".date-fields").show();
+    $(".pdf-firm-list").hide();
+    $(".pdf-status-list").hide();
+    $(".pdf-broker-list").hide();
+
+  }
+  else if(selectVal == 'broker_f')
+  {
+    $(".pdf-broker-list").show();
+    $(".pdf-firm-list").hide();
+    $(".pdf-status-list").hide();
+    $(".date-fields").show();
+  }
+  else if(selectVal == 'status_f')
+  {
+    $(".pdf-broker-list").hide();
+    $(".pdf-firm-list").hide();
+    $(".date-fields").show();
+    $(".pdf-status-list").show();
+  }
+});

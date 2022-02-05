@@ -4,8 +4,18 @@
         <form action="<?= base_url('admin/exportAllEntries'); ?>" method="post" id="add_job" enctype="multipart/form-data">
             <div class="row">
                 <div class="form-group col-sm-6 col-xs-12">
+                    <label for="exampleFormControlSelect3">Select Filter:</label>
+                    <select class="form-control pdf-filter-list" name="bCommodity" id="bCommodity">
+                        <option value="">--choose one--</option>
+                        <option value="broker_f">by Broker Name</option>
+                        <option value="date_f">by Date</option>
+                        <option value="firm_f">by Firm</option>
+                        <option value="status_f">by Status</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6 col-xs-12 pdf-firm-list" style="display: none;" >
                     <label for="exampleFormControlSelect3">Filter By Firm</label>
-                    <select class="form-control" name="bFirm" id="bFirm">
+                    <select class="form-control"  name="bFirm" id="bFirm">
                         <option value="">Select Firm</option>
                         <?php
                         if (!empty($firm_list)) {
@@ -18,7 +28,32 @@
                         ?>
                     </select>
                 </div>
-                <div class="form-group col-sm-6 col-xs-12">
+                <div class="form-group col-sm-6 col-xs-12 pdf-broker-list" style="display: none;" >
+                    <label for="exampleFormControlSelect3">Filter By Broker</label>
+                    <select class="form-control"  name="brokerName" id="brokerName">
+                        <option value="">Select Broker</option>
+                        <?php
+                        if (!empty($brokers)) {
+                            foreach ($brokers as $broker) {
+                        ?>
+                                <option value="<?= $broker->brokerName ?>"><?= $broker->brokerName ?></option>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group col-sm-6 col-xs-12 pdf-status-list" style="display: none;" >
+                    <label for="exampleFormControlSelect3">Filter By Status</label>
+                    <select class="form-control"  name="status" id="status">
+                        <option value="">--choose one--</option>
+                        <option value="active">active</option>
+                        <option value="completed">completed</option>
+                        <option value="cancelled">cancelled</option>
+                        <option value="expired">expired</option>
+                    </select>
+                </div>
+                <!-- <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect3">Filter By Commodity</label>
                     <select class="form-control" name="bCommodity" id="bCommodity">
                         <option value="">Select Commodity</option>
@@ -32,10 +67,10 @@
                         }
                         ?>
                     </select>
-                </div>
+                </div> -->
             </div>
             <div class="row">
-                <div class="form-group col-sm-6 col-xs-12">
+                <!-- <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect3">Filter By Status</label>
                     <select class="form-control" name="bStatus" id="bStatus">
                         <option value="">Select Status</option>
@@ -44,11 +79,11 @@
                         <option value="cancelled">Cancelled</option>
                         <option value="expired">Expired</option>
                     </select>
-                </div>
+                </div> -->
             </div>
             <label for="exampleFormControlSelect2">Filter By Date</label>
-            <hr />
-            <div class="row">
+            <hr/>
+            <div class="row date-fields" style="display: none;">
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect2">Date From</label>
                     <input type="date" class="form-control" id="bSelectedDate" name="bSelectedDate">
@@ -58,9 +93,9 @@
                     <input type="date" class="form-control" id="bSelectedDateTo" name="bSelectedDateTo">
                 </div>
             </div>
-            <label for="exampleFormControlSelect2">Filter By Purchase Order</label>
-            <hr />
-            <div class="row">
+            <!-- <label for="exampleFormControlSelect2">Filter By Purchase Order</label>
+            <hr /> -->
+            <!-- <div class="row">
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect2">PO From</label>
                     <select class="form-control" name="poFrom" id="poFrom">
@@ -91,7 +126,7 @@
                         ?>
                     </select>
                 </div>
-            </div>
+            </div> -->
             <!-- /.card-body -->
             <div class="card-footer">
                 <a href="<?= base_url('admin/job'); ?>" class="btn btn-warning step-back float-left admin-cancel-btn" title="Cancel">Cancel</a>

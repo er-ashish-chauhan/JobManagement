@@ -347,4 +347,14 @@ class Admin_job_model extends CI_Model
             return null;
         }
     }
+
+    public function getBrokers()
+    {   
+         return $this->db->select('id, brokerName')
+                 ->from("job")
+                 ->where("status", "active")
+                 ->or_where("status", "completed")
+                 ->group_by('brokerName')
+                 ->get()->result();
+    }
 }
