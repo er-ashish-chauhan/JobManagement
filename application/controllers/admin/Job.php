@@ -320,33 +320,42 @@ class Job extends CI_Controller
 	{
 		if ($this->input->post()) {
 			$firmId = $this->input->post("bFirm");
-			$commodityId = $this->input->post("bCommodity");
+			// $commodityId = $this->input->post("bCommodity");
 			$status = $this->input->post("bStatus");
-			$poFrom = $this->input->post("poFrom");
-			$poTo = $this->input->post("poTo");
+			// $poFrom = $this->input->post("poFrom");
+			// $poTo = $this->input->post("poTo");
+			$filterredBy = $this->input->post("filterby");
+			$brokerName = $this->input->post("brokerName");
 			$selectedDateFrom = $this->input->post("bSelectedDate") ? date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDate"))) : "";
 			$selectedDateto = $this->input->post("bSelectedDateTo") != "" ?
 				date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDateTo"))) : date("Y-m-d h:i:s");
 
 			$where = "WHERE `job`.`created` <= '$selectedDateto'";
-			if ($status != "") {
+
+			$pdfTitle = "";
+			if ($filterredBy == "status_f" && $status != "") {
+				$pdfTitle = "Status: - " . strtoupper($status);
 				$where .= " AND `job`.`status` = '$status'";
 			}
 			if ($selectedDateFrom != "") {
 				$where .= " AND `job`.`created` >= '$selectedDateFrom'";
 			}
-			if ($firmId != "") {
+			if ($filterredBy == "firm_f" && $firmId != "") {
 				$where .= " AND `firm`.`id` = $firmId";
 			}
-			if ($commodityId != "") {
-				$where .= " AND `commodities`.`id` = $commodityId";
+			if ($filterredBy == "broker_f" && $brokerName != "") {
+				$pdfTitle = "Broker: - " . strtoupper($brokerName);
+				$where .= " AND `job`.`brokerName` = '$brokerName'";
 			}
-			if ($poFrom != "") {
-				$where .= " AND `job`.`purchaseOrder` >= $poFrom";
-			}
-			if ($poTo != "") {
-				$where .= " AND `job`.`purchaseOrder` <= $poTo";
-			}
+			// if ($commodityId != "") {
+			// 	$where .= " AND `commodities`.`id` = $commodityId";
+			// }
+			// if ($poFrom != "") {
+			// 	$where .= " AND `job`.`purchaseOrder` >= $poFrom";
+			// }
+			// if ($poTo != "") {
+			// 	$where .= " AND `job`.`purchaseOrder` <= $poTo";
+			// }
 
 			$mpdf = new \Mpdf();
 			$mpdf->debug = true;
@@ -385,8 +394,21 @@ class Job extends CI_Controller
 				$bargainIds = $list->bargainId;
 			}
 
-			$data["entries"]  = $entries;
+			if ($filterredBy == "firm_f" && $firmId != "") {
+				$pdfTitle = "Firm: - " . $entries[0]->FirmName;
+			}
 
+			$data["filterValues"] = [
+				"startDate" => date("d-m-Y", strtotime($selectedDateFrom)) != "01-01-1970" ? date("d-m-Y", strtotime($selectedDateFrom)) : "",
+				"endDate" => date("d-m-Y", strtotime($selectedDateto)),
+				"title" => $pdfTitle
+			];
+
+			$data["entries"]  = $entries;
+			// echo "<pre>";
+			// print_r($entries[0]);
+			// echo "</pre>";
+			// die();
 			$html = $this->load->view('pdfViews/entriesList', $data, true);
 			$mpdf->WriteHTML($html);
 			ob_clean();

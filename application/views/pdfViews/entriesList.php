@@ -24,8 +24,14 @@
 
 <body>
 
-    <h2>Bargain's Report</h2>
-
+    <h2 style="text-align: center;">Bargain's Report</h2>
+    <div class="row" style="">
+        <?php echo $filterValues['title'] != "" ? "<div class='col-sm-6 col-xs-12' style='align-self: center;'><h4>" . $filterValues['title'] . "</h4></div>" : ""; ?>
+        <?php echo $filterValues['startDate'] != "" && $filterValues['endDate'] != "" ?
+            "<div class='col-sm-6 col-xs-12'><h4>" . $filterValues['startDate'] . " - " . $filterValues['endDate'] . "</h4></div>" : ""; ?>
+        <?php echo $filterValues['startDate'] == "" && $filterValues['endDate'] != "" ?
+            "<div class='col-sm-6 col-xs-12'><h4>Result for: - " . $filterValues['endDate'] . "</h4></div>" : ""; ?>
+    </div>
     <table>
         <tr>
             <th>Bargain Detaiils</th>
