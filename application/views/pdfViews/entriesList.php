@@ -62,7 +62,7 @@
             }
         } else { ?>
             <tr>
-                <td colspan="9" style="align-self: center;">No entries for your selection!</td>
+                <td colspan="9" style="align-self: center;">No entries found for your selection!</td>
             </tr>
         <?php }
 
