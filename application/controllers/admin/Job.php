@@ -404,11 +404,11 @@ class Job extends CI_Controller
 			// print_r($entries);
 			// echo "</pre>";
 			// die();
-			$this->load->view('pdfViews/entriesList', $data);
-			// $html = $this->load->view('pdfViews/entriesList', $data, true);
-			// $mpdf->WriteHTML($html);
-			// ob_clean();
-			// $mpdf->Output("entriesReport.pdf", "D");
+			// $this->load->view('pdfViews/entriesList', $data);
+			$html = $this->load->view('pdfViews/entriesList', $data, true);
+			$mpdf->WriteHTML($html);
+			ob_clean();
+			$mpdf->Output("entriesReport.pdf", "D");
 		}
 	}
 
