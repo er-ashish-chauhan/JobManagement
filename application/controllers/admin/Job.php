@@ -348,43 +348,56 @@ class Job extends CI_Controller
 			if ($filterredBy == "firm_f" && $fbrokerName != "") {
 				$where .= " AND `job`.`brokerName` = '$fbrokerName'";
 			}
-			
 			$mpdf = new \Mpdf();
 			$mpdf->debug = true;
 
 			$this->load->dbutil();
 			$this->load->helper('file');
 			$this->load->helper('download');
-			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ') as BargainDetaiils,
+			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', '`brokers`.`brokerName`) as BargainDetaiils,
 		`job`.`id` as `bargainId`,
-		`jobMeta`.`recordCreated` as EntryDate,
-		`jobMeta`.`truckNo` as TruckNo,
-		`jobMeta`.`currentSlipNo` as kantaSlipNo,
-		`jobMeta`.`cNetWeight` as Quantity_in_qts,
-		`jobMeta`.`noOfBags` as Quantity_in_bags,
 		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
 		`firm`.`firm_name` as FirmName,
 		`firm`.`address` as FirmAddress,
-		`users`.`coFirm` as userFirm
-		from `jobMeta` LEFT JOIN firm ON firm.id = jobMeta.firmId
+		-- `users`.`coFirm` as userFirm
+		from `job` LEFT JOIN firm ON firm.id = job.firmId
 		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
-		LEFT JOIN job ON job.id = jobMeta.jobId
-		-- LEFT JOIN brokers ON brokers.id = job.id
-		LEFT JOIN users ON users.id = jobMeta.addedBy
+		LEFT JOIN brokers ON brokers.id = job.id
+		-- LEFT JOIN users ON users.id = jobMeta.addedBy
 		$where";
 			$result = $this->db->query($query);
 			$query_result = $result->result();
-			$entries = array();
+
+			$entries = [];
 			$bargainIds = '';
 
 			foreach ($query_result as $list) {
-				if ($bargainIds == $list->bargainId) {
-					$list->BargainDetaiils = "";
-					array_push($entries, $list);
+
+				$subquery = "SELECT `jobMeta.jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
+				`jobMeta`.`currentSlipNo` as kantaSlipNo,
+				`jobMeta`.`cNetWeight` as Quantity_in_qts,
+				`jobMeta`.`noOfBags` as Quantity_in_bags,
+				`users`.`coFirm` as userFirm
+				from `jobMeta`
+				LEFT JOIN users ON users.id = jobMeta.addedBy WHERE `jobMeta.jobId` = $list->bargainId";
+
+				$entriesResult = $this->db->query($subquery);
+				$entriesResult = $entriesResult->result();
+
+				if (sizeof($entriesResult) > 0) {
+
+					foreach ($entriesResult as $elist) {
+						if ($bargainIds == $list->bargainId) {
+							$list->BargainDetaiils = "";
+							array_push($entries, ["bargain" => $list, "entries" => $elist]);
+						} else {
+							array_push($entries, $list);
+						}
+						$bargainIds = $list->bargainId;
+					}
 				} else {
-					array_push($entries, $list);
+					array_push($entries, ["bargain" => $list, "entries" => ""]);
 				}
-				$bargainIds = $list->bargainId;
 			}
 
 			if ($filterredBy == "firm_f" && $firmId != "") {
@@ -398,10 +411,10 @@ class Job extends CI_Controller
 			];
 
 			$data["entries"]  = $entries;
-			// echo "<pre>";
-			// print_r($entries[0]);
-			// echo "</pre>";
-			// die();
+			echo "<pre>";
+			print_r($entries);
+			echo "</pre>";
+			die();
 			$html = $this->load->view('pdfViews/entriesList', $data, true);
 			$mpdf->WriteHTML($html);
 			ob_clean();
