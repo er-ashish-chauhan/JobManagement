@@ -44,7 +44,7 @@
                 echo "
                     <tr>
                         <td>" . $j . "</td>
-                        <td colspan='5'>" . $value["bargain"]->BargainDetaiils . "</td>
+                        <td colspan='8'>" . $value["bargain"]->BargainDetaiils . "</td>
                        </tr>" ?>
             <?php
                 if ($value["entries"]) {
@@ -72,8 +72,6 @@
                                 <td>" . $list->userFirm . "</td></tr>";
                         $i++;
                     };
-                } else {
-                    echo '<td colspan="3"></td>';
                 }
                 $j++;
             }
