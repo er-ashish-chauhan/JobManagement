@@ -53,20 +53,23 @@
             <?php
                 if ($value["entries"]) {
                     foreach ($value["entries"] as $list) {
-                        echo "<td>" . $list->EntryDate . "</td><td>" . $list->kantaSlipNo . "</td>
+                        echo "<tr><td></td><td>" . $list->EntryDate . "</td>
+                                <td>" . $list->kantaSlipNo . "</td>
                                 <td>" . $list->TruckNo . "</td>
                                 <td>" . $list->Quantity_in_qts . "</td>
                                 <td>" . $list->Quantity_in_bags . "</td>
                                 <td>" . $value["bargain"]->FirmName . "</td>
                                 <td>" . $value["bargain"]->FirmAddress . "</td>
-                                <td>" . $list->userFirm . "</td>";
+                                <td>" . $list->userFirm . "</td></tr>";
                     }
                     "</tr>";
+                }else {
+                    echo '<td colspan="8" style="align-self: center;">No entries found!</td>';
                 }
             }
         } else { ?>
             <tr>
-                <td colspan="9" style="align-self: center;">No entries found for your selection!</td>
+                <td colspan="9" style="align-self: center;">No bargains found for your selection!</td>
             </tr>
         <?php }
 

@@ -400,10 +400,10 @@ class Job extends CI_Controller
 			];
 
 			$data["entries"]  = $entries;
-			echo "<pre>";
-			print_r($entries);
-			echo "</pre>";
-			die();
+			// echo "<pre>";
+			// print_r($entries);
+			// echo "</pre>";
+			// die();
 			$this->load->view('pdfViews/entriesList', $data);
 			// $html = $this->load->view('pdfViews/entriesList', $data, true);
 			// $mpdf->WriteHTML($html);
