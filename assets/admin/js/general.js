@@ -755,6 +755,12 @@ $(document).on("click", "#editBroker", function (e) {
 $(document).on("click", "#updateBroker", function (e) {
   var val = $(this).closest('td').next().find("input").val();
   var brokerId = $(this).data("bid");
+
+  if (val.trim().length == 0) {
+    alert("Please enter valid broker name.");
+    return;
+  }
+
   $.ajax({
     url: admin_url + "job/updateBrokerDetails",
     method: "post",
