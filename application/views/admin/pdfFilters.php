@@ -13,21 +13,17 @@
                         <option value="status_f">By Status</option>
                     </select>
                 </div>
-                <div class="form-group col-sm-6 col-xs-12 pdf-firm-list" style="display: none;">
-                    <label for="exampleFormControlSelect3">Party Name</label>
-                    <select class="form-control" name="bFirm" id="bFirm">
-                        <option value="">Select Party</option>
-                        <?php
-                        if (!empty($firm_list)) {
-                            foreach ($firm_list as $list) {
-                        ?>
-                                <option value="<?= $list->id ?>"><?= $list->firm_name ?></option>
-                        <?php
-                            }
-                        }
-                        ?>
+                <div class="form-group col-sm-6 col-xs-12 pdf-status-list">
+                    <label for="exampleFormControlSelect3">Status</label>
+                    <select class="form-control" name="status" id="status">
+                        <option value="">Select Status</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                        <option value="expired">Expired</option>
                     </select>
                 </div>
+
                 <div class="form-group col-sm-6 col-xs-12 pdf-broker-list" style="display: none;">
                     <label for="exampleFormControlSelect3">Broker Name</label>
                     <select class="form-control" name="brokerName" id="brokerName">
@@ -43,31 +39,38 @@
                         ?>
                     </select>
                 </div>
-                <div class="form-group col-sm-6 col-xs-12 pdf-status-list" style="display: none;">
-                    <label for="exampleFormControlSelect3">Status</label>
-                    <select class="form-control" name="status" id="status">
-                        <option value="">Select Status</option>
-                        <option value="active">Active</option>
-                        <option value="completed">Completed</option>
-                        <option value="cancelled">Cancelled</option>
-                        <option value="expired">Expired</option>
-                    </select>
-                </div>
-                <!-- <div class="form-group col-sm-6 col-xs-12">
-                    <label for="exampleFormControlSelect3">Filter By Commodity</label>
-                    <select class="form-control" name="bCommodity" id="bCommodity">
-                        <option value="">Select Commodity</option>
+            </div>
+            <div class="row pdf-firm-list" style="display: none;">
+                <div class="form-group col-sm-6 col-xs-12 ">
+                    <label for="exampleFormControlSelect3">Party Name</label>
+                    <select class="form-control" name="bFirm" id="bFirm">
+                        <option value="">Select Party</option>
                         <?php
-                        if (!empty($commodities)) {
-                            foreach ($commodities as $list) {
+                        if (!empty($firm_list)) {
+                            foreach ($firm_list as $list) {
                         ?>
-                                <option value="<?= $list->id ?>"><?= $list->commodity ?></option>
+                                <option value="<?= $list->id ?>"><?= $list->firm_name ?></option>
                         <?php
                             }
                         }
                         ?>
                     </select>
-                </div> -->
+                </div>
+                <div class="form-group col-sm-6 col-xs-12">
+                    <label for="exampleFormControlSelect3">Broker Name</label>
+                    <select class="form-control" name="brokerName" id="brokerName">
+                        <option value="">Select Broker</option>
+                        <?php
+                        if (!empty($brokers)) {
+                            foreach ($brokers as $broker) {
+                        ?>
+                                <option value="<?= $broker->id ?>"><?= $broker->brokerName ?></option>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
             </div>
             <div class="row">
                 <!-- <div class="form-group col-sm-6 col-xs-12">
