@@ -358,7 +358,7 @@ class Job extends CI_Controller
 		`job`.`id` as `bargainId`,
 		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
 		`firm`.`firm_name` as FirmName,
-		`firm`.`address` as FirmAddress,
+		`firm`.`address` as FirmAddress
 		from `job` LEFT JOIN firm ON firm.id = job.firmId
 		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
 		LEFT JOIN brokers ON brokers.id = job.brokerName
