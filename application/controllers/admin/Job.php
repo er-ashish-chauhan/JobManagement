@@ -371,13 +371,13 @@ class Job extends CI_Controller
 
 			foreach ($query_result as $list) {
 
-				$subquery = "SELECT `jobMeta.jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
+				$subquery = "SELECT `jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
 				`jobMeta`.`currentSlipNo` as kantaSlipNo,
 				`jobMeta`.`cNetWeight` as Quantity_in_qts,
 				`jobMeta`.`noOfBags` as Quantity_in_bags,
 				`users`.`coFirm` as userFirm
 				from `jobMeta`
-				LEFT JOIN users ON users.id = jobMeta.addedBy WHERE `jobMeta.jobId` = $list->bargainId";
+				LEFT JOIN users ON users.id = jobMeta.addedBy WHERE `jobMeta`.`jobId` = $list->bargainId";
 
 				$entriesResult = $this->db->query($subquery);
 				$entriesResult = $entriesResult->result();
