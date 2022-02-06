@@ -34,8 +34,8 @@
     </div>
     <table>
         <tr>
-            <th>Bargain Detaiils</th>
-            <th>Entry Details</th>
+            <th colspan="9">Bargain Detaiils</th>
+            <!-- <th>Entry Details</th> -->
         </tr>
         <?php
         if ($entries) {
