@@ -42,7 +42,7 @@
             foreach ($entries as $value) {
                 echo "
                     <tr>
-                        <td>" . $value["bargain"]->BargainDetaiils . "</td>
+                        <td colspan='9'>" . $value["bargain"]->BargainDetaiils . "</td>
                        " ?>
             <?php
                 if ($value["entries"]) {
