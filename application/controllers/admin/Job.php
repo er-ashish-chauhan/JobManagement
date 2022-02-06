@@ -382,7 +382,7 @@ class Job extends CI_Controller
 				$entriesResult = $this->db->query($subquery);
 				$entriesResult = $entriesResult->result();
 
-				if (sizeof($entriesResult) > 0) {
+				if ($entriesResult->num_rows() > 0) {
 					foreach ($entriesResult as $elist) {
 						if ($bargainIds == $list->bargainId) {
 							$list->BargainDetaiils = "";
@@ -392,7 +392,6 @@ class Job extends CI_Controller
 						}
 						$bargainIds = $list->bargainId;
 					}
-					return;
 				} else {
 					array_push($entries, ["bargain" => $list, "entries" => ""]);
 				}
