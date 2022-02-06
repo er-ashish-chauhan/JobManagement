@@ -359,11 +359,9 @@ class Job extends CI_Controller
 		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
 		`firm`.`firm_name` as FirmName,
 		`firm`.`address` as FirmAddress,
-		-- `users`.`coFirm` as userFirm
 		from `job` LEFT JOIN firm ON firm.id = job.firmId
 		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
 		LEFT JOIN brokers ON brokers.id = job.brokerName
-		-- LEFT JOIN users ON users.id = jobMeta.addedBy
 		$where";
 			$result = $this->db->query($query);
 			$query_result = $result->result();
