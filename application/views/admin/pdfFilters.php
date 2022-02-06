@@ -14,7 +14,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-6 col-xs-12 pdf-firm-list" style="display: none;">
-                    <label for="exampleFormControlSelect3">Filter By Party</label>
+                    <label for="exampleFormControlSelect3">Party Name</label>
                     <select class="form-control" name="bFirm" id="bFirm">
                         <option value="">Select Party</option>
                         <?php
@@ -29,7 +29,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-6 col-xs-12 pdf-broker-list" style="display: none;">
-                    <label for="exampleFormControlSelect3">Filter By Broker</label>
+                    <label for="exampleFormControlSelect3">Broker Name</label>
                     <select class="form-control" name="brokerName" id="brokerName">
                         <option value="">Select Broker</option>
                         <?php
@@ -44,7 +44,7 @@
                     </select>
                 </div>
                 <div class="form-group col-sm-6 col-xs-12 pdf-status-list" style="display: none;">
-                    <label for="exampleFormControlSelect3">Filter By Status</label>
+                    <label for="exampleFormControlSelect3">Status</label>
                     <select class="form-control" name="status" id="status">
                         <option value="">Select Status</option>
                         <option value="active">Active</option>
@@ -82,8 +82,8 @@
                 </div> -->
             </div>
             <div class="date-fields" style="display: none;">
-                <label for="exampleFormControlSelect2">Filter By Date</label>
-                <hr />
+                <!-- <label for="exampleFormControlSelect2">Filter By Date</label>
+                <hr /> -->
                 <div class="row">
                     <div class="form-group col-sm-6 col-xs-12">
                         <label for="exampleFormControlSelect2">Date From</label>
