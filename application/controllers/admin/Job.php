@@ -354,7 +354,7 @@ class Job extends CI_Controller
 			$this->load->dbutil();
 			$this->load->helper('file');
 			$this->load->helper('download');
-			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', '`brokers`.`brokerName`) as BargainDetaiils,
+			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', `brokers`.`brokerName`) as BargainDetaiils,
 		`job`.`id` as `bargainId`,
 		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
 		`firm`.`firm_name` as FirmName,
