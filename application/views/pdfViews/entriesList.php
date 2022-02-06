@@ -34,15 +34,18 @@
     </div>
     <table>
         <tr>
-            <th colspan="9">Bargain's</th>
+            <th colspan="1">Sr. No</th>
+            <th colspan="8">Bargain's</th>
             <!-- <th>Entry Details</th> -->
         </tr>
         <?php
         if ($entries) {
+            $j = 1;
             foreach ($entries as $value) {
                 echo "
                     <tr>
-                        <td colspan='4'>" . $value["bargain"]->BargainDetaiils . "</td>
+                        <td>" . $j . "</td>
+                        <td colspan='5'>" . $value["bargain"]->BargainDetaiils . "</td>
                        </tr>" ?>
             <?php
                 if ($value["entries"]) {
@@ -71,8 +74,9 @@
                         $i++;
                     };
                 } else {
-                    echo '<td colspan="4"></td>';
+                    echo '<td colspan="3"></td>';
                 }
+                $j++;
             }
         } else { ?>
             <tr>
