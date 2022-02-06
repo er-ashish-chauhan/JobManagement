@@ -15,7 +15,7 @@
                 </div>
                 <div class="form-group col-sm-6 col-xs-12 pdf-status-list" style="display: none;">
                     <label for="exampleFormControlSelect3">Status</label>
-                    <select class="form-control" name="status" id="status">
+                    <select class="form-control" name="bStatus" id="bStatus">
                         <option value="">Select Status</option>
                         <option value="active">Active</option>
                         <option value="completed">Completed</option>

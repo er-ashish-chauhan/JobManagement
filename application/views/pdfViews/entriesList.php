@@ -51,7 +51,7 @@
                     echo "<tr>
                         <th>#</th>
                         <th>Entry Date</th>
-                        <th>Inward no No</th>
+                        <th>Inward No</th>
                         <th>Truck No</th>
                         <th>Quantity (qts)</th>
                         <th>Quantity (bags)</th>
