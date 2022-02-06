@@ -383,17 +383,9 @@ class Job extends CI_Controller
 
 				if ($entriesResult->num_rows() > 0) {
 					$entriesResult = $entriesResult->result();
-					foreach ($entriesResult as $elist) {
-						if ($bargainIds == $list->bargainId) {
-							$list->BargainDetaiils = "";
-							array_push($entries, ["bargain" => $list, "entries" => $elist]);
-						} else {
-							array_push($entries, ["bargain" => $list, "entries" => $elist]);
-						}
-						$bargainIds = $list->bargainId;
-					}
+					array_push($entries, ["bargain" => $list, "entries" => $entriesResult]);
 				} else {
-					array_push($entries, ["bargain" => $list, "entries" => ""]);
+					array_push($entries, ["bargain" => $list, "entries" => null]);
 				}
 			}
 
@@ -412,10 +404,11 @@ class Job extends CI_Controller
 			print_r($entries);
 			echo "</pre>";
 			die();
-			$html = $this->load->view('pdfViews/entriesList', $data, true);
-			$mpdf->WriteHTML($html);
-			ob_clean();
-			$mpdf->Output("entriesReport.pdf", "D");
+			$this->load->view('pdfViews/entriesList', $data);
+			// $html = $this->load->view('pdfViews/entriesList', $data, true);
+			// $mpdf->WriteHTML($html);
+			// ob_clean();
+			// $mpdf->Output("entriesReport.pdf", "D");
 		}
 	}
 

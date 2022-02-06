@@ -49,16 +49,20 @@
             foreach ($entries as $value) {
                 echo "
                     <tr>
-                        <td>" . $value->BargainDetaiils . "</td>
-                        <td>" . $value->EntryDate . "</td>
-                        <td>" . $value->kantaSlipNo . "</td>
-                        <td>" . $value->TruckNo . "</td>
-                        <td>" . $value->Quantity_in_qts . "</td>
-                        <td>" . $value->Quantity_in_bags . "</td>
-                        <td>" . $value->FirmName . "</td>
-                        <td>" . $value->FirmAddress . "</td>
-                        <td>" . $value->userFirm . "</td>
-                     </tr>";
+                        <td>" . $value["bargain"]->BargainDetaiils . "</td>" ?>
+            <?php
+                if ($value["entries"]) {
+                    foreach ($value["entries"] as $list) {
+                        echo "<td>" . $list->EntryDate . "</td><td>" . $list->kantaSlipNo . "</td>
+                                <td>" . $list->TruckNo . "</td>
+                                <td>" . $list->Quantity_in_qts . "</td>
+                                <td>" . $list->Quantity_in_bags . "</td>
+                                <td>" . $value["bargain"]->FirmName . "</td>
+                                <td>" . $value["bargain"]->FirmAddress . "</td>
+                                <td>" . $list->userFirm . "</td>";
+                    }
+                    "</tr>";
+                }
             }
         } else { ?>
             <tr>
