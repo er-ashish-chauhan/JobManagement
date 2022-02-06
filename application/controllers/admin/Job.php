@@ -380,9 +380,9 @@ class Job extends CI_Controller
 				LEFT JOIN users ON users.id = jobMeta.addedBy WHERE `jobMeta`.`jobId` = $list->bargainId";
 
 				$entriesResult = $this->db->query($subquery);
-				$entriesResult = $entriesResult->result();
 
 				if ($entriesResult->num_rows() > 0) {
+					$entriesResult = $entriesResult->result();
 					foreach ($entriesResult as $elist) {
 						if ($bargainIds == $list->bargainId) {
 							$list->BargainDetaiils = "";
