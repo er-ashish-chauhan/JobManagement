@@ -34,7 +34,7 @@
     </div>
     <table>
         <tr>
-            <th>Bargain Detaiils</th>
+            <th colspan="9">Bargain Detaiils</th>
             <!-- <th>Entry Details</th> -->
         </tr>
         <?php
@@ -57,9 +57,9 @@
                         <th>Party Location</th>
                         <th>Firm</th>
                     </tr>";
-                    $i=1;
+                    $i = 1;
                     foreach ($value["entries"] as $list) {
-                        echo "<tr><td>".$i."</td>
+                        echo "<tr><td>" . $i . "</td>
                                 <td>" . $list->EntryDate . "</td>
                                 <td>" . $list->kantaSlipNo . "</td>
                                 <td>" . $list->TruckNo . "</td>
@@ -68,9 +68,8 @@
                                 <td>" . $value["bargain"]->FirmName . "</td>
                                 <td>" . $value["bargain"]->FirmAddress . "</td>
                                 <td>" . $list->userFirm . "</td></tr>";
-                    }
-                    $i++;
-                    ;
+                        $i++;
+                    };
                 } else {
                     echo '<td colspan="8" style="align-self: center;">No entries found!</td>';
                 }
