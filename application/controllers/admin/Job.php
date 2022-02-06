@@ -383,16 +383,16 @@ class Job extends CI_Controller
 				$entriesResult = $entriesResult->result();
 
 				if (sizeof($entriesResult) > 0) {
-
 					foreach ($entriesResult as $elist) {
 						if ($bargainIds == $list->bargainId) {
 							$list->BargainDetaiils = "";
 							array_push($entries, ["bargain" => $list, "entries" => $elist]);
 						} else {
-							array_push($entries, $list);
+							array_push($entries, ["bargain" => $list, "entries" => $elist]);
 						}
 						$bargainIds = $list->bargainId;
 					}
+					return;
 				} else {
 					array_push($entries, ["bargain" => $list, "entries" => ""]);
 				}
