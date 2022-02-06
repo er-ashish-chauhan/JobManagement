@@ -34,9 +34,8 @@
     </div>
     <table>
         <tr>
-            <th colspan="1">Sr. No</th>
+            <th colspan="1">#</th>
             <th colspan="8">Bargain's</th>
-            <!-- <th>Entry Details</th> -->
         </tr>
         <?php
         if ($entries) {
@@ -50,7 +49,7 @@
             <?php
                 if ($value["entries"]) {
                     echo "<tr>
-                        <th>Sr. No.</th>
+                        <th>#</th>
                         <th>Entry Date</th>
                         <th>Inward no No</th>
                         <th>Truck No</th>
