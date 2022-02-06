@@ -99,15 +99,15 @@ if (!empty($entry_details)) {
       <div class="row">
         <div class="form-group col-sm-4 col-xs-12">
           <label for="exampleFormControlSelect2">Gross weight</label>
-          <input type="number" class="form-control" maxlength="6" id="cGrossWeight" name="cGrossWeight" value="<?= $cGrossWeight ?>" min='1'>
+          <input type="text" class="form-control" maxlength="8" id="cGrossWeight" name="cGrossWeight" value="<?= $cGrossWeight ?>" min='1'>
         </div>
         <div class="form-group col-sm-4 col-xs-12">
           <label for="exampleFormControlSelect3">Tare weight</label>
-          <input type="number" class="form-control" maxlength="6" id="cTareWeight" name="cTareWeight" value="<?= $cTareWeight ?>" min='1'>
+          <input type="text" class="form-control" maxlength="8" id="cTareWeight" name="cTareWeight" value="<?= $cTareWeight ?>" min='1'>
         </div>
         <div class="form-group col-sm-4 col-xs-12">
           <label for="exampleFormControlSelect2">Net Weight</label>
-          <input type="number" class="form-control" maxlength="6" id="cNetWeight" name="cNetWeight" value="<?= $cNetWeight ?>" disabled>
+          <input type="text" class="form-control" maxlength="8" id="cNetWeight" name="cNetWeight" value="<?= $cNetWeight ?>" disabled>
         </div>
       </div>
 
@@ -115,11 +115,11 @@ if (!empty($entry_details)) {
       <div class="row">
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">No of Bags</label>
-          <input type="text" class="form-control" maxlength="5" id="noOfBags" name="noOfBags" value="<?= $noOfBags ?>">
+          <input type="text" class="form-control" maxlength="10" id="noOfBags" name="noOfBags" value="<?= $noOfBags ?>">
         </div>
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Truck No</label>
-          <input type="text" class="form-control" maxlength="5" id="truckNo" name="truckNo" value="<?= $truckNo ?>">
+          <input type="text" class="form-control" maxlength="12" id="truckNo" name="truckNo" value="<?= $truckNo ?>">
         </div>
       </div>
 
@@ -139,7 +139,7 @@ if (!empty($entry_details)) {
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Bill No</label>
-          <input type="text" class="form-control" maxlength="5" id="billNo" name="billNo" value="<?= $billNo ?>">
+          <input type="text" class="form-control" maxlength="15" id="billNo" name="billNo" value="<?= $billNo ?>">
         </div>
       </div>
 
@@ -161,7 +161,7 @@ if (!empty($entry_details)) {
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Previous Slip No</label>
-          <input type="text" class="form-control" maxlength="5" id="previousSlipNo" name="previousSlipNo" value="<?= $previousSlipNo ?>">
+          <input type="text" class="form-control" maxlength="15" id="previousSlipNo" name="previousSlipNo" value="<?= $previousSlipNo ?>">
         </div>
 
       </div>
@@ -182,7 +182,7 @@ if (!empty($entry_details)) {
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Current Slip No</label>
-          <input type="text" class="form-control" maxlength="5" id="currentSlipNo" name="currentSlipNo" value="<?= $currentSlipNo ?>">
+          <input type="text" class="form-control" maxlength="15" id="currentSlipNo" name="currentSlipNo" value="<?= $currentSlipNo ?>">
         </div>
       </div>
 
@@ -202,7 +202,7 @@ if (!empty($entry_details)) {
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Kanta Slip No</label>
-          <input type="text" class="form-control" maxlength="5" id="kantaSlipNo" name="kantaSlipNo" value="<?= $kantaSlipNo ?>">
+          <input type="text" class="form-control" maxlength="15" id="kantaSlipNo" name="kantaSlipNo" value="<?= $kantaSlipNo ?>">
         </div>
       </div>
       <!-- /.card-body -->
