@@ -58,7 +58,7 @@
                         <th>Firm</th>
                     </tr>";
                     foreach ($value["entries"] as $list) {
-                        echo "<td></td>1<td>" . $list->EntryDate . "</td>
+                        echo "<tr><td></td>1<td>" . $list->EntryDate . "</td>
                                 <td>" . $list->kantaSlipNo . "</td>
                                 <td>" . $list->TruckNo . "</td>
                                 <td>" . $list->Quantity_in_qts . "</td>
@@ -67,7 +67,7 @@
                                 <td>" . $value["bargain"]->FirmAddress . "</td>
                                 <td>" . $list->userFirm . "</td></tr>";
                     }
-                    "</tr>";
+                    ;
                 } else {
                     echo '<td colspan="8" style="align-self: center;">No entries found!</td>';
                 }
