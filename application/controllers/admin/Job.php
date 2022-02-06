@@ -200,7 +200,7 @@ class Job extends CI_Controller
 		$this->data_array["jobId"] = $jobId;
 		$this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
 		$this->data_array["commodities"] = $this->admin_job_model->getCommodities();
-		$this->data_array["bargain"] = $this->admin_job_model->checkIfJobExist(["id" => decode($jobId)]);
+		$this->data_array["bargain"] = $this->admin_job_model->checkIfJobExist(["job.id" => decode($jobId)]);
 
 
 		if ($this->input->post()) {
