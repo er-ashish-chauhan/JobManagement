@@ -13,7 +13,7 @@
                         <option value="status_f">By Status</option>
                     </select>
                 </div>
-                <div class="form-group col-sm-6 col-xs-12 pdf-status-list">
+                <div class="form-group col-sm-6 col-xs-12 pdf-status-list" style="display: none;">
                     <label for="exampleFormControlSelect3">Status</label>
                     <select class="form-control" name="status" id="status">
                         <option value="">Select Status</option>
