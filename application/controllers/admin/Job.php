@@ -360,6 +360,7 @@ class Job extends CI_Controller
 		`firm`.`firm_name` as FirmName,
 		`firm`.`address` as FirmAddress
 		from `job` LEFT JOIN firm ON firm.id = job.firmId
+		LEFT JOIN commodities ON commodities.id = job.commodityId
 		LEFT JOIN brokers ON brokers.id = job.brokerName
 		$where";
 			$result = $this->db->query($query);
