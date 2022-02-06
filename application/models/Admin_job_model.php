@@ -292,8 +292,11 @@ class Admin_job_model extends CI_Model
 
     public function checkIfJobExist($where)
     {
-        $this->db->select('*');
+        $this->db->select('job.id, job.purchaseOrder, job.assignToId, job.firmId, brokers.brokerName, 
+        job.total_quantity, job.remaining_quantity, job.quantityType, job.commodityId, job.dealValidFrom, 
+        job.dealValidUpto, job.deliveryType, job.status, job.price, job.created');
         $this->db->from("job");
+        $this->db->join("brokers", "brokers.id = job.brokerName", "left");
         $this->db->where($where);
         $query = $this->db->get();
         if ($query->num_rows() > 0) {
