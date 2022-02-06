@@ -375,7 +375,7 @@ class Job extends CI_Controller
 		`firm`.`firm_name` as FirmName,
 		`firm`.`address` as FirmAddress,
 		`users`.`coFirm` as userFirm
-		from `job` LEFT JOIN firm ON firm.id = jobMeta.firmId
+		from `jobMeta` LEFT JOIN firm ON firm.id = jobMeta.firmId
 		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
 		LEFT JOIN job ON job.id = jobMeta.jobId
 		LEFT JOIN brokers ON brokers.id = job.id
