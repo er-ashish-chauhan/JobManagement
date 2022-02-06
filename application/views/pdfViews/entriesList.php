@@ -42,7 +42,7 @@
             foreach ($entries as $value) {
                 echo "
                     <tr>
-                        <td>" . $value["bargain"]->BargainDetaiils . "</td>
+                        <td colspan='9'>" . $value["bargain"]->BargainDetaiils . "</td>
                        </tr>" ?>
             <?php
                 if ($value["entries"]) {
@@ -71,7 +71,7 @@
                         $i++;
                     };
                 } else {
-                    echo '<td colspan="8" style="align-self: center;">No entries found!</td>';
+                    echo '<td colspan="4"></td>';
                 }
             }
         } else { ?>
