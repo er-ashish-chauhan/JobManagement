@@ -577,7 +577,7 @@ var jobentry_datatable = $("#jobEntriesList").DataTable({
   },
   order: [[2, "desc"]],
   columnDefs: [
-    { orderable: false, targets: [0,1] },
+    { orderable: false, targets: [0, 1] },
     { targets: 2, name: "firm.firm_name" },
     { targets: 3, name: "commodities.commodity" },
     { targets: 4, name: "jobMeta.currentSlipNo" },
@@ -680,36 +680,105 @@ $(document).on("click", ".csvExportButton", function (e) {
 });
 
 // code for export page action
-$(document).on("change", ".pdf-filter-list", function(){
+$(document).on("change", ".pdf-filter-list", function () {
 
   selectVal = $(this).val();
-  if(selectVal == 'firm_f')
-  {
+  if (selectVal == 'firm_f') {
     $(".pdf-firm-list").show();
     $(".date-fields").show();
     $(".pdf-broker-list").hide();
     $(".pdf-status-list").hide();
   }
-  else if(selectVal == 'date_f')
-  {
+  else if (selectVal == 'date_f') {
     $(".date-fields").show();
     $(".pdf-firm-list").hide();
     $(".pdf-status-list").hide();
     $(".pdf-broker-list").hide();
 
   }
-  else if(selectVal == 'broker_f')
-  {
+  else if (selectVal == 'broker_f') {
     $(".pdf-broker-list").show();
     $(".pdf-firm-list").hide();
     $(".pdf-status-list").hide();
     $(".date-fields").show();
   }
-  else if(selectVal == 'status_f')
-  {
+  else if (selectVal == 'status_f') {
     $(".pdf-broker-list").hide();
     $(".pdf-firm-list").hide();
     $(".date-fields").show();
     $(".pdf-status-list").show();
   }
+});
+
+// code to list entries in ajax datatable
+$("#brokersList").DataTable({
+  processing: true,
+  serverSide: true,
+  pageLength: 25,
+  scrollY: "calc(100vh - 250px)",
+  stateSave: true,
+  scrollX: true,
+  scrollCollapse: true,
+  fixedColumns: {
+    leftColumns: 6,
+  },
+  serverMethod: "post",
+  ajax: {
+    url: admin_url + "job/getBrokersList",
+  },
+  order: [[2, "desc"]],
+  columnDefs: [
+    { orderable: false, targets: [0] },
+    { targets: 1, name: "brokers.brokerName" },
+    { targets: 2, name: "brokers.created" },
+    { targets: 3, name: "brokers.updated" },
+  ],
+  lengthMenu: [
+    [10, 25, 50, -1],
+    [10, 25, 50, "All"],
+  ],
+});
+
+$(document).on("click", "#editBroker", function (e) {
+
+  var brokerId = $(this).data("bid");
+
+  var brokerName = $(this).closest('td').next().text();
+  $(this).closest('td').next().html(
+    '<input type="text" class="form-control" id="broker_name" name="broker_name" placeholder="Enter Broker Name" value="' + brokerName + '">'
+  );
+  $(this).closest('td').html(
+    "<a  href='javascript:void(0)' class='btn btn-sm btn-flat btn-primary' id='updateBroker' title='Update Broker' data-bid='" + brokerId + "' ><i class=' fa fa-check'></i></a> <a  href='javascript:void(0)' class='btn btn-sm btn-flat btn-primary' id='cancelUpdateBroker' title='Cancel' data-brokername='" + brokerName + "' data-bid='" + brokerId + "' ><i class=' fa fa-close'></i></a>"
+  );
+});
+
+$(document).on("click", "#updateBroker", function (e) {
+  var val = $(this).closest('td').next().find("input").val();
+  var brokerId = $(this).data("bid");
+  $.ajax({
+    url: admin_url + "job/updateBrokerDetails",
+    method: "post",
+    data: {
+      brokerName: val,
+      brokerId: brokerId
+    },
+    success: (data) => {
+      $(this).closest('td').next().text(val);
+      $(this).closest('td').html(
+        "<a  href='javascript:void(0)' class='btn btn-sm btn-flat btn-primary' id='editBroker' title='Edit Broker' data-bid='" + brokerId + "' ><i class=' fa fa-edit'></i></a>"
+      );
+    },
+  });
+});
+
+$(document).on("click", "#cancelUpdateBroker", function (e) {
+
+  var brokerId = $(this).data("bid");
+
+  var brokerName = $(this).data("brokername")
+  $(this).closest('td').next().text(brokerName);
+
+  $(this).closest('td').html(
+    "<a  href='javascript:void(0)' class='btn btn-sm btn-flat btn-primary' id='editBroker' title='Edit Broker' data-bid='" + brokerId + "' ><i class=' fa fa-edit'></i></a>"
+  );
 });

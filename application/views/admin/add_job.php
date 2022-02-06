@@ -44,7 +44,19 @@
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect2">Broker Name</label>
-                    <input type="text" class="form-control" id="broker_name" name="broker_name">
+                    <!-- <input type="text" class="form-control" id="broker_name" name="broker_name"> -->
+                    <select class="form-control" name="broker_name" id="broker_name">
+                        <option value="">Select Broker Name</option>
+                        <?php
+                        if (!empty($brokers)) {
+                            foreach ($brokers as $list) {
+                        ?>
+                                <option value="<?= $list->id ?>"><?= $list->brokerName ?></option>
+                        <?php
+                            }
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
             <div class="row">

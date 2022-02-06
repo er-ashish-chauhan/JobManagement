@@ -9,7 +9,7 @@
                         <option value="">Select Filter</option>
                         <option value="broker_f">By Broker Name</option>
                         <option value="date_f">By Date</option>
-                        <option value="firm_f">By Firm</option>
+                        <option value="firm_f">By Party</option>
                         <option value="status_f">By Status</option>
                     </select>
                 </div>
@@ -36,7 +36,7 @@
                         if (!empty($brokers)) {
                             foreach ($brokers as $broker) {
                         ?>
-                                <option value="<?= $broker->brokerName ?>"><?= $broker->brokerName ?></option>
+                                <option value="<?= $broker->id ?>"><?= $broker->brokerName ?></option>
                         <?php
                             }
                         }

@@ -65,4 +65,6 @@ $route['admin/exportAllEntries'] = 'admin/Job/exportAllEntries';
 $route['admin/completeBargain/(:any)'] = 'admin/Job/completeBargain/$1';
 $route['admin/deleteparty/(:any)'] = 'admin/Firm/deleteparty/$1';
 $route['admin/applyFilters'] = 'admin/Job/bargainListFilters';
-// $route['admin/job'] = 'admin/coach_video';
+$route['admin/applyFilters'] = 'admin/Job/bargainListFilters';
+$route['admin/addBroker'] = 'admin/Job/addBroker';
+$route['admin/brokerslist'] = 'admin/Job/brokerslist';

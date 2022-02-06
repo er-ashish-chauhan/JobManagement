@@ -57,6 +57,7 @@ class Job extends CI_Controller
 
 			$this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
 			$this->data_array["commodities"] = $this->admin_job_model->getCommodities();
+			$this->data_array["brokers"] = $this->admin_job_model->getBrokersList();
 
 			adminviews('add_job', $this->data_array);
 		} else if ($_SERVER["REQUEST_METHOD"] == 'POST') {
@@ -308,7 +309,7 @@ class Job extends CI_Controller
 
 		$this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
 		$this->data_array["commodities"] = $this->admin_job_model->getCommodities();
-		$this->data_array["brokers"] = $this->admin_job_model->getBrokers();
+		$this->data_array["brokers"] = $this->admin_job_model->getBrokersList();
 		// echo "<pre>";
 		// print_r($this->data_array["brokers"]); die;
 		$this->data_array["purchaseOrders"] = $this->admin_job_model->getPurchaseOrders();
@@ -363,7 +364,7 @@ class Job extends CI_Controller
 			$this->load->dbutil();
 			$this->load->helper('file');
 			$this->load->helper('download');
-			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`job`.`brokerName`) as BargainDetaiils,
+			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`brokers`.`brokerName`) as BargainDetaiils,
 		`job`.`id` as `bargainId`,
 		`jobMeta`.`recordCreated` as EntryDate,
 		`jobMeta`.`truckNo` as TruckNo,
@@ -377,6 +378,7 @@ class Job extends CI_Controller
 		from `jobMeta` LEFT JOIN firm ON firm.id = jobMeta.firmId
 		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
 		LEFT JOIN job ON job.id = jobMeta.jobId
+		LEFT JOIN brokers ON brokers.id = job.id
 		LEFT JOIN users ON users.id = jobMeta.addedBy
 		$where";
 			$result = $this->db->query($query);
@@ -413,6 +415,54 @@ class Job extends CI_Controller
 			$mpdf->WriteHTML($html);
 			ob_clean();
 			$mpdf->Output("entriesReport.pdf", "D");
+		}
+	}
+
+	// add broker
+	public function addBroker()
+	{
+		$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Manage Broker';
+		$this->data_array['pageTitle'] = 'Add Broker';
+
+		if ($this->input->post()) {
+			$form_data_arr = ["brokerName" => $this->input->post("broker_name")];
+
+			$response_data =  $this->admin_job_model->addBroker($form_data_arr);;
+
+			if ($response_data) {
+				$this->session->set_flashdata("success", 'Broker added successfully');
+			} else {
+				$this->session->set_flashdata("error", 'Error while adding Broker');
+			}
+		}
+
+		adminviews('addBroker', $this->data_array);
+	}
+
+	public function brokerslist()
+	{
+		$this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Manage Broker';
+		$this->data_array['pageTitle'] = 'Broker\'s List';
+		adminviews('brokerslist', $this->data_array);
+	}
+
+	public function getBrokersList()
+	{
+		try {
+			$postData = $this->input->post();
+			$data = $this->admin_job_model->getBrokers($postData);
+			echo json_encode($data);
+		} catch (Exception $e) {
+			log_message('error', 'Error while getting brokers details: FILE-' . __FILE__ . 'CLASS: ' . __CLASS__ . 'FUNCTION: ' . __FUNCTION__);
+		}
+	}
+
+	public function updateBrokerDetails()
+	{
+		if ($this->input->post("brokerId")) {
+			$form_data_arr = ["brokerName" => $this->input->post("brokerName"), "updated" => date("Y-m-d h:i:s")];
+			$response_data =  $this->admin_job_model->updateBroker($form_data_arr, ["id" => decode($this->input->post("brokerId"))]);
+			echo json_encode($response_data);
 		}
 	}
 }

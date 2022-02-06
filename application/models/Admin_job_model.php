@@ -348,10 +348,130 @@ class Admin_job_model extends CI_Model
         }
     }
 
-    public function getBrokers()
+    // get broker name
+    public function getBrokersList()
     {
-        return $this->db->select('id, brokerName')
-            ->from("job")
-            ->get()->result();
+        $this->db->select('*');
+        $this->db->from("brokers");
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        } else {
+            return null;
+        }
+    }
+
+    // add broker
+    public function addBroker($data)
+    {
+        $this->db->insert('brokers', $data);
+        return $this->db->insert_id();
+    }
+
+    public function getBrokers($postData = null)
+    {
+        $response = array();
+        ## Reading post values
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length']; // Rows display per page
+        $columnIndex = $postData['order'][0]['column']; // Column index
+        $columnName = $postData['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue = $postData['search']['value']; // Search value
+        ## variable to store data for searching.
+        $searchQuery = "";
+        if ($searchValue != '') {
+            if ($searchValue == 'Active') {
+                $searchValue = 'Enabled';
+            }
+            if ($searchValue == 'Inactive') {
+                $searchValue = 'Disabled';
+            }
+
+            $searchQuery = " (brokers.brokerName like '%" . $searchValue . "%') ";
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->from("brokers");
+        $query = $this->db->get();
+        $records = $query->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->from("brokers");
+
+        if ($searchQuery != '') {
+            $this->db->where($searchQuery);
+        }
+
+        $query = $this->db->get();
+        $records = $query->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select("*");
+        $this->db->from("brokers");
+
+        if ($searchQuery != '') {
+            $this->db->where($searchQuery);
+        }
+
+        if (!empty($columnName)) {
+            $this->db->order_by($columnName, $columnSortOrder);
+        } else {
+            $this->db->order_by('brokerName', 'DESC');
+        }
+
+        if ($rowperpage != -1) {
+            $this->db->limit($rowperpage, $start);
+        }
+        $query = $this->db->get();
+        $records = $query->result();
+        $data = array();
+
+        $i = $start + 1;
+        // loop to iterate and storing data into array accordingly that is going to display.
+        foreach ($records as $record) {
+            $id = $record->id;
+
+            // link to edit Broker
+            $actionLinks_edit = "<a  href='javascript:void(0)' class='btn btn-sm btn-flat btn-primary' id='editBroker' title='Edit Broker' data-bid='" . encode($id) . "' ><i class=' fa fa-edit'></i></a>";
+
+            $created = date('m-d-Y', strtotime($record->created));
+            $updated = $record->updated ? date('m-d-Y', strtotime($record->updated)) : "-";
+
+            $data[] = array(
+                $i++,
+                $actionLinks_edit,
+                $record->brokerName,
+                $created,
+                $updated
+            );
+        }
+
+        ## Response
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data,
+            "detail" => [$columnName, $columnSortOrder],
+            "detail"                => [$columnName, $columnSortOrder],
+            "search_query"          => $searchQuery,
+            "last_query"            => $this->db->last_query()
+        );
+        // pr($response,1);
+        return $response;
+    }
+
+    public function updateBroker($data, $where)
+    {
+        $this->db->where($where);
+        $this->db->update('brokers', $data);
+        $afftectedRow = $this->db->affected_rows();
+        return  $afftectedRow;
     }
 }
