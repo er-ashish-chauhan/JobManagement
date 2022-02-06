@@ -362,7 +362,7 @@ class Job extends CI_Controller
 		-- `users`.`coFirm` as userFirm
 		from `job` LEFT JOIN firm ON firm.id = job.firmId
 		LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
-		LEFT JOIN brokers ON brokers.id = job.id
+		LEFT JOIN brokers ON brokers.id = job.brokerName
 		-- LEFT JOIN users ON users.id = jobMeta.addedBy
 		$where";
 			$result = $this->db->query($query);
