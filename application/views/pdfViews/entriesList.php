@@ -34,7 +34,7 @@
     </div>
     <table>
         <tr>
-            <th colspan="9">Bargain Detaiils</th>
+            <th colspan="9">Bargain's</th>
             <!-- <th>Entry Details</th> -->
         </tr>
         <?php
@@ -42,7 +42,7 @@
             foreach ($entries as $value) {
                 echo "
                     <tr>
-                        <td colspan='9'>" . $value["bargain"]->BargainDetaiils . "</td>
+                        <td colspan='4'>" . $value["bargain"]->BargainDetaiils . "</td>
                        </tr>" ?>
             <?php
                 if ($value["entries"]) {
