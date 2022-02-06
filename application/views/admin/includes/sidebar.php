@@ -15,12 +15,12 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-              <i class="icon-contract menu-icon"></i>
+            <a class="nav-link" data-toggle="collapse" href="#brokers" aria-expanded="false" aria-controls="icons">
+              <i class="icon-layout menu-icon"></i>
               <span class="menu-title">Manage Brokers</span>
               <i class="menu-arrow"></i>
             </a>
-            <div class="collapse" id="icons">
+            <div class="collapse" id="brokers">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/addBroker'); ?>">Add Broker</a></li>
                 <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/brokerslist') ?>">Broker's List</a></li>
