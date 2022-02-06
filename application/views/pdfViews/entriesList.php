@@ -43,7 +43,7 @@
                 echo "
                     <tr>
                         <td>" . $value["bargain"]->BargainDetaiils . "</td>
-                       " ?>
+                       </tr>" ?>
             <?php
                 if ($value["entries"]) {
                     echo "<tr>
