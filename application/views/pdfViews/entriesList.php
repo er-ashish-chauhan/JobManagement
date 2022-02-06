@@ -35,25 +35,30 @@
     <table>
         <tr>
             <th>Bargain Detaiils</th>
-            <th>Entry Date</th>
-            <th>Inward no No</th>
-            <th>Truck No</th>
-            <th>Quantity (qts)</th>
-            <th>Quantity (bags)</th>
-            <th>Party</th>
-            <th>Party Location</th>
-            <th>Firm</th>
+            <th>Entry Details</th>
         </tr>
         <?php
         if ($entries) {
             foreach ($entries as $value) {
                 echo "
                     <tr>
-                        <td>" . $value["bargain"]->BargainDetaiils . "</td>" ?>
+                        <td>" . $value["bargain"]->BargainDetaiils . "</td>
+                       " ?>
             <?php
                 if ($value["entries"]) {
+                    echo "<tr>
+                        <th>Sr. No.</th>
+                        <th>Entry Date</th>
+                        <th>Inward no No</th>
+                        <th>Truck No</th>
+                        <th>Quantity (qts)</th>
+                        <th>Quantity (bags)</th>
+                        <th>Party</th>
+                        <th>Party Location</th>
+                        <th>Firm</th>
+                    </tr>";
                     foreach ($value["entries"] as $list) {
-                        echo "<tr><td></td><td>" . $list->EntryDate . "</td>
+                        echo "<td></td>1<td>" . $list->EntryDate . "</td>
                                 <td>" . $list->kantaSlipNo . "</td>
                                 <td>" . $list->TruckNo . "</td>
                                 <td>" . $list->Quantity_in_qts . "</td>
@@ -63,7 +68,7 @@
                                 <td>" . $list->userFirm . "</td></tr>";
                     }
                     "</tr>";
-                }else {
+                } else {
                     echo '<td colspan="8" style="align-self: center;">No entries found!</td>';
                 }
             }
