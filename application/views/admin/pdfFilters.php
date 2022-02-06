@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect3">Broker Name</label>
-                    <select class="form-control" name="brokerName" id="brokerName">
+                    <select class="form-control" name="broker_Name" id="broker_Name">
                         <option value="">Select Broker</option>
                         <?php
                         if (!empty($brokers)) {

@@ -321,10 +321,8 @@ class Job extends CI_Controller
 	{
 		if ($this->input->post()) {
 			$firmId = $this->input->post("bFirm");
-			// $commodityId = $this->input->post("bCommodity");
 			$status = $this->input->post("bStatus");
-			// $poFrom = $this->input->post("poFrom");
-			// $poTo = $this->input->post("poTo");
+			$fbrokerName = $this->input->post("broker_Name");
 			$filterredBy = $this->input->post("filterby");
 			$brokerName = $this->input->post("brokerName");
 			$selectedDateFrom = $this->input->post("bSelectedDate") ? date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDate"))) : "";
@@ -345,19 +343,12 @@ class Job extends CI_Controller
 				$where .= " AND `firm`.`id` = $firmId";
 			}
 			if ($filterredBy == "broker_f" && $brokerName != "") {
-				$pdfTitle = "Broker: - " . strtoupper($brokerName);
 				$where .= " AND `job`.`brokerName` = '$brokerName'";
 			}
-			// if ($commodityId != "") {
-			// 	$where .= " AND `commodities`.`id` = $commodityId";
-			// }
-			// if ($poFrom != "") {
-			// 	$where .= " AND `job`.`purchaseOrder` >= $poFrom";
-			// }
-			// if ($poTo != "") {
-			// 	$where .= " AND `job`.`purchaseOrder` <= $poTo";
-			// }
-
+			if ($filterredBy == "firm_f" && $fbrokerName != "") {
+				$where .= " AND `job`.`brokerName` = '$fbrokerName'";
+			}
+			
 			$mpdf = new \Mpdf();
 			$mpdf->debug = true;
 
