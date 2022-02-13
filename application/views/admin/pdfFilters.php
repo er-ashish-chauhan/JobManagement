@@ -1,7 +1,7 @@
 <!-- partial -->
 <div class="main-panel">
     <div class="content-wrapper">
-        <form action="<?= base_url('admin/exportAllEntries'); ?>" method="post" id="add_job" enctype="multipart/form-data">
+        <form action="<?= base_url('admin/exportFile/' . $type); ?>" method="post" id="add_job" enctype="multipart/form-data">
             <div class="row">
                 <div class="form-group col-sm-6 col-xs-12">
                     <label for="exampleFormControlSelect3">Select Filter:</label>

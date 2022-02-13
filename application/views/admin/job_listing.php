@@ -11,9 +11,9 @@
                       <div class="card">
                           <div class="card-body">
                               <div class="exportBtnContainer" style="margin-bottom: 20px;">
-                                  <!-- <a href="<?php echo base_url("admin/exportJobs"); ?>" class="csv_ExportButton btn btn-primary">Export Bargain as CSV</a> -->
-                                  <a href="<?php echo base_url("admin/applyFilters"); ?>" class="csv_ExportButton btn btn-primary">Export Entries as PDF</a>
-                                  <!-- <a href="<?php echo base_url("admin/exportAllEntries"); ?>" class="csv_ExportButton btn btn-primary">Export Entries as PDF</a> -->
+                                  <a href="<?php echo base_url("admin/applyFilters/exportBargain"); ?>" class="csv_ExportButton btn btn-primary">Export Bargain Without Entries</a>
+                                  <a href="<?php echo base_url("admin/applyFilters/exportEntries"); ?>" class="csv_ExportButton btn btn-primary">Export Entries</a>
+                                  <a href="<?php echo base_url("admin/applyFilters/exportBargainWithEntries"); ?>" class="csv_ExportButton btn btn-primary">Export Bargain With Entries</a>
                               </div>
                               <div class="row">
                                   <div class="col-12">

@@ -1,7 +1,8 @@
 {
     "require": {
         "mpdf/mpdf": "6.1",
-        "tecnickcom/tc-lib-pdf": "dev-main"
+        "tecnickcom/tc-lib-pdf": "dev-main",
+        "phpoffice/phpspreadsheet": "^1.21"
     },
     "repositories": [
         {
