@@ -7,8 +7,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 include_once APPPATH . 'third_party/Getid3/getid3/getid3.php';
 include_once APPPATH . 'third_party/mpdf/mpdf/mpdf.php';
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+// use PhpOffice\PhpSpreadsheet\Spreadsheet;
+// use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 // include_once FCPATH . 'vendor/autoload.php';
 
 class Job extends CI_Controller
@@ -480,205 +480,205 @@ class Job extends CI_Controller
 		}
 	}
 
-	public function exportExcel($type)
-	{
-		$spreadsheet = new Spreadsheet();
-		$sheet = $spreadsheet->getActiveSheet();
+	// public function exportExcel($type)
+	// {
+	// 	$spreadsheet = new Spreadsheet();
+	// 	$sheet = $spreadsheet->getActiveSheet();
 
-		if ($this->input->post()) {
-			$firmId = $this->input->post("bFirm");
-			$status = $this->input->post("bStatus");
-			$fbrokerName = $this->input->post("broker_Name");
-			$filterredBy = $this->input->post("filterby");
-			$brokerName = $this->input->post("brokerName");
-			$selectedDateFrom = $this->input->post("bSelectedDate") ? date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDate"))) : "";
-			$selectedDateto = $this->input->post("bSelectedDateTo") != "" ?
-				date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDateTo"))) : date("Y-m-d h:i:s");
+	// 	if ($this->input->post()) {
+	// 		$firmId = $this->input->post("bFirm");
+	// 		$status = $this->input->post("bStatus");
+	// 		$fbrokerName = $this->input->post("broker_Name");
+	// 		$filterredBy = $this->input->post("filterby");
+	// 		$brokerName = $this->input->post("brokerName");
+	// 		$selectedDateFrom = $this->input->post("bSelectedDate") ? date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDate"))) : "";
+	// 		$selectedDateto = $this->input->post("bSelectedDateTo") != "" ?
+	// 			date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDateTo"))) : date("Y-m-d h:i:s");
 
-			$where = "WHERE `job`.`created` <= '$selectedDateto'";
+	// 		$where = "WHERE `job`.`created` <= '$selectedDateto'";
 
-			$pdfTitle = "";
-			if ($filterredBy == "status_f" && $status != "") {
-				$pdfTitle = "Status: - " . strtoupper($status);
-				$where .= " AND `job`.`status` = '$status'";
-			}
-			if ($selectedDateFrom != "") {
-				$where .= " AND `job`.`created` >= '$selectedDateFrom'";
-			}
-			if ($filterredBy == "firm_f" && $firmId != "") {
-				$where .= " AND `firm`.`id` = $firmId";
-			}
-			if ($filterredBy == "broker_f" && $brokerName != "") {
-				$where .= " AND `job`.`brokerName` = '$brokerName'";
-			}
-			if ($filterredBy == "firm_f" && $fbrokerName != "") {
-				$where .= " AND `job`.`brokerName` = '$fbrokerName'";
-			}
+	// 		$pdfTitle = "";
+	// 		if ($filterredBy == "status_f" && $status != "") {
+	// 			$pdfTitle = "Status: - " . strtoupper($status);
+	// 			$where .= " AND `job`.`status` = '$status'";
+	// 		}
+	// 		if ($selectedDateFrom != "") {
+	// 			$where .= " AND `job`.`created` >= '$selectedDateFrom'";
+	// 		}
+	// 		if ($filterredBy == "firm_f" && $firmId != "") {
+	// 			$where .= " AND `firm`.`id` = $firmId";
+	// 		}
+	// 		if ($filterredBy == "broker_f" && $brokerName != "") {
+	// 			$where .= " AND `job`.`brokerName` = '$brokerName'";
+	// 		}
+	// 		if ($filterredBy == "firm_f" && $fbrokerName != "") {
+	// 			$where .= " AND `job`.`brokerName` = '$fbrokerName'";
+	// 		}
 
-			$fileName = 'Bargains_' . time() . '.xls';
+	// 		$fileName = 'Bargains_' . time() . '.xls';
 
-			if ($type == "exportBargain") {
-				$sheet->setTitle("Bargain's");
-				$sheet->setCellValue('A1', "Sr. No.");
-				$sheet->setCellValue('B1', "Purchase Order");
-				$sheet->setCellValue('C1', "Party Name");
-				$sheet->setCellValue('D1', "Commodity");
-				$sheet->setCellValue('E1', "Broker");
-				$sheet->setCellValue('F1', "Total Qty");
-				$sheet->setCellValue('G1', "Remaining Qty");
-				$sheet->setCellValue('H1', "Qty type");
-				$sheet->setCellValue('I1', "Deal valid upto");
-				$sheet->setCellValue('J1', "Delivery type");
-				$rows = 2;
+	// 		if ($type == "exportBargain") {
+	// 			$sheet->setTitle("Bargain's");
+	// 			$sheet->setCellValue('A1', "Sr. No.");
+	// 			$sheet->setCellValue('B1', "Purchase Order");
+	// 			$sheet->setCellValue('C1', "Party Name");
+	// 			$sheet->setCellValue('D1', "Commodity");
+	// 			$sheet->setCellValue('E1', "Broker");
+	// 			$sheet->setCellValue('F1', "Total Qty");
+	// 			$sheet->setCellValue('G1', "Remaining Qty");
+	// 			$sheet->setCellValue('H1', "Qty type");
+	// 			$sheet->setCellValue('I1', "Deal valid upto");
+	// 			$sheet->setCellValue('J1', "Delivery type");
+	// 			$rows = 2;
 
-				$query = "SELECT `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
-					`commodities`.`commodity` as Commodity,`job`.`brokerName` as BrokerName, 
-					`job`.`total_quantity` as TotalQuantity, `job`.`remaining_quantity` as RemainingQuantity,
-					`job`.`quantityType` as QuantityType, `job`.`dealValidUpto` as DealValidUpto,
-					`job`.`deliveryType` as DeliveryType, `job`.`status` as BargainStatus
-					from `job` LEFT JOIN firm ON firm.id = job.firmId
-					LEFT JOIN commodities ON commodities.id = job.commodityId $where";
-				$result = $this->db->query($query);
-				$query_result = $result->result();
-				$serial = 1;
-				foreach ($query_result as $val) {
-					$sheet->setCellValue('A' . $rows, $serial);
-					$sheet->setCellValue('B' . $rows, $val->PurchaseOrder);
-					$sheet->setCellValue('C' . $rows, $val->Firm);
-					$sheet->setCellValue('D' . $rows, $val->Commodity);
-					$sheet->setCellValue('E' . $rows, $val->BrokerName);
-					$sheet->setCellValue('F' . $rows, $val->TotalQuantity);
-					$sheet->setCellValue('G' . $rows, $val->RemainingQuantity);
-					$sheet->setCellValue('H' . $rows, $val->QuantityType);
-					$sheet->setCellValue('I' . $rows, $val->DealValidUpto);
-					$sheet->setCellValue('J' . $rows, $val->DeliveryType);
-					$rows++;
-					$serial++;
-				}
-			} else if ($type == "exportEntries") {
-				$fileName = 'entries_' . time() . '.xls';
-				$sheet->setTitle("Entries");
-				$sheet->setCellValue('A1', "Sr. No.");
-				$sheet->setCellValue('B1', "Bargain Details");
-				$sheet->setCellValue('C1', "Entry Date");
-				$sheet->setCellValue('D1', "Inward No.");
-				$sheet->setCellValue('E1', "Truck No.");
-				$sheet->setCellValue('F1', "Quantity (qts)");
-				$sheet->setCellValue('G1', "Quantity (bags)");
-				$sheet->setCellValue('H1', "Party");
-				$sheet->setCellValue('I1', "Party Location");
-				$sheet->setCellValue('J1', "Firm");
-				$rows = 2;
+	// 			$query = "SELECT `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
+	// 				`commodities`.`commodity` as Commodity,`job`.`brokerName` as BrokerName, 
+	// 				`job`.`total_quantity` as TotalQuantity, `job`.`remaining_quantity` as RemainingQuantity,
+	// 				`job`.`quantityType` as QuantityType, `job`.`dealValidUpto` as DealValidUpto,
+	// 				`job`.`deliveryType` as DeliveryType, `job`.`status` as BargainStatus
+	// 				from `job` LEFT JOIN firm ON firm.id = job.firmId
+	// 				LEFT JOIN commodities ON commodities.id = job.commodityId $where";
+	// 			$result = $this->db->query($query);
+	// 			$query_result = $result->result();
+	// 			$serial = 1;
+	// 			foreach ($query_result as $val) {
+	// 				$sheet->setCellValue('A' . $rows, $serial);
+	// 				$sheet->setCellValue('B' . $rows, $val->PurchaseOrder);
+	// 				$sheet->setCellValue('C' . $rows, $val->Firm);
+	// 				$sheet->setCellValue('D' . $rows, $val->Commodity);
+	// 				$sheet->setCellValue('E' . $rows, $val->BrokerName);
+	// 				$sheet->setCellValue('F' . $rows, $val->TotalQuantity);
+	// 				$sheet->setCellValue('G' . $rows, $val->RemainingQuantity);
+	// 				$sheet->setCellValue('H' . $rows, $val->QuantityType);
+	// 				$sheet->setCellValue('I' . $rows, $val->DealValidUpto);
+	// 				$sheet->setCellValue('J' . $rows, $val->DeliveryType);
+	// 				$rows++;
+	// 				$serial++;
+	// 			}
+	// 		} else if ($type == "exportEntries") {
+	// 			$fileName = 'entries_' . time() . '.xls';
+	// 			$sheet->setTitle("Entries");
+	// 			$sheet->setCellValue('A1', "Sr. No.");
+	// 			$sheet->setCellValue('B1', "Bargain Details");
+	// 			$sheet->setCellValue('C1', "Entry Date");
+	// 			$sheet->setCellValue('D1', "Inward No.");
+	// 			$sheet->setCellValue('E1', "Truck No.");
+	// 			$sheet->setCellValue('F1', "Quantity (qts)");
+	// 			$sheet->setCellValue('G1', "Quantity (bags)");
+	// 			$sheet->setCellValue('H1', "Party");
+	// 			$sheet->setCellValue('I1', "Party Location");
+	// 			$sheet->setCellValue('J1', "Firm");
+	// 			$rows = 2;
 
-				$equery = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`brokers`.`brokerName`) as BargainDetaiils,
-					`jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
-					`jobMeta`.`currentSlipNo` as kantaSlipNo,
-					`jobMeta`.`cNetWeight` as Quantity_in_qts,
-					`jobMeta`.`noOfBags` as Quantity_in_bags,
-					`users`.`coFirm` as userFirm,
-					IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
-					`firm`.`firm_name` as FirmName,
-					`firm`.`address` as FirmAddress
-					from `jobMeta` 
-					LEFT JOIN users ON users.id = jobMeta.addedBy
-					LEFT JOIN firm ON firm.id = jobMeta.firmId
-					LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
-					LEFT JOIN job ON job.id = jobMeta.jobId
-					LEFT JOIN brokers ON brokers.id = job.brokerName $where";
-				$eresult = $this->db->query($equery);
+	// 			$equery = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`brokers`.`brokerName`) as BargainDetaiils,
+	// 				`jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
+	// 				`jobMeta`.`currentSlipNo` as kantaSlipNo,
+	// 				`jobMeta`.`cNetWeight` as Quantity_in_qts,
+	// 				`jobMeta`.`noOfBags` as Quantity_in_bags,
+	// 				`users`.`coFirm` as userFirm,
+	// 				IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
+	// 				`firm`.`firm_name` as FirmName,
+	// 				`firm`.`address` as FirmAddress
+	// 				from `jobMeta` 
+	// 				LEFT JOIN users ON users.id = jobMeta.addedBy
+	// 				LEFT JOIN firm ON firm.id = jobMeta.firmId
+	// 				LEFT JOIN commodities ON commodities.id = jobMeta.commodityId
+	// 				LEFT JOIN job ON job.id = jobMeta.jobId
+	// 				LEFT JOIN brokers ON brokers.id = job.brokerName $where";
+	// 			$eresult = $this->db->query($equery);
 
-				$equery_result = $eresult->result();
-				$eserial = 1;
-				foreach ($equery_result as $val) {
-					$sheet->setCellValue('A' . $rows, $eserial);
-					$sheet->setCellValue('B' . $rows, $val->BargainDetaiils);
-					$sheet->setCellValue('C' . $rows, $val->EntryDate);
-					$sheet->setCellValue('D' . $rows, $val->kantaSlipNo);
-					$sheet->setCellValue('E' . $rows, $val->TruckNo);
-					$sheet->setCellValue('F' . $rows, $val->Quantity_in_qts);
-					$sheet->setCellValue('G' . $rows, $val->Quantity_in_bags);
-					$sheet->setCellValue('H' . $rows, $val->FirmName);
-					$sheet->setCellValue('I' . $rows, $val->FirmAddress);
-					$sheet->setCellValue('J' . $rows, $val->userFirm);
-					$rows++;
-					$eserial++;
-				}
-			} else if ($type == "exportBargainWithEntries") {
+	// 			$equery_result = $eresult->result();
+	// 			$eserial = 1;
+	// 			foreach ($equery_result as $val) {
+	// 				$sheet->setCellValue('A' . $rows, $eserial);
+	// 				$sheet->setCellValue('B' . $rows, $val->BargainDetaiils);
+	// 				$sheet->setCellValue('C' . $rows, $val->EntryDate);
+	// 				$sheet->setCellValue('D' . $rows, $val->kantaSlipNo);
+	// 				$sheet->setCellValue('E' . $rows, $val->TruckNo);
+	// 				$sheet->setCellValue('F' . $rows, $val->Quantity_in_qts);
+	// 				$sheet->setCellValue('G' . $rows, $val->Quantity_in_bags);
+	// 				$sheet->setCellValue('H' . $rows, $val->FirmName);
+	// 				$sheet->setCellValue('I' . $rows, $val->FirmAddress);
+	// 				$sheet->setCellValue('J' . $rows, $val->userFirm);
+	// 				$rows++;
+	// 				$eserial++;
+	// 			}
+	// 		} else if ($type == "exportBargainWithEntries") {
 
 
-				$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`brokers`.`brokerName`) as BargainDetaiils,
-			`job`.`id` as `bargainId`,
-			IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
-			`firm`.`firm_name` as FirmName,
-			`firm`.`address` as FirmAddress
-			from `job` LEFT JOIN firm ON firm.id = job.firmId
-			LEFT JOIN commodities ON commodities.id = job.commodityId
-			LEFT JOIN brokers ON brokers.id = job.brokerName
-			$where";
-				$result = $this->db->query($query);
-				$query_result = $result->result();
+	// 			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`brokers`.`brokerName`) as BargainDetaiils,
+	// 		`job`.`id` as `bargainId`,
+	// 		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
+	// 		`firm`.`firm_name` as FirmName,
+	// 		`firm`.`address` as FirmAddress
+	// 		from `job` LEFT JOIN firm ON firm.id = job.firmId
+	// 		LEFT JOIN commodities ON commodities.id = job.commodityId
+	// 		LEFT JOIN brokers ON brokers.id = job.brokerName
+	// 		$where";
+	// 			$result = $this->db->query($query);
+	// 			$query_result = $result->result();
 
-				$entries = [];
+	// 			$entries = [];
 
-				foreach ($query_result as $list) {
+	// 			foreach ($query_result as $list) {
 
-					$subquery = "SELECT `jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
-				`jobMeta`.`currentSlipNo` as kantaSlipNo,
-				`jobMeta`.`cNetWeight` as Quantity_in_qts,
-				`jobMeta`.`noOfBags` as Quantity_in_bags,
-				`users`.`coFirm` as userFirm
-				from `jobMeta`
-				LEFT JOIN users ON users.id = jobMeta.addedBy WHERE `jobMeta`.`jobId` = $list->bargainId";
+	// 				$subquery = "SELECT `jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
+	// 			`jobMeta`.`currentSlipNo` as kantaSlipNo,
+	// 			`jobMeta`.`cNetWeight` as Quantity_in_qts,
+	// 			`jobMeta`.`noOfBags` as Quantity_in_bags,
+	// 			`users`.`coFirm` as userFirm
+	// 			from `jobMeta`
+	// 			LEFT JOIN users ON users.id = jobMeta.addedBy WHERE `jobMeta`.`jobId` = $list->bargainId";
 
-					$entriesResult = $this->db->query($subquery);
+	// 				$entriesResult = $this->db->query($subquery);
 
-					if ($entriesResult->num_rows() > 0) {
-						$entriesResult = $entriesResult->result();
-						array_push($entries, ["bargain" => $list, "entries" => $entriesResult]);
-					} else {
-						array_push($entries, ["bargain" => $list, "entries" => null]);
-					}
-				}
+	// 				if ($entriesResult->num_rows() > 0) {
+	// 					$entriesResult = $entriesResult->result();
+	// 					array_push($entries, ["bargain" => $list, "entries" => $entriesResult]);
+	// 				} else {
+	// 					array_push($entries, ["bargain" => $list, "entries" => null]);
+	// 				}
+	// 			}
 
-				$fileName = 'BargainsWEntries_' . time() . '.xls';
-				$sheet->setTitle("Bargains wih Entries");
-				$sheet->setCellValue('A1', "Sr. No.");
-				$sheet->setCellValue('B1', "Bargain Details");
-				$sheet->setCellValue('C1', "Entry Date");
-				$sheet->setCellValue('D1', "Inward No.");
-				$sheet->setCellValue('E1', "Truck No.");
-				$sheet->setCellValue('F1', "Quantity (qts)");
-				$sheet->setCellValue('G1', "Quantity (bags)");
-				$sheet->setCellValue('H1', "Party");
-				$sheet->setCellValue('I1', "Party Location");
-				$sheet->setCellValue('J1', "Firm");
-				$rows = 2;
+	// 			$fileName = 'BargainsWEntries_' . time() . '.xls';
+	// 			$sheet->setTitle("Bargains wih Entries");
+	// 			$sheet->setCellValue('A1', "Sr. No.");
+	// 			$sheet->setCellValue('B1', "Bargain Details");
+	// 			$sheet->setCellValue('C1', "Entry Date");
+	// 			$sheet->setCellValue('D1', "Inward No.");
+	// 			$sheet->setCellValue('E1', "Truck No.");
+	// 			$sheet->setCellValue('F1', "Quantity (qts)");
+	// 			$sheet->setCellValue('G1', "Quantity (bags)");
+	// 			$sheet->setCellValue('H1', "Party");
+	// 			$sheet->setCellValue('I1', "Party Location");
+	// 			$sheet->setCellValue('J1', "Firm");
+	// 			$rows = 2;
 
-				$eserial = 1;
-				foreach ($entries as $val) {
-					$sheet->setCellValue('A' . $rows, $eserial);
-					$sheet->setCellValue('B' . $rows, $val["bargain"]->BargainDetaiils);
-					if ($val["entries"]) {
-						foreach ($val["entries"] as $eval) {
-							$sheet->setCellValue('C' . $rows, $eval->EntryDate);
-							$sheet->setCellValue('D' . $rows, $eval->kantaSlipNo);
-							$sheet->setCellValue('E' . $rows, $eval->TruckNo);
-							$sheet->setCellValue('F' . $rows, $eval->Quantity_in_qts);
-							$sheet->setCellValue('G' . $rows, $eval->Quantity_in_bags);
-							$sheet->setCellValue('H' . $rows, $val["bargain"]->FirmName);
-							$sheet->setCellValue('I' . $rows, $val["bargain"]->FirmAddress);
-							$sheet->setCellValue('J' . $rows, $eval->userFirm);
-						}
-					}
-					$rows++;
-					$eserial++;
-				}
-			}
+	// 			$eserial = 1;
+	// 			foreach ($entries as $val) {
+	// 				$sheet->setCellValue('A' . $rows, $eserial);
+	// 				$sheet->setCellValue('B' . $rows, $val["bargain"]->BargainDetaiils);
+	// 				if ($val["entries"]) {
+	// 					foreach ($val["entries"] as $eval) {
+	// 						$sheet->setCellValue('C' . $rows, $eval->EntryDate);
+	// 						$sheet->setCellValue('D' . $rows, $eval->kantaSlipNo);
+	// 						$sheet->setCellValue('E' . $rows, $eval->TruckNo);
+	// 						$sheet->setCellValue('F' . $rows, $eval->Quantity_in_qts);
+	// 						$sheet->setCellValue('G' . $rows, $eval->Quantity_in_bags);
+	// 						$sheet->setCellValue('H' . $rows, $val["bargain"]->FirmName);
+	// 						$sheet->setCellValue('I' . $rows, $val["bargain"]->FirmAddress);
+	// 						$sheet->setCellValue('J' . $rows, $eval->userFirm);
+	// 					}
+	// 				}
+	// 				$rows++;
+	// 				$eserial++;
+	// 			}
+	// 		}
 
-			$writer = new Xlsx($spreadsheet);
-			$writer->save("upload/" . $fileName);
-			header("Content-Type: application/vnd.ms-excel");
-			redirect(base_url() . "/upload/" . $fileName);
-		}
-	}
+	// 		$writer = new Xlsx($spreadsheet);
+	// 		$writer->save("upload/" . $fileName);
+	// 		header("Content-Type: application/vnd.ms-excel");
+	// 		redirect(base_url() . "/upload/" . $fileName);
+	// 	}
+	// }
 }
