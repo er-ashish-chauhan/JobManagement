@@ -54,7 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 
-$route['admin'] = 'admin/login';
+$route[''] = 'admin/login';
 $route['admin/addBargain'] = 'admin/Job/manage_job_detail';
 $route['admin/bargainsListing'] = 'admin/Job';
 $route['admin/editBargain/(:any)'] = 'admin/Job/editBargain/$1';
