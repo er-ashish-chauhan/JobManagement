@@ -5,7 +5,7 @@ use Mpdf\Mpdf;
 defined('BASEPATH') or exit('No direct script access allowed');
 // include_once('pathto/getid3.php');
 include_once APPPATH . 'third_party/Getid3/getid3/getid3.php';
-include_once APPPATH . 'third_party/mpdf/mpdf/mpdf.php';
+// include_once APPPATH . 'third_party/mpdf/mpdf/mpdf.php';
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -337,100 +337,100 @@ class Job extends CI_Controller
 		adminviews('pdfFilters', $this->data_array);
 	}
 
-	public function exportAllEntries()
-	{
-		if ($this->input->post()) {
-			$firmId = $this->input->post("bFirm");
-			$status = $this->input->post("bStatus");
-			$fbrokerName = $this->input->post("broker_Name");
-			$filterredBy = $this->input->post("filterby");
-			$brokerName = $this->input->post("brokerName");
-			$selectedDateFrom = $this->input->post("bSelectedDate") ? date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDate"))) : "";
-			$selectedDateto = $this->input->post("bSelectedDateTo") != "" ?
-				date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDateTo"))) : date("Y-m-d h:i:s");
+	// public function exportAllEntries()
+	// {
+	// 	if ($this->input->post()) {
+	// 		$firmId = $this->input->post("bFirm");
+	// 		$status = $this->input->post("bStatus");
+	// 		$fbrokerName = $this->input->post("broker_Name");
+	// 		$filterredBy = $this->input->post("filterby");
+	// 		$brokerName = $this->input->post("brokerName");
+	// 		$selectedDateFrom = $this->input->post("bSelectedDate") ? date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDate"))) : "";
+	// 		$selectedDateto = $this->input->post("bSelectedDateTo") != "" ?
+	// 			date("Y-m-d h:i:s", strtotime($this->input->post("bSelectedDateTo"))) : date("Y-m-d h:i:s");
 
-			$where = "WHERE `job`.`created` <= '$selectedDateto'";
+	// 		$where = "WHERE `job`.`created` <= '$selectedDateto'";
 
-			$pdfTitle = "";
-			if ($filterredBy == "status_f" && $status != "") {
-				$pdfTitle = "Status: - " . strtoupper($status);
-				$where .= " AND `job`.`status` = '$status'";
-			}
-			if ($selectedDateFrom != "") {
-				$where .= " AND `job`.`created` >= '$selectedDateFrom'";
-			}
-			if ($filterredBy == "firm_f" && $firmId != "") {
-				$where .= " AND `firm`.`id` = $firmId";
-			}
-			if ($filterredBy == "broker_f" && $brokerName != "") {
-				$where .= " AND `job`.`brokerName` = '$brokerName'";
-			}
-			if ($filterredBy == "firm_f" && $fbrokerName != "") {
-				$where .= " AND `job`.`brokerName` = '$fbrokerName'";
-			}
-			$mpdf = new \Mpdf();
-			$mpdf->debug = true;
+	// 		$pdfTitle = "";
+	// 		if ($filterredBy == "status_f" && $status != "") {
+	// 			$pdfTitle = "Status: - " . strtoupper($status);
+	// 			$where .= " AND `job`.`status` = '$status'";
+	// 		}
+	// 		if ($selectedDateFrom != "") {
+	// 			$where .= " AND `job`.`created` >= '$selectedDateFrom'";
+	// 		}
+	// 		if ($filterredBy == "firm_f" && $firmId != "") {
+	// 			$where .= " AND `firm`.`id` = $firmId";
+	// 		}
+	// 		if ($filterredBy == "broker_f" && $brokerName != "") {
+	// 			$where .= " AND `job`.`brokerName` = '$brokerName'";
+	// 		}
+	// 		if ($filterredBy == "firm_f" && $fbrokerName != "") {
+	// 			$where .= " AND `job`.`brokerName` = '$fbrokerName'";
+	// 		}
+	// 		$mpdf = new \Mpdf();
+	// 		$mpdf->debug = true;
 
-			$this->load->dbutil();
-			$this->load->helper('file');
-			$this->load->helper('download');
-			$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`brokers`.`brokerName`) as BargainDetaiils,
-		`job`.`id` as `bargainId`,
-		IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
-		`firm`.`firm_name` as FirmName,
-		`firm`.`address` as FirmAddress
-		from `job` LEFT JOIN firm ON firm.id = job.firmId
-		LEFT JOIN commodities ON commodities.id = job.commodityId
-		LEFT JOIN brokers ON brokers.id = job.brokerName
-		$where";
-			$result = $this->db->query($query);
-			$query_result = $result->result();
+	// 		$this->load->dbutil();
+	// 		$this->load->helper('file');
+	// 		$this->load->helper('download');
+	// 		$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`brokers`.`brokerName`) as BargainDetaiils,
+	// 	`job`.`id` as `bargainId`,
+	// 	IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
+	// 	`firm`.`firm_name` as FirmName,
+	// 	`firm`.`address` as FirmAddress
+	// 	from `job` LEFT JOIN firm ON firm.id = job.firmId
+	// 	LEFT JOIN commodities ON commodities.id = job.commodityId
+	// 	LEFT JOIN brokers ON brokers.id = job.brokerName
+	// 	$where";
+	// 		$result = $this->db->query($query);
+	// 		$query_result = $result->result();
 
-			$entries = [];
-			$bargainIds = '';
+	// 		$entries = [];
+	// 		$bargainIds = '';
 
-			foreach ($query_result as $list) {
+	// 		foreach ($query_result as $list) {
 
-				$subquery = "SELECT `jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
-				`jobMeta`.`currentSlipNo` as kantaSlipNo,
-				`jobMeta`.`cNetWeight` as Quantity_in_qts,
-				`jobMeta`.`noOfBags` as Quantity_in_bags,
-				`users`.`coFirm` as userFirm
-				from `jobMeta`
-				LEFT JOIN users ON users.id = jobMeta.addedBy WHERE `jobMeta`.`jobId` = $list->bargainId";
+	// 			$subquery = "SELECT `jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
+	// 			`jobMeta`.`currentSlipNo` as kantaSlipNo,
+	// 			`jobMeta`.`cNetWeight` as Quantity_in_qts,
+	// 			`jobMeta`.`noOfBags` as Quantity_in_bags,
+	// 			`users`.`coFirm` as userFirm
+	// 			from `jobMeta`
+	// 			LEFT JOIN users ON users.id = jobMeta.addedBy WHERE `jobMeta`.`jobId` = $list->bargainId";
 
-				$entriesResult = $this->db->query($subquery);
+	// 			$entriesResult = $this->db->query($subquery);
 
-				if ($entriesResult->num_rows() > 0) {
-					$entriesResult = $entriesResult->result();
-					array_push($entries, ["bargain" => $list, "entries" => $entriesResult]);
-				} else {
-					array_push($entries, ["bargain" => $list, "entries" => null]);
-				}
-			}
+	// 			if ($entriesResult->num_rows() > 0) {
+	// 				$entriesResult = $entriesResult->result();
+	// 				array_push($entries, ["bargain" => $list, "entries" => $entriesResult]);
+	// 			} else {
+	// 				array_push($entries, ["bargain" => $list, "entries" => null]);
+	// 			}
+	// 		}
 
-			if ($filterredBy == "firm_f" && $firmId != "") {
-				$pdfTitle = "Firm: - " . $entries[0]->FirmName;
-			}
+	// 		if ($filterredBy == "firm_f" && $firmId != "") {
+	// 			$pdfTitle = "Firm: - " . $entries[0]->FirmName;
+	// 		}
 
-			$data["filterValues"] = [
-				"startDate" => date("d-m-Y", strtotime($selectedDateFrom)) != "01-01-1970" ? date("d-m-Y", strtotime($selectedDateFrom)) : "",
-				"endDate" => date("d-m-Y", strtotime($selectedDateto)),
-				"title" => $pdfTitle
-			];
+	// 		$data["filterValues"] = [
+	// 			"startDate" => date("d-m-Y", strtotime($selectedDateFrom)) != "01-01-1970" ? date("d-m-Y", strtotime($selectedDateFrom)) : "",
+	// 			"endDate" => date("d-m-Y", strtotime($selectedDateto)),
+	// 			"title" => $pdfTitle
+	// 		];
 
-			$data["entries"]  = $entries;
-			// echo "<pre>";
-			// print_r($entries);
-			// echo "</pre>";
-			// die();
-			// $this->load->view('pdfViews/entriesList', $data);
-			$html = $this->load->view('pdfViews/entriesList', $data, true);
-			$mpdf->WriteHTML($html);
-			ob_clean();
-			$mpdf->Output("entriesReport.pdf", "D");
-		}
-	}
+	// 		$data["entries"]  = $entries;
+	// 		// echo "<pre>";
+	// 		// print_r($entries);
+	// 		// echo "</pre>";
+	// 		// die();
+	// 		// $this->load->view('pdfViews/entriesList', $data);
+	// 		$html = $this->load->view('pdfViews/entriesList', $data, true);
+	// 		$mpdf->WriteHTML($html);
+	// 		ob_clean();
+	// 		$mpdf->Output("entriesReport.pdf", "D");
+	// 	}
+	// }
 
 	// add broker
 	public function addBroker()
