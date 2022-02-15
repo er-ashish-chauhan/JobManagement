@@ -521,6 +521,7 @@ class Job extends CI_Controller
 				$sheet->setTitle("Bargain's");
 				$sheet->mergeCells("A1:J1");
 				// $sheet->setCellValue('A1-J1', "By Bargain's");
+				$sheet->setCellValue('A1', "By Bargain's");
 				$sheet->setCellValue('A3', "Sr. No.");
 				$sheet->setCellValue('B3', "Purchase Order");
 				$sheet->setCellValue('C3', "Party Name");
