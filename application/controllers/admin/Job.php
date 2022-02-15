@@ -531,7 +531,7 @@ class Job extends CI_Controller
 				$sheet->setCellValue('H3', "Qty type");
 				$sheet->setCellValue('I3', "Deal valid upto");
 				$sheet->setCellValue('J3', "Delivery type");
-				$rows = 2;
+				$rows = 3;
 
 				$query = "SELECT `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
 					`commodities`.`commodity` as Commodity,`brokers`.`brokerName` as BrokerName, 
