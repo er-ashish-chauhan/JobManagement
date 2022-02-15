@@ -176,7 +176,7 @@ class Job extends CI_Controller
 		$this->data_array['pageTitle'] = 'Manage Job Entries';
 		$this->data_array["jobId"] = $jobId;
 
-		$this->data_array["jobDetails"] = $this->admin_job_model->checkIfJobExist(["id" => decode($jobId)]);
+		$this->data_array["jobDetails"] = $this->admin_job_model->checkIfJobExist(["job.id" => decode($jobId)]);
 
 		adminviews('view_job', $this->data_array);
 	}
@@ -519,25 +519,28 @@ class Job extends CI_Controller
 
 			if ($type == "exportBargain") {
 				$sheet->setTitle("Bargain's");
-				$sheet->setCellValue('A1', "Sr. No.");
-				$sheet->setCellValue('B1', "Purchase Order");
-				$sheet->setCellValue('C1', "Party Name");
-				$sheet->setCellValue('D1', "Commodity");
-				$sheet->setCellValue('E1', "Broker");
-				$sheet->setCellValue('F1', "Total Qty");
-				$sheet->setCellValue('G1', "Remaining Qty");
-				$sheet->setCellValue('H1', "Qty type");
-				$sheet->setCellValue('I1', "Deal valid upto");
-				$sheet->setCellValue('J1', "Delivery type");
+				$sheet->mergeCells('A1:J1');
+				$sheet->setCellValue('A1:J1', "By Bargain's");
+				$sheet->setCellValue('A3', "Sr. No.");
+				$sheet->setCellValue('B3', "Purchase Order");
+				$sheet->setCellValue('C3', "Party Name");
+				$sheet->setCellValue('D3', "Commodity");
+				$sheet->setCellValue('E3', "Broker");
+				$sheet->setCellValue('F3', "Total Qty");
+				$sheet->setCellValue('G3', "Remaining Qty");
+				$sheet->setCellValue('H3', "Qty type");
+				$sheet->setCellValue('I3', "Deal valid upto");
+				$sheet->setCellValue('J3', "Delivery type");
 				$rows = 2;
 
 				$query = "SELECT `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
-					`commodities`.`commodity` as Commodity,`job`.`brokerName` as BrokerName, 
+					`commodities`.`commodity` as Commodity,`brokers`.`brokerName` as BrokerName, 
 					`job`.`total_quantity` as TotalQuantity, `job`.`remaining_quantity` as RemainingQuantity,
 					`job`.`quantityType` as QuantityType, `job`.`dealValidUpto` as DealValidUpto,
 					`job`.`deliveryType` as DeliveryType, `job`.`status` as BargainStatus
 					from `job` LEFT JOIN firm ON firm.id = job.firmId
-					LEFT JOIN commodities ON commodities.id = job.commodityId $where";
+					LEFT JOIN commodities ON commodities.id = job.commodityId
+					LEFT JOIN brokers ON brokers.id = job.brokerName $where";
 				$result = $this->db->query($query);
 				$query_result = $result->result();
 				$serial = 1;
