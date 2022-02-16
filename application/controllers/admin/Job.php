@@ -517,21 +517,21 @@ class Job extends CI_Controller
 			$fileName = 'Bargains_' . time() . '.xls';
 			$sheet->mergeCells("A1:J1");
 			$sheet->getStyle('A1:J1')->getAlignment()->setHorizontal('center');
-
+			$sheet->getStyle('A3:J3')->getFont()->setSize("14")->setBold(true);
 			if ($type == "exportBargain") {
 				$sheet->setCellValue('A1', $pdfTitle);
 				$sheet->mergeCells("C2:H2");
 				$sheet->getStyle('C2:H2')->getAlignment()->setHorizontal('center');
-				$sheet->setCellValue('A3', "Sr. No.");
-				$sheet->setCellValue('B3', "Purchase Order");
-				$sheet->setCellValue('C3', "Party Name");
-				$sheet->setCellValue('D3', "Commodity");
-				$sheet->setCellValue('E3', "Broker");
-				$sheet->setCellValue('F3', "Remaining Qty");
-				$sheet->setCellValue('G3', "Qty type");
-				$sheet->setCellValue('H3', "Deal valid upto");
-				$sheet->setCellValue('I3', "Delivery type");
-				$sheet->setCellValue('J3', "Created");
+				$sheet->setCellValue('A3', "SR. NO.");
+				$sheet->setCellValue('B3', "PURCHASE ORDER");
+				$sheet->setCellValue('C3', "PARTY NAME");
+				$sheet->setCellValue('D3', "COMMODITY");
+				$sheet->setCellValue('E3', "BROKER");
+				$sheet->setCellValue('F3', "REMAINING QTY");
+				$sheet->setCellValue('G3', "QTY TYPE");
+				$sheet->setCellValue('H3', "DEAL VALID UPTO");
+				$sheet->setCellValue('I3', "DELIVERY TYPE");
+				$sheet->setCellValue('J3', "DEAL FROM");
 				$rows = 4;
 
 				$query = "SELECT `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
@@ -574,18 +574,18 @@ class Job extends CI_Controller
 				$sheet->getStyle('C2:H2')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('C2', $pdfTitle);
 				$sheet->setCellValue('A1', "Daily Approved Entries");
-				$sheet->setCellValue('A3', "Sr. No.");
-				$sheet->setCellValue('B3', "Entry Date");
-				$sheet->setCellValue('C3', "Inward No.");
-				$sheet->setCellValue('D3', "Truck No.");
-				$sheet->setCellValue('E3', "Net Weight");
-				$sheet->setCellValue('F3', "Bags");
-				$sheet->setCellValue('G3', "Party");
-				$sheet->setCellValue('H3', "Station");
-				$sheet->setCellValue('I3', "Commodity");
-				$sheet->setCellValue('J3', "Broker");
-				$sheet->setCellValue('K3', "Rate");
-				$sheet->setCellValue('L3', "Firm");
+				$sheet->setCellValue('A3', "SR. NO.");
+				$sheet->setCellValue('B3', "ENTRY DATE");
+				$sheet->setCellValue('C3', "PARTY");
+				$sheet->setCellValue('D3', "STATION");
+				$sheet->setCellValue('E3', "INWARD NO.");
+				$sheet->setCellValue('F3', "TRUCK NO.");
+				$sheet->setCellValue('G3', "NET WEIGHT");
+				$sheet->setCellValue('H3', "BAGS");
+				$sheet->setCellValue('I3', "COMMODITY");
+				$sheet->setCellValue('J3', "BROKER");
+				$sheet->setCellValue('K3', "RATE");
+				$sheet->setCellValue('L3', "IN");
 				$rows = 4;
 
 				$equery = "SELECT `job`.`price`,
@@ -612,12 +612,12 @@ class Job extends CI_Controller
 				foreach ($equery_result as $val) {
 					$sheet->setCellValue('A' . $rows, $eserial);
 					$sheet->setCellValue('B' . $rows, $val->EntryDate);
-					$sheet->setCellValue('C' . $rows, $val->kantaSlipNo);
-					$sheet->setCellValue('D' . $rows, $val->TruckNo);
-					$sheet->setCellValue('E' . $rows, $val->Quantity_in_qts);
-					$sheet->setCellValue('F' . $rows, $val->Quantity_in_bags);
-					$sheet->setCellValue('G' . $rows, $val->FirmName);
-					$sheet->setCellValue('H' . $rows, $val->FirmAddress);
+					$sheet->setCellValue('C' . $rows, $val->FirmName);
+					$sheet->setCellValue('D' . $rows, $val->FirmAddress);
+					$sheet->setCellValue('E' . $rows, $val->kantaSlipNo);
+					$sheet->setCellValue('F' . $rows, $val->TruckNo);
+					$sheet->setCellValue('G' . $rows, $val->Quantity_in_qts);
+					$sheet->setCellValue('H' . $rows, $val->Quantity_in_bags);
 					$sheet->setCellValue('I' . $rows, $val->commodity);
 					$sheet->setCellValue('J' . $rows, $val->brokerName);
 					$sheet->setCellValue('K' . $rows, $val->price);
@@ -697,6 +697,19 @@ class Job extends CI_Controller
 			}
 			$sheet->getStyle("A1")->getFont()->setSize("14")->setBold(true)->setUnderline(true);
 			$sheet->getStyle("C2")->getFont()->setSize("14")->setBold(true);
+			$sheet->getStyle('A')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('B')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('C')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('D')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('E')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('F')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('G')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('H')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('I')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('J')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('K')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('L')->getAlignment()->setHorizontal('center');
+
 			$sheet->getColumnDimension('A')->setAutoSize(true);
 			$sheet->getColumnDimension('B')->setAutoSize(true);
 			$sheet->getColumnDimension('C')->setAutoSize(true);

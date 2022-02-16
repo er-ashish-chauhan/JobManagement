@@ -309,16 +309,16 @@ class Entries extends CI_Controller
         $fileName = 'entries_' . time() . '.xls';
         $sheet->setTitle("Entries");
         $sheet->setCellValue('A1', "Daily Entries");
-        $sheet->setCellValue('A2', "Sr. No.");
-        $sheet->setCellValue('B2', "Entry Date");
-        $sheet->setCellValue('C2', "Inward No.");
-        $sheet->setCellValue('D2', "Truck No.");
-        $sheet->setCellValue('E2', "Net Weight");
-        $sheet->setCellValue('F2', "Bags");
-        $sheet->setCellValue('G2', "Party");
-        $sheet->setCellValue('H2', "Station");
-        $sheet->setCellValue('I2', "Commodity");
-        $sheet->setCellValue('J2', "Firm");
+        $sheet->setCellValue('A2', "SR. NO.");
+        $sheet->setCellValue('B2', "ENTRY DATE");
+        $sheet->setCellValue('C2', "INWARD NO.");
+        $sheet->setCellValue('D2', "TRUCK NO.");
+        $sheet->setCellValue('E2', "NET WEIGHT");
+        $sheet->setCellValue('F2', "BAGS");
+        $sheet->setCellValue('G2', "PARTY");
+        $sheet->setCellValue('H2', "STATION");
+        $sheet->setCellValue('I2', "COMMODITY");
+        $sheet->setCellValue('J2', "IN");
         $rows = 3;
 
         $equery = "SELECT 
@@ -354,6 +354,19 @@ class Entries extends CI_Controller
         }
 
         $sheet->getStyle("A1")->getFont()->setSize("14")->setBold(true);
+        $sheet->getStyle("A2:J2")->getFont()->setSize("14")->setBold(true);
+
+        $sheet->getStyle('A')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('B')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('C')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('D')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('E')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('F')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('G')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('H')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('I')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('J')->getAlignment()->setHorizontal('center');
+
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);
         $sheet->getColumnDimension('C')->setAutoSize(true);
@@ -364,8 +377,6 @@ class Entries extends CI_Controller
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);
         $sheet->getColumnDimension('J')->setAutoSize(true);
-        $sheet->getColumnDimension('K')->setAutoSize(true);
-        $sheet->getColumnDimension('L')->setAutoSize(true);
         $writer = new Xlsx($spreadsheet);
         $writer->save("upload/" . $fileName);
         header("Content-Type: application/vnd.ms-excel");
