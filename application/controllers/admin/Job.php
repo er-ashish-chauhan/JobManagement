@@ -485,7 +485,6 @@ class Job extends CI_Controller
 	{
 		$spreadsheet = new Spreadsheet();
 		$sheet = $spreadsheet->getActiveSheet();
-
 		if ($this->input->post()) {
 			$firmId = $this->input->post("bFirm");
 			$status = $this->input->post("bStatus");
@@ -696,7 +695,7 @@ class Job extends CI_Controller
 					$eserial++;
 				}
 			}
-			$sheet->getStyle("A1")->getFont()->setSize("14")->setBold(true);
+			$sheet->getStyle("A1")->getFont()->setSize("14")->setBold(true)->setUnderline(true);
 			$sheet->getStyle("C2")->getFont()->setSize("14")->setBold(true);
 			$sheet->getColumnDimension('A')->setAutoSize(true);
 			$sheet->getColumnDimension('B')->setAutoSize(true);
@@ -713,6 +712,7 @@ class Job extends CI_Controller
 			$writer = new Xlsx($spreadsheet);
 			$writer->save("upload/" . $fileName);
 			header("Content-Type: application/vnd.ms-excel");
+			// unlink(BASEPATH . "/upload/" . $fileName);
 			redirect(base_url() . "/upload/" . $fileName);
 		}
 	}

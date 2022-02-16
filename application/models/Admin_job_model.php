@@ -160,8 +160,8 @@ class Admin_job_model extends CI_Model
         $searchValue = $postData['search']['value']; // Search value
         ## variable to store data for searching.
 
-        $searchByFromdate = $postData['searchByFromdate'];
-        $searchByTodate = $postData['searchByTodate'];
+        // $searchByFromdate = $postData['searchByFromdate'];
+        // $searchByTodate = $postData['searchByTodate'];
 
         $searchQuery = "";
         if ($searchValue != '') {
@@ -180,10 +180,10 @@ class Admin_job_model extends CI_Model
         $this->db->from("jobMeta");
         $this->db->where("jobId", $jobId);
         // Date filter
-        if ($searchByFromdate != '' && $searchByTodate != '') {
-            $daterange_condition = "(jobMeta.created between '" . $searchByFromdate . "' and '" . $searchByTodate . "' ) ";
-            $this->db->where($daterange_condition);
-        }
+        // if ($searchByFromdate != '' && $searchByTodate != '') {
+        //     $daterange_condition = "(jobMeta.created between '" . $searchByFromdate . "' and '" . $searchByTodate . "' ) ";
+        //     $this->db->where($daterange_condition);
+        // }
         $query = $this->db->get();
         $records = $query->result();
         $totalRecords = $records[0]->allcount;
@@ -193,10 +193,10 @@ class Admin_job_model extends CI_Model
         $this->db->from("jobMeta");
         $this->db->where("jobId", $jobId);
         // Date filter
-        if ($searchByFromdate != '' && $searchByTodate != '') {
-            $daterange_condition = "(jobMeta.created between '" . $searchByFromdate . "' and '" . $searchByTodate . "' ) ";
-            $this->db->where($daterange_condition);
-        }
+        // if ($searchByFromdate != '' && $searchByTodate != '') {
+        //     $daterange_condition = "(jobMeta.created between '" . $searchByFromdate . "' and '" . $searchByTodate . "' ) ";
+        //     $this->db->where($daterange_condition);
+        // }
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
         }
@@ -215,10 +215,10 @@ class Admin_job_model extends CI_Model
         $this->db->where('jobId', $jobId);
         $this->db->where('jobMeta.status', 2);
         // Date filter
-        if ($searchByFromdate != '' && $searchByTodate != '') {
-            $daterange_condition = "(jobMeta.created between '" . $searchByFromdate . "' and '" . $searchByTodate . "' ) ";
-            $this->db->where($daterange_condition);
-        }
+        // if ($searchByFromdate != '' && $searchByTodate != '') {
+        //     $daterange_condition = "(jobMeta.created between '" . $searchByFromdate . "' and '" . $searchByTodate . "' ) ";
+        //     $this->db->where($daterange_condition);
+        // }
         $this->db->join("job j", "jobMeta.jobId = j.id", "left");
         if ($searchQuery != '') {
             $this->db->where($searchQuery);
