@@ -340,7 +340,7 @@ class Entries extends CI_Controller
         $eserial = 1;
         foreach ($equery_result as $val) {
             $sheet->setCellValue('A' . $rows, $eserial);
-            $sheet->setCellValue('B' . $rows, $val->EntryDate);
+            $sheet->setCellValue('B' . $rows, date("d/m/Y", strtotime($val->EntryDate)));
             $sheet->setCellValue('C' . $rows, $val->kantaSlipNo);
             $sheet->setCellValue('D' . $rows, $val->TruckNo);
             $sheet->setCellValue('E' . $rows, $val->Quantity_in_qts);
