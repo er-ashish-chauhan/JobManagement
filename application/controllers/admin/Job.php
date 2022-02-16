@@ -1,6 +1,7 @@
 <?php
 
 use Mpdf\Mpdf;
+use PhpOffice\PhpSpreadsheet\Reader\Xml\Style\Alignment;
 
 defined('BASEPATH') or exit('No direct script access allowed');
 // include_once('pathto/getid3.php');
@@ -497,9 +498,8 @@ class Job extends CI_Controller
 
 			$where = "WHERE `job`.`created` <= '$selectedDateto'";
 
-			$pdfTitle = "";
+			$pdfTitle = $filterredBy == "status_f" ? "By Status" : ($filterredBy == "firm_f" ? "By Party" : ($filterredBy == "broker_f" ? "By Broker" : ($filterredBy == "date_f" ? "By Date" : "")));
 			if ($filterredBy == "status_f" && $status != "") {
-				$pdfTitle = "Status: - " . strtoupper($status);
 				$where .= " AND `job`.`status` = '$status'";
 			}
 			if ($selectedDateFrom != "") {
@@ -516,70 +516,87 @@ class Job extends CI_Controller
 			}
 
 			$fileName = 'Bargains_' . time() . '.xls';
+			$sheet->mergeCells("A1:J1");
+			$sheet->getStyle('A1:J1')->getAlignment()->setHorizontal('center');
 
 			if ($type == "exportBargain") {
-				$sheet->setTitle("Bargain's");
-				$sheet->mergeCells("A1:J1");
-				// $sheet->setCellValue('A1-J1', "By Bargain's");
-				$sheet->setCellValue('A1', "By Bargain's");
+				$sheet->setCellValue('A1', $pdfTitle);
+				$sheet->mergeCells("C2:H2");
+				$sheet->getStyle('C2:H2')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('A3', "Sr. No.");
 				$sheet->setCellValue('B3', "Purchase Order");
 				$sheet->setCellValue('C3', "Party Name");
 				$sheet->setCellValue('D3', "Commodity");
 				$sheet->setCellValue('E3', "Broker");
-				$sheet->setCellValue('F3', "Total Qty");
-				$sheet->setCellValue('G3', "Remaining Qty");
-				$sheet->setCellValue('H3', "Qty type");
-				$sheet->setCellValue('I3', "Deal valid upto");
-				$sheet->setCellValue('J3', "Delivery type");
+				$sheet->setCellValue('F3', "Remaining Qty");
+				$sheet->setCellValue('G3', "Qty type");
+				$sheet->setCellValue('H3', "Deal valid upto");
+				$sheet->setCellValue('I3', "Delivery type");
+				$sheet->setCellValue('J3', "Created");
 				$rows = 4;
 
 				$query = "SELECT `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
 					`commodities`.`commodity` as Commodity,`brokers`.`brokerName` as BrokerName, 
 					`job`.`total_quantity` as TotalQuantity, `job`.`remaining_quantity` as RemainingQuantity,
 					`job`.`quantityType` as QuantityType, `job`.`dealValidUpto` as DealValidUpto,
-					`job`.`deliveryType` as DeliveryType, `job`.`status` as BargainStatus
+					`job`.`deliveryType` as DeliveryType, `job`.`status` as BargainStatus, `job`.`created`
 					from `job` LEFT JOIN firm ON firm.id = job.firmId
 					LEFT JOIN commodities ON commodities.id = job.commodityId
 					LEFT JOIN brokers ON brokers.id = job.brokerName $where";
 				$result = $this->db->query($query);
 				$query_result = $result->result();
 				$serial = 1;
+
+				$pdfSubTitle = $filterredBy == "status_f" && $status != "" ?
+					strtoupper($status) : ($filterredBy == "firm_f" && $firmId != "" ?
+						$query_result[0]->Firm : ($filterredBy == "broker_f" && $brokerName != ""
+							? $query_result[0]->BrokerName : ($filterredBy == "date_f" && $selectedDateFrom != ""
+								? date("Y-m-d", strtotime($selectedDateFrom)) . " - " . date("Y-m-d", strtotime($selectedDateto)) : "")));
+
+				$sheet->setCellValue('C2', $pdfSubTitle);
 				foreach ($query_result as $val) {
 					$sheet->setCellValue('A' . $rows, $serial);
 					$sheet->setCellValue('B' . $rows, $val->PurchaseOrder);
 					$sheet->setCellValue('C' . $rows, $val->Firm);
 					$sheet->setCellValue('D' . $rows, $val->Commodity);
 					$sheet->setCellValue('E' . $rows, $val->BrokerName);
-					$sheet->setCellValue('F' . $rows, $val->TotalQuantity);
-					$sheet->setCellValue('G' . $rows, $val->RemainingQuantity);
-					$sheet->setCellValue('H' . $rows, $val->QuantityType);
-					$sheet->setCellValue('I' . $rows, $val->DealValidUpto);
-					$sheet->setCellValue('J' . $rows, $val->DeliveryType);
+					$sheet->setCellValue('F' . $rows, $val->RemainingQuantity);
+					$sheet->setCellValue('G' . $rows, $val->QuantityType);
+					$sheet->setCellValue('H' . $rows, $val->DealValidUpto);
+					$sheet->setCellValue('I' . $rows, $val->DeliveryType);
+					$sheet->setCellValue('J' . $rows, date("d/m/Y", strtotime($val->created)));
 					$rows++;
 					$serial++;
 				}
 			} else if ($type == "exportEntries") {
 				$fileName = 'entries_' . time() . '.xls';
 				$sheet->setTitle("Entries");
-				$sheet->setCellValue('A1', "Sr. No.");
-				$sheet->setCellValue('B1', "Bargain Details");
-				$sheet->setCellValue('C1', "Entry Date");
-				$sheet->setCellValue('D1', "Inward No.");
-				$sheet->setCellValue('E1', "Truck No.");
-				$sheet->setCellValue('F1', "Quantity (qts)");
-				$sheet->setCellValue('G1', "Quantity (bags)");
-				$sheet->setCellValue('H1', "Party");
-				$sheet->setCellValue('I1', "Party Location");
-				$sheet->setCellValue('J1', "Firm");
+				$sheet->mergeCells("C2:H2");
+				$sheet->getStyle('C2:H2')->getAlignment()->setHorizontal('center');
+				$sheet->setCellValue('C2', $pdfTitle);
+				$sheet->setCellValue('A1', "Daily Approved Entries");
+				$sheet->setCellValue('A3', "Sr. No.");
+				$sheet->setCellValue('B3', "Entry Date");
+				$sheet->setCellValue('C3', "Inward No.");
+				$sheet->setCellValue('D3', "Truck No.");
+				$sheet->setCellValue('E3', "Net Weight");
+				$sheet->setCellValue('F3', "Bags");
+				$sheet->setCellValue('G3', "Party");
+				$sheet->setCellValue('H3', "Station");
+				$sheet->setCellValue('I3', "Commodity");
+				$sheet->setCellValue('J3', "Broker");
+				$sheet->setCellValue('K3', "Rate");
+				$sheet->setCellValue('L3', "Firm");
 				$rows = 2;
 
-				$equery = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`brokers`.`brokerName`) as BargainDetaiils,
+				$equery = "SELECT `job`.`price`,
+					`brokers`.`brokerName`,
 					`jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
 					`jobMeta`.`currentSlipNo` as kantaSlipNo,
 					`jobMeta`.`cNetWeight` as Quantity_in_qts,
 					`jobMeta`.`noOfBags` as Quantity_in_bags,
 					`users`.`coFirm` as userFirm,
+					`commodities`.`commodity`,
 					IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
 					`firm`.`firm_name` as FirmName,
 					`firm`.`address` as FirmAddress
@@ -595,20 +612,21 @@ class Job extends CI_Controller
 				$eserial = 1;
 				foreach ($equery_result as $val) {
 					$sheet->setCellValue('A' . $rows, $eserial);
-					$sheet->setCellValue('B' . $rows, $val->BargainDetaiils);
-					$sheet->setCellValue('C' . $rows, $val->EntryDate);
-					$sheet->setCellValue('D' . $rows, $val->kantaSlipNo);
-					$sheet->setCellValue('E' . $rows, $val->TruckNo);
-					$sheet->setCellValue('F' . $rows, $val->Quantity_in_qts);
-					$sheet->setCellValue('G' . $rows, $val->Quantity_in_bags);
-					$sheet->setCellValue('H' . $rows, $val->FirmName);
-					$sheet->setCellValue('I' . $rows, $val->FirmAddress);
-					$sheet->setCellValue('J' . $rows, $val->userFirm);
+					$sheet->setCellValue('B' . $rows, $val->EntryDate);
+					$sheet->setCellValue('C' . $rows, $val->kantaSlipNo);
+					$sheet->setCellValue('D' . $rows, $val->TruckNo);
+					$sheet->setCellValue('E' . $rows, $val->Quantity_in_qts);
+					$sheet->setCellValue('F' . $rows, $val->Quantity_in_bags);
+					$sheet->setCellValue('G' . $rows, $val->FirmName);
+					$sheet->setCellValue('H' . $rows, $val->FirmAddress);
+					$sheet->setCellValue('I' . $rows, $val->commodity);
+					$sheet->setCellValue('J' . $rows, $val->brokerName);
+					$sheet->setCellValue('K' . $rows, $val->price);
+					$sheet->setCellValue('L' . $rows, $val->userFirm);
 					$rows++;
 					$eserial++;
 				}
 			} else if ($type == "exportBargainWithEntries") {
-
 
 				$query = "SELECT CONCAT(DATE_FORMAT(`job`.`created`, '%d-%m-%Y'),', ',`job`.`total_quantity`,' ', `job`.`quantityType`,', Rs. ', `job`.`price`,', ',`commodities`.`commodity`,', ',`brokers`.`brokerName`) as BargainDetaiils,
 			`job`.`id` as `bargainId`,
@@ -678,7 +696,20 @@ class Job extends CI_Controller
 					$eserial++;
 				}
 			}
-
+			$sheet->getStyle("A1")->getFont()->setSize("14")->setBold(true);
+			$sheet->getStyle("C2")->getFont()->setSize("14")->setBold(true);
+			$sheet->getColumnDimension('A')->setAutoSize(true);
+			$sheet->getColumnDimension('B')->setAutoSize(true);
+			$sheet->getColumnDimension('C')->setAutoSize(true);
+			$sheet->getColumnDimension('D')->setAutoSize(true);
+			$sheet->getColumnDimension('E')->setAutoSize(true);
+			$sheet->getColumnDimension('F')->setAutoSize(true);
+			$sheet->getColumnDimension('G')->setAutoSize(true);
+			$sheet->getColumnDimension('H')->setAutoSize(true);
+			$sheet->getColumnDimension('I')->setAutoSize(true);
+			$sheet->getColumnDimension('J')->setAutoSize(true);
+			$sheet->getColumnDimension('K')->setAutoSize(true);
+			$sheet->getColumnDimension('L')->setAutoSize(true);
 			$writer = new Xlsx($spreadsheet);
 			$writer->save("upload/" . $fileName);
 			header("Content-Type: application/vnd.ms-excel");
