@@ -587,7 +587,7 @@ class Job extends CI_Controller
 				$sheet->setCellValue('J3', "Broker");
 				$sheet->setCellValue('K3', "Rate");
 				$sheet->setCellValue('L3', "Firm");
-				$rows = 2;
+				$rows = 4;
 
 				$equery = "SELECT `job`.`price`,
 					`brokers`.`brokerName`,
