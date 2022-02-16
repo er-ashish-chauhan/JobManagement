@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Entries extends CI_Controller
 {
     private $pageData = array();
@@ -44,7 +48,7 @@ class Entries extends CI_Controller
             unset($request['id']);
 
             $id = $request['job_meta_id'];
-        
+
             $entryD = $this->entries_model->getEntryById(["id" => $id]);
             $checkIfJobExist = $this->admin_job_model->getLastBargain();
 
@@ -81,7 +85,7 @@ class Entries extends CI_Controller
             $response_data =  $this->entries_model->insertBargain($form_data_arr);
 
             if ($response_data) {
-                
+
                 $this->entries_model->updatedJobMeta($id, ["jobId" => $response_data, "status" => 2]);
                 $this->session->set_flashdata("success", 'Bargain added successfully');
             } else {
@@ -291,5 +295,80 @@ class Entries extends CI_Controller
             }
             redirect('admin/entries');
         }
+    }
+
+    public function exportExcel()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $fileName = 'Entries_' . time() . '.xls';
+        $sheet->mergeCells("A1:J1");
+        $sheet->getStyle('A1:J1')->getAlignment()->setHorizontal('center');
+
+        $fileName = 'entries_' . time() . '.xls';
+        $sheet->setTitle("Entries");
+        $sheet->setCellValue('A1', "Daily Entries");
+        $sheet->setCellValue('A2', "Sr. No.");
+        $sheet->setCellValue('B2', "Entry Date");
+        $sheet->setCellValue('C2', "Inward No.");
+        $sheet->setCellValue('D2', "Truck No.");
+        $sheet->setCellValue('E2', "Net Weight");
+        $sheet->setCellValue('F2', "Bags");
+        $sheet->setCellValue('G2', "Party");
+        $sheet->setCellValue('H2', "Station");
+        $sheet->setCellValue('I2', "Commodity");
+        $sheet->setCellValue('J2', "Firm");
+        $rows = 3;
+
+        $equery = "SELECT 
+					`jobMeta`.`created` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
+					`jobMeta`.`currentSlipNo` as kantaSlipNo,
+					`jobMeta`.`cNetWeight` as Quantity_in_qts,
+					`jobMeta`.`noOfBags` as Quantity_in_bags,
+					`users`.`coFirm` as userFirm,
+					`commodities`.`commodity`,
+					`firm`.`firm_name` as FirmName,
+					`firm`.`address` as FirmAddress
+					from `jobMeta` 
+					LEFT JOIN users ON users.id = jobMeta.addedBy
+					LEFT JOIN firm ON firm.id = jobMeta.firmId
+					LEFT JOIN commodities ON commodities.id = jobMeta.commodityId WHERE `jobMeta`.`status` = 1";
+        $eresult = $this->db->query($equery);
+
+        $equery_result = $eresult->result();
+        $eserial = 1;
+        foreach ($equery_result as $val) {
+            $sheet->setCellValue('A' . $rows, $eserial);
+            $sheet->setCellValue('B' . $rows, $val->EntryDate);
+            $sheet->setCellValue('C' . $rows, $val->kantaSlipNo);
+            $sheet->setCellValue('D' . $rows, $val->TruckNo);
+            $sheet->setCellValue('E' . $rows, $val->Quantity_in_qts);
+            $sheet->setCellValue('F' . $rows, $val->Quantity_in_bags);
+            $sheet->setCellValue('G' . $rows, $val->FirmName);
+            $sheet->setCellValue('H' . $rows, $val->FirmAddress);
+            $sheet->setCellValue('I' . $rows, $val->commodity);
+            $sheet->setCellValue('J' . $rows, $val->userFirm);
+            $rows++;
+            $eserial++;
+        }
+
+        $sheet->getStyle("A1")->getFont()->setSize("14")->setBold(true);
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
+        $sheet->getColumnDimension('K')->setAutoSize(true);
+        $sheet->getColumnDimension('L')->setAutoSize(true);
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("upload/" . $fileName);
+        header("Content-Type: application/vnd.ms-excel");
+        redirect(base_url() . "/upload/" . $fileName);
     }
 }

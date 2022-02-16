@@ -24,6 +24,9 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
+                        <div class="exportBtnContainer" style="margin-bottom: 20px;">
+                            <a href="<?php echo base_url("admin/exportDailyEntries"); ?>" class="csv_ExportButton btn btn-primary">Export Daily Entries</a>
+                        </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="table-responsive">
@@ -66,6 +69,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+
                     <div class="row">
                         <div class="col-12">
                             <div class="table-responsive">

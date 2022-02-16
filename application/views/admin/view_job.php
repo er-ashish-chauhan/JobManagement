@@ -18,9 +18,9 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="exportBtnContainer" style="margin-bottom: 20px;margin-left: 10px;">
+                            <!-- <div class="exportBtnContainer" style="margin-bottom: 20px;margin-left: 10px;">
                                 <a href="<?php echo base_url("admin/exportEntries/" . encode($jobDetails->id)); ?>" class="csv_ExportButton btn btn-primary">Export as CSV</a>
-                            </div>
+                            </div> -->
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-6">

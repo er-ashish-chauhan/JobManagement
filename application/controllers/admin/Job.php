@@ -591,7 +591,7 @@ class Job extends CI_Controller
 
 				$equery = "SELECT `job`.`price`,
 					`brokers`.`brokerName`,
-					`jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
+					`jobMeta`.`jobId`, `jobMeta`.`created` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
 					`jobMeta`.`currentSlipNo` as kantaSlipNo,
 					`jobMeta`.`cNetWeight` as Quantity_in_qts,
 					`jobMeta`.`noOfBags` as Quantity_in_bags,
