@@ -696,7 +696,7 @@ class Job extends CI_Controller
 				}
 			}
 			$sheet->getStyle("A1")->getFont()->setSize("14")->setBold(true)->setUnderline(true);
-			$sheet->getStyle("C2")->getFont()->setSize("14")->setBold(true);
+			$sheet->getStyle("C2")->getFont()->setSize("12")->setBold(true);
 			$sheet->getStyle('A')->getAlignment()->setHorizontal('center');
 			$sheet->getStyle('B')->getAlignment()->setHorizontal('center');
 			$sheet->getStyle('C')->getAlignment()->setHorizontal('center');
