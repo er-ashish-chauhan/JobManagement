@@ -107,7 +107,7 @@ if (!empty($entry_details)) {
         </div>
         <div class="form-group col-sm-4 col-xs-12">
           <label for="exampleFormControlSelect2">Net Weight</label>
-          <input type="text" class="form-control" maxlength="8" id="cNetWeight" name="cNetWeight" value="<?= $cNetWeight ?>" disabled>
+          <input type="text" class="form-control" maxlength="8" id="cNetWeight" name="cNetWeight" value="<?= $cNetWeight ?>">
         </div>
       </div>
 
