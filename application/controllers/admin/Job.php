@@ -517,7 +517,7 @@ class Job extends CI_Controller
 			$fileName = 'Bargains_' . time() . '.xls';
 			$sheet->mergeCells("A1:J1");
 			$sheet->getStyle('A1:J1')->getAlignment()->setHorizontal('center');
-			$sheet->getStyle('A3:J3')->getFont()->setSize("14")->setBold(true);
+			$sheet->getStyle('A3:L3')->getFont()->setSize("14")->setBold(true);
 			if ($type == "exportBargain") {
 				$sheet->setCellValue('A1', $pdfTitle == "" ? "By Bargain's" : $pdfTitle);
 				$sheet->mergeCells("C2:H2");
