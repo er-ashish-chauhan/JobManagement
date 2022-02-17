@@ -82,7 +82,7 @@ if (!empty($entry_details)) {
           <select class="form-control" name="entryType" id="entryType">
             <option value="">Select Entry Type</option>
             <option value="IN" <?php echo $entryType == "IN" ? "selected" : "" ?>>IN</option>
-            <option value="IN" <?php echo $entryType == "OUT" ? "selected" : "" ?>>OUT</option>
+            <option value="OUT" <?php echo $entryType == "OUT" ? "selected" : "" ?>>OUT</option>
           </select>
         </div>
 
@@ -90,9 +90,9 @@ if (!empty($entry_details)) {
           <label for="exampleFormControlSelect3">Select Delivery Type</label>
           <!-- <input type="text" class="form-control" maxlength="5" id="deliveryType" name="deliveryType" value="<?= $deliveryType ?>"> -->
           <select class="form-control" name="deliveryType" id="deliveryType">
-            <option value="">Select Entry Type</option>
-            <option value="IN" <?php echo $deliveryType == "FOR" ? "selected" : "" ?>>FOR</option>
-            <option value="IN" <?php echo $deliveryType == "Ex-Mill" ? "selected" : "" ?>>Ex-Mill</option>
+            <option value="">Select Delivery Type</option>
+            <option value="FOR" <?php echo $deliveryType == "FOR" ? "selected" : "" ?>>FOR</option>
+            <option value="Ex-Mill" <?php echo $deliveryType == "Ex-Mill" ? "selected" : "" ?>>Ex-Mill</option>
           </select>
         </div>
       </div>

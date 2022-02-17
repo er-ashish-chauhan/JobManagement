@@ -250,10 +250,12 @@ class Entries extends CI_Controller
             $request = $this->security->xss_clean($request);
 
             $id = $request['job_meta_id'];
+
+            $entry_details = $this->entries_model->viewEntriesDetail($id);
+
             unset($request['job_meta_id']);
 
             $form_data_arr = array(
-                // 'status' => 1,
                 'firmId' => $request['firmId'],
                 "commodityId" => $request["commodityId"],
                 "entryType" => $request["entryType"],

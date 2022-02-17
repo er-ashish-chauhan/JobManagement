@@ -519,22 +519,23 @@ class Job extends CI_Controller
 			$sheet->getStyle('A1:J1')->getAlignment()->setHorizontal('center');
 			$sheet->getStyle('A3:J3')->getFont()->setSize("14")->setBold(true);
 			if ($type == "exportBargain") {
-				$sheet->setCellValue('A1', $pdfTitle);
+				$sheet->setCellValue('A1', $pdfTitle == "" ? "By Bargain's" : $pdfTitle);
 				$sheet->mergeCells("C2:H2");
 				$sheet->getStyle('C2:H2')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('A3', "SR. NO.");
-				$sheet->setCellValue('B3', "PURCHASE ORDER");
-				$sheet->setCellValue('C3', "PARTY NAME");
-				$sheet->setCellValue('D3', "COMMODITY");
-				$sheet->setCellValue('E3', "BROKER");
-				$sheet->setCellValue('F3', "REMAINING QTY");
-				$sheet->setCellValue('G3', "QTY TYPE");
-				$sheet->setCellValue('H3', "DEAL VALID UPTO");
+				$sheet->setCellValue('B3', "DEAL FROM");
+				$sheet->setCellValue('C3', "PURCHASE ORDER");
+				$sheet->setCellValue('D3', "PARTY NAME");
+				$sheet->setCellValue('E3', "COMMODITY");
+				$sheet->setCellValue('F3', "BROKER");
+				$sheet->setCellValue('G3', "REMAINING QTY");
+				$sheet->setCellValue('H3', "QTY TYPE");
 				$sheet->setCellValue('I3', "DELIVERY TYPE");
-				$sheet->setCellValue('J3', "DEAL FROM");
+				$sheet->setCellValue('J3', "RATE");
+				$sheet->setCellValue('K3', "DEAL VALID UPTO");
 				$rows = 4;
 
-				$query = "SELECT `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
+				$query = "SELECT `job`.`price`, `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
 					`commodities`.`commodity` as Commodity,`brokers`.`brokerName` as BrokerName, 
 					`job`.`total_quantity` as TotalQuantity, `job`.`remaining_quantity` as RemainingQuantity,
 					`job`.`quantityType` as QuantityType, `job`.`dealValidUpto` as DealValidUpto,
@@ -555,15 +556,16 @@ class Job extends CI_Controller
 				$sheet->setCellValue('C2', $pdfSubTitle);
 				foreach ($query_result as $val) {
 					$sheet->setCellValue('A' . $rows, $serial);
-					$sheet->setCellValue('B' . $rows, $val->PurchaseOrder);
-					$sheet->setCellValue('C' . $rows, $val->Firm);
-					$sheet->setCellValue('D' . $rows, $val->Commodity);
-					$sheet->setCellValue('E' . $rows, $val->BrokerName);
-					$sheet->setCellValue('F' . $rows, $val->RemainingQuantity);
-					$sheet->setCellValue('G' . $rows, $val->QuantityType);
-					$sheet->setCellValue('H' . $rows, $val->DealValidUpto);
+					$sheet->setCellValue('B' . $rows, date("d/m/Y", strtotime($val->created)));
+					$sheet->setCellValue('C' . $rows, $val->PurchaseOrder);
+					$sheet->setCellValue('D' . $rows, $val->Firm);
+					$sheet->setCellValue('E' . $rows, $val->Commodity);
+					$sheet->setCellValue('F' . $rows, $val->BrokerName);
+					$sheet->setCellValue('G' . $rows, $val->RemainingQuantity);
+					$sheet->setCellValue('H' . $rows, $val->QuantityType);
 					$sheet->setCellValue('I' . $rows, $val->DeliveryType);
-					$sheet->setCellValue('J' . $rows, date("d/m/Y", strtotime($val->created)));
+					$sheet->setCellValue('J' . $rows, $val->price);
+					$sheet->setCellValue('K' . $rows, $val->DealValidUpto);
 					$rows++;
 					$serial++;
 				}
@@ -573,7 +575,7 @@ class Job extends CI_Controller
 				$sheet->mergeCells("C2:H2");
 				$sheet->getStyle('C2:H2')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('C2', $pdfTitle);
-				$sheet->setCellValue('A1', "Daily Approved Entries");
+				$sheet->setCellValue('A1', "Approved Entries");
 				$sheet->setCellValue('A3', "SR. NO.");
 				$sheet->setCellValue('B3', "ENTRY DATE");
 				$sheet->setCellValue('C3', "PARTY");
