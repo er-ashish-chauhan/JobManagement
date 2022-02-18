@@ -36,7 +36,7 @@ class Entries extends CI_Controller
 
             $this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
             $this->data_array["commodities"] = $this->admin_job_model->getCommodities();
-
+            $this->data_array["brokers"] = $this->entries_model->getBrokers();
             $this->data_array['job_meta'] = $this->db->select("quantity, id")->from('jobMeta')->get()->row();
             $this->data_array['entries'] = $this->entries_model->getEntryById(["id" => $id]);
 
@@ -239,7 +239,7 @@ class Entries extends CI_Controller
 
             $this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
             $this->data_array["commodities"] = $this->admin_job_model->getCommodities();
-
+            $this->data_array["brokers"] = $this->entries_model->getBrokers();
             $this->data_array['entries'] = $this->entries_model->getEntryById(["id" => $id]);
             $this->data_array['entry_details'] = $this->entries_model->viewEntriesDetail($id);
 
@@ -395,7 +395,7 @@ class Entries extends CI_Controller
 
         $this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
         $this->data_array["commodities"] = $this->admin_job_model->getCommodities();
-
+        $this->data_array["brokers"] = $this->entries_model->getBrokers();
         if ($this->input->post()) {
             $request = $this->input->post();
             $request = $this->security->xss_clean($request);

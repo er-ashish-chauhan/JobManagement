@@ -227,4 +227,16 @@ class Entries_model extends CI_Model
         $this->db->insert('jobMeta', $data);
         return $this->db->insert_id();
     }
+
+    public function getBrokers()
+    {
+        $this->db->select("*");
+        $this->db->from("brokers");
+        $result = $this->db->get();
+        if ($result->num_rows() > 0) {
+            return $result->result();
+        } else {
+            return null;
+        }
+    }
 }

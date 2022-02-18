@@ -46,7 +46,7 @@ if (!empty($entry_details)) {
         <input type="hidden" name="job_meta_id" value="<?= $id ?? "" ?>">
         <div class="form-group col-sm-3 col-xs-12">
           <label for="exampleFormControlSelect3">Select Firm</label>
-          <select class="form-control" name="firmId" id="firmId">
+          <select class="form-control" name="firmId" id="firmId" disabled>
             <option value="">Select Firm</option>
             <?php
             if (isset($firm_list) && !empty($firm_list)) {
@@ -62,7 +62,7 @@ if (!empty($entry_details)) {
         </div>
         <div class="form-group col-sm-3 col-xs-12">
           <label for="exampleFormControlSelect3">Select Commodity</label>
-          <select class="form-control" name="commodityId" id="commodityId">
+          <select class="form-control" name="commodityId" id="commodityId" disabled>
             <option value="">Select Commodity</option>
             <?php
             if (isset($commodities) && !empty($commodities)) {
@@ -79,7 +79,7 @@ if (!empty($entry_details)) {
         <div class="form-group col-sm-3 col-xs-12">
           <label for="exampleFormControlSelect2">Select Entry Type</label>
           <!-- <input type="text" class="form-control" maxlength="5" id="entryType" name="entryType" min="0" value="<?= $entryType ?>"> -->
-          <select class="form-control" name="entryType" id="entryType">
+          <select class="form-control" name="entryType" id="entryType" disabled>
             <option value="">Select Entry Type</option>
             <option value="IN" <?php echo $entryType == "IN" ? "selected" : "" ?>>IN</option>
             <option value="OUT" <?php echo $entryType == "OUT" ? "selected" : "" ?>>OUT</option>
@@ -89,7 +89,7 @@ if (!empty($entry_details)) {
         <div class="form-group col-sm-3 col-xs-12">
           <label for="exampleFormControlSelect3">Select Delivery Type</label>
           <!-- <input type="text" class="form-control" maxlength="5" id="deliveryType" name="deliveryType" value="<?= $deliveryType ?>"> -->
-          <select class="form-control" name="deliveryType" id="deliveryType">
+          <select class="form-control" name="deliveryType" id="deliveryType" disabled>
             <option value="">Select Delivery Type</option>
             <option value="FOR" <?php echo $deliveryType == "FOR" ? "selected" : "" ?>>FOR</option>
             <option value="Ex-Mill" <?php echo $deliveryType == "Ex-Mill" ? "selected" : "" ?>>Ex-Mill</option>
