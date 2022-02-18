@@ -63,7 +63,7 @@ class Entries_model extends CI_Model
         $totalRecordwithFilter = $records[0]->allcount;
 
         ## Fetch records
-        $this->db->select("jobMeta.id, jobMeta.previousSlip, jobMeta.currentSlip,jobMeta.bill,
+        $this->db->select("jobMeta.id, jobMeta.previousSlip, jobMeta.currentSlip,jobMeta.bill, jobMeta.currentSlipNo,
         jobMeta.firmId, jobMeta.commodityId, jobMeta.entryType, jobMeta.deliveryType, jobMeta.created,commodities.commodity, firm.firm_name, jobMeta.cNetWeight");
         $this->db->from("jobMeta");
         $this->db->where('jobMeta.status', 1);
@@ -115,6 +115,7 @@ class Entries_model extends CI_Model
                 $actionLinks,
                 $record->firm_name,
                 $record->commodity,
+                $record->currentSlipNo,
                 // $previousSlip,
                 // $currentSlip,
                 // $bill,

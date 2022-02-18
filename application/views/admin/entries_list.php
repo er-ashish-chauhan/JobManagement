@@ -37,6 +37,7 @@
                                                 <th>Action</th>
                                                 <th>Party</th>
                                                 <th>Commodity</th>
+                                                <th>Inward No.</th>
                                                 <!-- <th>Previous Slip</th>
                                                 <th>Current Slip</th>
                                                 <th>Bill Slip</th> -->

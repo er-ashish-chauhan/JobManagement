@@ -396,7 +396,7 @@ class Entries extends CI_Controller
         $this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
         $this->data_array["commodities"] = $this->admin_job_model->getCommodities();
 
-        if ($this->input->post("submit")) {
+        if ($this->input->post()) {
             $request = $this->input->post();
             $request = $this->security->xss_clean($request);
 
@@ -435,9 +435,9 @@ class Entries extends CI_Controller
             $response_data =  $this->entries_model->add_entries($form_data_arr);
 
             if ($response_data) {
-                $this->session->set_flashdata("success", 'Entries updated successfully');
+                $this->session->set_flashdata("success", 'Entries added successfully');
             } else {
-                $this->session->set_flashdata("error", 'Error while updating Entries');
+                $this->session->set_flashdata("error", 'Error while adding Entries');
             }
         }
         adminviews('addEntry', $this->data_array);

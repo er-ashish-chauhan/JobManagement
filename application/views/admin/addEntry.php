@@ -188,7 +188,7 @@ $kantaSlipNo = "";
             <!-- /.card-body -->
             <div class="card-footer">
                 <a href="<?= base_url('admin/entries'); ?>" class="btn btn-warning step-back float-left admin-cancel-btn" title="Cancel">Back</a>
-                <input type="submit" name="submit" class="btn btn-success btn-flat ml-1" title="Add">Submit</button>
+                <button type="submit" name="submit" class="btn btn-success btn-flat ml-1" title="Add">Submit</button>
             </div>
         </form>
     </div>
