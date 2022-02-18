@@ -60,10 +60,19 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?= base_url('admin/entries') ?>">
+            <a class="nav-link" data-toggle="collapse" href="#entries" aria-expanded="false" aria-controls="entries">
               <i class="icon-paper menu-icon"></i>
               <span class="menu-title">Manage Entries</span>
+              <i class="menu-arrow"></i>
             </a>
+
+            <div class="collapse" id="entries">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/manageEntries/addEntry'); ?>">Add Entry</a></li>
+                <li class="nav-item"> <a class="nav-link" href="<?= base_url('admin/entries') ?>"> Entries List </a></li>
+              </ul>
+            </div>
+
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">

@@ -70,3 +70,4 @@ $route['admin/addBroker'] = 'admin/Job/addBroker';
 $route['admin/brokerslist'] = 'admin/Job/brokerslist';
 $route['admin/exportFile/(:any)'] = 'admin/Job/exportExcel/$1';
 $route['admin/exportDailyEntries'] = 'admin/Entries/exportExcel';
+$route['admin/manageEntries/addEntry'] = 'admin/Entries/addEntries';

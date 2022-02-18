@@ -384,4 +384,62 @@ class Entries extends CI_Controller
         header("Content-Type: application/vnd.ms-excel");
         redirect(base_url() . "/upload/" . $fileName);
     }
+
+    // add entries
+    public function addEntries()
+    {
+        $this->data_array['title'] = lang("BRAND_NAME") . ' Admin | Add Entry';
+
+        $this->data_array['pageTitle'] = 'Manage Entries';
+        $this->data_array["btn_name"] = "Add";
+
+        $this->data_array['firm_list'] = $this->db->select("firm_name, id")->from('firm')->get()->result();
+        $this->data_array["commodities"] = $this->admin_job_model->getCommodities();
+
+        if ($this->input->post("submit")) {
+            $request = $this->input->post();
+            $request = $this->security->xss_clean($request);
+
+            $form_data_arr = array(
+                'firmId' => $request['firmId'],
+                "commodityId" => $request["commodityId"],
+                "entryType" => $request["entryType"],
+                "deliveryType" => $request["deliveryType"],
+                "cNetWeight" => $request["cNetWeight"],
+                "cTareWeight" => $request["cTareWeight"],
+                "noOfBags" => $request["noOfBags"],
+                "truckNo" => $request["truckNo"],
+                "kantaSlipNo" => $request["kantaSlipNo"],
+                "previousSlipNo" => $request["previousSlipNo"],
+                "currentSlipNo" => $request["currentSlipNo"],
+                "billNo" => $request["billNo"],
+                "cGrossWeight" => $request["cGrossWeight"],
+            );
+
+            if (!empty($_FILES['bill']['name'])) {
+                $form_data_arr['bill'] = "jobMgmtApis/uploads/" . $_FILES['bill']['name'];
+            }
+
+            if (!empty($_FILES['previousSlip']['name'])) {
+                $form_data_arr['previousSlip'] = "jobMgmtApis/uploads/" . $_FILES['previousSlip']['name'];
+            }
+
+            if (!empty($_FILES['currentSlip']['name'])) {
+                $form_data_arr['currentSlip'] = "jobMgmtApis/uploads/" . $_FILES['currentSlip']['name'];
+            }
+
+            if (!empty($_FILES['kantaSlip']['name'])) {
+                $form_data_arr['kantaSlip'] = "jobMgmtApis/uploads/" . $_FILES['kantaSlip']['name'];
+            }
+
+            $response_data =  $this->entries_model->add_entries($form_data_arr);
+
+            if ($response_data) {
+                $this->session->set_flashdata("success", 'Entries updated successfully');
+            } else {
+                $this->session->set_flashdata("error", 'Error while updating Entries');
+            }
+        }
+        adminviews('addEntry', $this->data_array);
+    }
 }

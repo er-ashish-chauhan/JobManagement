@@ -220,4 +220,10 @@ class Entries_model extends CI_Model
         $this->db->where('id', $id);
         return $this->db->update('jobMeta', $data);
     }
+
+    public function add_entries($data)
+    {
+        $this->db->insert('jobMeta', $data);
+        return $this->db->insert_id();
+    }
 }
