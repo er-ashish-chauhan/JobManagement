@@ -45,9 +45,9 @@ if (!empty($entry_details)) {
       <div class="row">
         <input type="hidden" name="job_meta_id" value="<?= $id ?? "" ?>">
         <div class="form-group col-sm-3 col-xs-12">
-          <label for="exampleFormControlSelect3">Select Party</label>
+          <label for="exampleFormControlSelect3">Select Firm</label>
           <select class="form-control" name="firmId" id="firmId">
-            <option value="">Select Party</option>
+            <option value="">Select Firm</option>
             <?php
             if (isset($firm_list) && !empty($firm_list)) {
               foreach ($firm_list as $list) {
@@ -68,7 +68,7 @@ if (!empty($entry_details)) {
             if (isset($commodities) && !empty($commodities)) {
               foreach ($commodities as $list) {
             ?>
-                <option value="<?= $list->id ?>">
+                <option value="<?= $list->id ?>" <?php echo $list->id == $entries->commodityId ? "selected" : "" ?>>
                   <?= $list->commodity ?></option>
             <?php
               }
@@ -81,32 +81,33 @@ if (!empty($entry_details)) {
           <!-- <input type="text" class="form-control" maxlength="5" id="entryType" name="entryType" min="0" value="<?= $entryType ?>"> -->
           <select class="form-control" name="entryType" id="entryType">
             <option value="">Select Entry Type</option>
-            <option value="IN">IN</option>
-            <option value="OUT">OUT</option>
+            <option value="IN" <?php echo $entryType == "IN" ? "selected" : "" ?>>IN</option>
+            <option value="OUT" <?php echo $entryType == "OUT" ? "selected" : "" ?>>OUT</option>
           </select>
         </div>
 
         <div class="form-group col-sm-3 col-xs-12">
           <label for="exampleFormControlSelect3">Select Delivery Type</label>
+          <!-- <input type="text" class="form-control" maxlength="5" id="deliveryType" name="deliveryType" value="<?= $deliveryType ?>"> -->
           <select class="form-control" name="deliveryType" id="deliveryType">
             <option value="">Select Delivery Type</option>
-            <option value="FOR">FOR</option>
-            <option value="Ex-Mill">Ex-Mill</option>
+            <option value="FOR" <?php echo $deliveryType == "FOR" ? "selected" : "" ?>>FOR</option>
+            <option value="Ex-Mill" <?php echo $deliveryType == "Ex-Mill" ? "selected" : "" ?>>Ex-Mill</option>
           </select>
         </div>
       </div>
       <div class="row">
         <div class="form-group col-sm-4 col-xs-12">
           <label for="exampleFormControlSelect2">Gross weight</label>
-          <input type="text" class="form-control" maxlength="8" id="cGrossWeight" name="cGrossWeight" value="" min='1'>
+          <input type="text" class="form-control" maxlength="8" id="cGrossWeight" name="cGrossWeight" value="<?= $cGrossWeight ?>" min='1'>
         </div>
         <div class="form-group col-sm-4 col-xs-12">
           <label for="exampleFormControlSelect3">Tare weight</label>
-          <input type="text" class="form-control" maxlength="8" id="cTareWeight" name="cTareWeight" value="" min='1'>
+          <input type="text" class="form-control" maxlength="8" id="cTareWeight" name="cTareWeight" value="<?= $cTareWeight ?>" min='1'>
         </div>
         <div class="form-group col-sm-4 col-xs-12">
           <label for="exampleFormControlSelect2">Net Weight</label>
-          <input type="text" class="form-control" maxlength="8" id="cNetWeight" name="cNetWeight" value="">
+          <input type="text" class="form-control" maxlength="8" id="cNetWeight" name="cNetWeight" value="<?= $cNetWeight ?>">
         </div>
       </div>
 
@@ -114,11 +115,11 @@ if (!empty($entry_details)) {
       <div class="row">
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">No of Bags</label>
-          <input type="text" class="form-control" maxlength="10" id="noOfBags" name="noOfBags" value="">
+          <input type="text" class="form-control" maxlength="10" id="noOfBags" name="noOfBags" value="<?= $noOfBags ?>">
         </div>
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Truck No</label>
-          <input type="text" class="form-control" maxlength="12" id="truckNo" name="truckNo" value="">
+          <input type="text" class="form-control" maxlength="12" id="truckNo" name="truckNo" value="<?= $truckNo ?>">
         </div>
       </div>
 
@@ -138,7 +139,7 @@ if (!empty($entry_details)) {
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Bill No</label>
-          <input type="text" class="form-control" maxlength="15" id="billNo" name="billNo" value="">
+          <input type="text" class="form-control" maxlength="15" id="billNo" name="billNo" value="<?= $billNo ?>">
         </div>
       </div>
 
@@ -160,7 +161,7 @@ if (!empty($entry_details)) {
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Previous Slip No</label>
-          <input type="text" class="form-control" maxlength="15" id="previousSlipNo" name="previousSlipNo" value="">
+          <input type="text" class="form-control" maxlength="15" id="previousSlipNo" name="previousSlipNo" value="<?= $previousSlipNo ?>">
         </div>
 
       </div>
@@ -181,7 +182,7 @@ if (!empty($entry_details)) {
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Current Slip No</label>
-          <input type="text" class="form-control" maxlength="15" id="currentSlipNo" name="currentSlipNo" value="">
+          <input type="text" class="form-control" maxlength="15" id="currentSlipNo" name="currentSlipNo" value="<?= $currentSlipNo ?>">
         </div>
       </div>
 
@@ -201,13 +202,13 @@ if (!empty($entry_details)) {
 
         <div class="form-group col-sm-6 col-xs-12">
           <label for="exampleFormControlSelect2">Kanta Slip No</label>
-          <input type="text" class="form-control" maxlength="15" id="kantaSlipNo" name="kantaSlipNo" value="">
+          <input type="text" class="form-control" maxlength="15" id="kantaSlipNo" name="kantaSlipNo" value="<?= $kantaSlipNo ?>">
         </div>
       </div>
       <!-- /.card-body -->
       <div class="card-footer">
         <a href="<?= base_url('admin/entries'); ?>" class="btn btn-warning step-back float-left admin-cancel-btn" title="Cancel">Back</a>
-        <button type="submit" class="btn btn-success btn-flat ml-1" title="Add">Submit</button>
+        <button type="submit" class="btn btn-success btn-flat ml-1" title="Add">Update</button>
       </div>
     </form>
   </div>

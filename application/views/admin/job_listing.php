@@ -3,7 +3,7 @@
           <div class="content-wrapper">
               <div class="row">
                   <div class="col-md-12">
-                      <h4 style="display:inline;" class="card-title"><?= $pageTitle = "Manage Job" ?></h4>
+                      <h4 style="display:inline;" class="card-title"><?= $pageTitle = "Manage Bargain" ?></h4>
                   </div>
               </div>
               <div class="row">
