@@ -521,19 +521,20 @@ class Job extends CI_Controller
 				$sheet->getStyle('A3:K3')->getFont()->setSize("12")->setBold(true);
 
 				$sheet->setCellValue('A1', $pdfTitle == "" ? "By Bargain's" : $pdfTitle);
-				$sheet->mergeCells("C2:H2");
-				$sheet->getStyle('C2:H2')->getAlignment()->setHorizontal('center');
+				$sheet->mergeCells("D2:I2");
+				$sheet->getStyle('D2:I2')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('A3', "SR. NO.");
 				$sheet->setCellValue('B3', "DEAL FROM");
 				$sheet->setCellValue('C3', "PURCHASE ORDER");
 				$sheet->setCellValue('D3', "PARTY NAME");
 				$sheet->setCellValue('E3', "COMMODITY");
 				$sheet->setCellValue('F3', "BROKER");
-				$sheet->setCellValue('G3', "REMAINING QTY");
-				$sheet->setCellValue('H3', "QTY TYPE");
-				$sheet->setCellValue('I3', "DELIVERY TYPE");
-				$sheet->setCellValue('J3', "RATE");
-				$sheet->setCellValue('K3', "DEAL VALID UPTO");
+				$sheet->setCellValue('G3', "TOTAL QTY");
+				$sheet->setCellValue('H3', "REMAINING QTY");
+				$sheet->setCellValue('I3', "QTY TYPE");
+				$sheet->setCellValue('J3', "DELIVERY TYPE");
+				$sheet->setCellValue('K3', "RATE");
+				$sheet->setCellValue('L3', "DEAL VALID UPTO");
 				$rows = 4;
 
 				$query = "SELECT `job`.`price`, `job`.`purchaseOrder` as PurchaseOrder, `firm`.`firm_name` as Firm,
@@ -562,11 +563,12 @@ class Job extends CI_Controller
 					$sheet->setCellValue('D' . $rows, $val->Firm);
 					$sheet->setCellValue('E' . $rows, $val->Commodity);
 					$sheet->setCellValue('F' . $rows, $val->BrokerName);
-					$sheet->setCellValue('G' . $rows, $val->RemainingQuantity);
-					$sheet->setCellValue('H' . $rows, $val->QuantityType);
-					$sheet->setCellValue('I' . $rows, $val->DeliveryType);
-					$sheet->setCellValue('J' . $rows, $val->price);
-					$sheet->setCellValue('K' . $rows, $val->DealValidUpto);
+					$sheet->setCellValue('G' . $rows, $val->TotalQuantity);
+					$sheet->setCellValue('H' . $rows, $val->RemainingQuantity);
+					$sheet->setCellValue('I' . $rows, $val->QuantityType);
+					$sheet->setCellValue('J' . $rows, $val->DeliveryType);
+					$sheet->setCellValue('K' . $rows, $val->price);
+					$sheet->setCellValue('L' . $rows, $val->DealValidUpto);
 					$rows++;
 					$serial++;
 				}
@@ -633,7 +635,8 @@ class Job extends CI_Controller
 				}
 			} else if ($type == "exportBargainWithEntries") {
 
-				$query = "SELECT DATE_FORMAT(`job`.`created`, '%d-%m-%Y') as jobCreatedDate,`job`.`remaining_quantity`,`job`.`quantityType`, `job`.`price`,`commodities`.`commodity`,`brokers`.`brokerName`,
+				$query = "SELECT DATE_FORMAT(`job`.`created`, '%d-%m-%Y') as jobCreatedDate, `job`.`total_quantity`,
+				`job`.`remaining_quantity`,`job`.`quantityType`, `job`.`price`,`commodities`.`commodity`,`brokers`.`brokerName`,
 			`job`.`id` as `bargainId`,
 			IF(`job`.`quantityType` = 'trucks', '1', '-') as Quantity_in_trucks,
 			`firm`.`firm_name` as FirmName,
@@ -675,61 +678,59 @@ class Job extends CI_Controller
 
 
 
-				$sheet->getStyle('A3:L3')->getFont()->setSize("12")->setBold(true);
+				$sheet->getStyle('A3:O3')->getFont()->setSize("12")->setBold(true);
+				$sheet->getStyle('A4:O4')->getFont()->setSize("12")->setBold(true);
 
-				$sheet->mergeCells("D2:K2");
-				$sheet->getStyle('D2:K2')->getAlignment()->setHorizontal('center');
+				$sheet->mergeCells("D2:L2");
+				$sheet->getStyle('D2:L2')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('D2', $pdfSubTitle);
-				$sheet->mergeCells('A3:E3');
-				$sheet->getStyle('A3:E3')->getAlignment()->setHorizontal('center');
+				$sheet->mergeCells('A3:F3');
+				$sheet->getStyle('A3:F3')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('A3', "BARGAIN");
 
-				$sheet->mergeCells('G3:N3');
-				$sheet->getStyle('G3:N3')->getAlignment()->setHorizontal('center');
-				$sheet->setCellValue('G3', "ENTRIES");
+				$sheet->mergeCells('H3:O3');
+				$sheet->getStyle('H3:O3')->getAlignment()->setHorizontal('center');
+				$sheet->setCellValue('H3', "ENTRIES");
 
 				$sheet->setCellValue('A4', "DATE");
-				$sheet->setCellValue('B4', "QTY");
-				$sheet->setCellValue('C4', "RATE");
-				$sheet->setCellValue('D4', "COMDT.");
-				$sheet->setCellValue('E4', "BROKER");
-				$sheet->setCellValue('F4', "");
-				$sheet->setCellValue('G4', "DATE");
-				$sheet->setCellValue('H4', "INWARD NO");
-				$sheet->setCellValue('I4', "TRUCK NO");
-				$sheet->setCellValue('J4', "BAGS");
-				$sheet->setCellValue('K4', "WEIGHT");
-				$sheet->setCellValue('L4', "RATE");
-				$sheet->setCellValue('M4', "COMDT.");
-				$sheet->setCellValue('N4', "IN");
+				$sheet->setCellValue('B4', "TOTAL QTY");
+				$sheet->setCellValue('C4', "REMAIN. QTY");
+				$sheet->setCellValue('D4', "RATE");
+				$sheet->setCellValue('E4', "COMDT.");
+				$sheet->setCellValue('F4', "BROKER");
+				$sheet->setCellValue('G4', "");
+				$sheet->setCellValue('H4', "DATE");
+				$sheet->setCellValue('I4', "INWARD NO");
+				$sheet->setCellValue('J4', "TRUCK NO");
+				$sheet->setCellValue('K4', "BAGS");
+				$sheet->setCellValue('L4', "WEIGHT");
+				$sheet->setCellValue('M4', "RATE");
+				$sheet->setCellValue('N4', "COMDT.");
+				$sheet->setCellValue('O4', "IN");
 				$rows = 5;
 
 				$eserial = 1;
-				// echo "<pre>";
-				// print_r($entries);
-				// echo "</pre>";
-				// die();
 				foreach ($entries as $val) {
 					$sheet->setCellValue('A' . $rows, $val["bargain"]->jobCreatedDate);
-					$sheet->setCellValue('B' . $rows, $val["bargain"]->remaining_quantity);
-					$sheet->setCellValue('C' . $rows, $val["bargain"]->price);
-					$sheet->setCellValue('D' . $rows, $val["bargain"]->commodity);
-					$sheet->setCellValue('E' . $rows, $val["bargain"]->brokerName);
+					$sheet->setCellValue('B' . $rows, $val["bargain"]->total_quantity);
+					$sheet->setCellValue('C' . $rows, $val["bargain"]->remaining_quantity);
+					$sheet->setCellValue('D' . $rows, $val["bargain"]->price);
+					$sheet->setCellValue('E' . $rows, $val["bargain"]->commodity);
+					$sheet->setCellValue('F' . $rows, $val["bargain"]->brokerName);
 					if ($val["entries"]) {
 						foreach ($val["entries"] as $eval) {
-							$sheet->setCellValue('G' . $rows, $eval->EntryDate);
-							$sheet->setCellValue('H' . $rows, $eval->kantaSlipNo);
-							$sheet->setCellValue('I' . $rows, $eval->TruckNo);
-							$sheet->setCellValue('J' . $rows, $eval->Quantity_in_qts);
-							$sheet->setCellValue('K' . $rows, $eval->Quantity_in_bags);
-							$sheet->setCellValue('L' . $rows, $val["bargain"]->price);
-							$sheet->setCellValue('M' . $rows, $val["bargain"]->commodity);
-							$sheet->setCellValue('N' . $rows, $eval->userFirm);
+							$sheet->setCellValue('H' . $rows, $eval->EntryDate);
+							$sheet->setCellValue('I' . $rows, $eval->kantaSlipNo);
+							$sheet->setCellValue('J' . $rows, $eval->TruckNo);
+							$sheet->setCellValue('K' . $rows, $eval->Quantity_in_qts);
+							$sheet->setCellValue('L' . $rows, $eval->Quantity_in_bags);
+							$sheet->setCellValue('M' . $rows, $val["bargain"]->price);
+							$sheet->setCellValue('N' . $rows, $val["bargain"]->commodity);
+							$sheet->setCellValue('O' . $rows, $eval->userFirm);
 
 							$rows++;
 						}
 					}
-
 					// $eserial++;
 				}
 			}
@@ -752,6 +753,7 @@ class Job extends CI_Controller
 			$sheet->getStyle('L')->getAlignment()->setHorizontal('center');
 			$sheet->getStyle('M')->getAlignment()->setHorizontal('center');
 			$sheet->getStyle('N')->getAlignment()->setHorizontal('center');
+			$sheet->getStyle('O')->getAlignment()->setHorizontal('center');
 
 			$sheet->getColumnDimension('A')->setAutoSize(true);
 			$sheet->getColumnDimension('B')->setAutoSize(true);
@@ -767,6 +769,7 @@ class Job extends CI_Controller
 			$sheet->getColumnDimension('L')->setAutoSize(true);
 			$sheet->getColumnDimension('M')->setAutoSize(true);
 			$sheet->getColumnDimension('N')->setAutoSize(true);
+			$sheet->getColumnDimension('O')->setAutoSize(true);
 			$writer = new Xlsx($spreadsheet);
 			$writer->save("upload/" . $fileName);
 			header("Content-Type: application/vnd.ms-excel");
