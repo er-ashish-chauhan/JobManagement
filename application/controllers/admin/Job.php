@@ -648,7 +648,7 @@ class Job extends CI_Controller
 				$entries = [];
 
 				foreach ($query_result as $list) {
-					$subquery = "SELECT `jobMeta`.`jobId`, `jobMeta`.`recordCreated` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
+					$subquery = "SELECT `jobMeta`.`jobId`, `jobMeta`.`created` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
 				`jobMeta`.`currentSlipNo` as kantaSlipNo,
 				`jobMeta`.`cNetWeight` as Quantity_in_qts,
 				`jobMeta`.`noOfBags` as Quantity_in_bags,
