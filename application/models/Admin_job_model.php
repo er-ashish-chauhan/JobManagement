@@ -98,7 +98,7 @@ class Admin_job_model extends CI_Model
             // link to edit user
             $actionLinks_view = "<a  href='" . base_url('admin/viewJobEntries') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' ><i class=' fa fa-eye'></i></a> ";
             $actionLinks_edit = "<a  href='" . base_url('admin/editBargain') . "/" . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit Bargain' ><i class=' fa fa-edit'></i></a>";
-            $actionLinks_complete = "<a  href='" . base_url('admin/completeBargain') . "/" . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Edit Bargain' ><i class=' fa fa-check'></i></a>";
+            $actionLinks_complete = "<a  href='" . base_url('admin/completeBargain') . "/" . encode($id) . " ' class='btn btn-sm btn-flat  btn-primary' title='Update Bargain as completed' ><i class=' fa fa-check'></i></a>";
             // $actionLinks_edit = "<a  href='" . base_url('admin/editBargain') . "/" . encode($id) . "' class='btn btn-sm btn-flat  btn-primary' title='View job details' >Edit Bargain</a> ";
 
             $newvalidfrom = date('m-d-Y', strtotime($record->dealValidFrom));

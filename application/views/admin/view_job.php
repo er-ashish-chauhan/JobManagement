@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="col-6">
                                         <span>Total Quantity: - <?php echo $jobDetails->total_quantity . " " . $jobDetails->quantityType ?></span><br>
-                                        <span>Remaing Quantity: - <?php echo $jobDetails->remaining_quantity . " " . $jobDetails->quantityType ?></span>
+                                        <span>Remaining Quantity: - <?php echo $jobDetails->remaining_quantity . " " . $jobDetails->quantityType ?></span>
                                     </div>
                                 </div>
                                 <!-- <br>

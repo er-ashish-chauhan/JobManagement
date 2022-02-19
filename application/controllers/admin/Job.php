@@ -648,7 +648,7 @@ class Job extends CI_Controller
 				$entries = [];
 
 				foreach ($query_result as $list) {
-					$subquery = "SELECT `jobMeta`.`jobId`, `jobMeta`.`created` as EntryDate, `jobMeta`.`truckNo` as TruckNo,
+					$subquery = "SELECT `jobMeta`.`jobId`, DATE_FORMAT(`jobMeta`.`created`, '%d-%m-%Y') as EntryDate, `jobMeta`.`truckNo` as TruckNo,
 				`jobMeta`.`currentSlipNo` as kantaSlipNo,
 				`jobMeta`.`cNetWeight` as Quantity_in_qts,
 				`jobMeta`.`noOfBags` as Quantity_in_bags,
@@ -729,7 +729,9 @@ class Job extends CI_Controller
 			}
 
 			$sheet->getStyle("A1")->getFont()->setSize("14")->setBold(true)->setUnderline(true);
+			$sheet->getStyle("D1")->getFont()->setSize("14")->setBold(true)->setUnderline(true);
 			$sheet->getStyle("C2")->getFont()->setSize("12")->setBold(true);
+			$sheet->getStyle("D2")->getFont()->setSize("12")->setBold(true);
 			$sheet->getStyle('A')->getAlignment()->setHorizontal('center');
 			$sheet->getStyle('B')->getAlignment()->setHorizontal('center');
 			$sheet->getStyle('C')->getAlignment()->setHorizontal('center');
