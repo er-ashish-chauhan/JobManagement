@@ -666,8 +666,8 @@ class Job extends CI_Controller
 				}
 
 				$fileName = 'BargainsWEntries_' . time() . '.xls';
-				$sheet->mergeCells("D1:K1");
-				$sheet->getStyle('D1:K1')->getAlignment()->setHorizontal('center');
+				$sheet->mergeCells("D1:L1");
+				$sheet->getStyle('D1:L1')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('D1', $pdfTitle == "" ? "Bargain's With Entries" : $pdfTitle);
 
 				$pdfSubTitle = $filterredBy == "status_f" && $status != "" ?
@@ -679,7 +679,7 @@ class Job extends CI_Controller
 
 
 				$sheet->getStyle('A3:O3')->getFont()->setSize("12")->setBold(true);
-				$sheet->getStyle('A4:O4')->getFont()->setSize("12")->setBold(true);
+				$sheet->getStyle('A4:O4')->getFont()->setSize("11")->setBold(true);
 
 				$sheet->mergeCells("D2:L2");
 				$sheet->getStyle('D2:L2')->getAlignment()->setHorizontal('center');
