@@ -667,10 +667,19 @@ class Job extends CI_Controller
 				$sheet->getStyle('A1:N1')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('A1', $pdfTitle == "" ? "Bargain's With Entries" : $pdfTitle);
 
+				$pdfSubTitle = $filterredBy == "status_f" && $status != "" ?
+					strtoupper($status) : ($filterredBy == "firm_f" && $firmId != "" ?
+						$query_result[0]->FirmName : ($filterredBy == "broker_f" && $brokerName != ""
+							? $query_result[0]->brokerName : ($filterredBy == "date_f" && $selectedDateFrom != ""
+								? date("Y-m-d", strtotime($selectedDateFrom)) . " - " . date("Y-m-d", strtotime($selectedDateto)) : "")));
+
+
+
 				$sheet->getStyle('A3:L3')->getFont()->setSize("12")->setBold(true);
 
-				// $sheet->mergeCells("C2:H2");
-				// $sheet->getStyle('C2:H2')->getAlignment()->setHorizontal('center');
+				$sheet->mergeCells("C2:L2");
+				$sheet->getStyle('C2:L2')->getAlignment()->setHorizontal('center');
+				$sheet->setCellValue('C2', $pdfSubTitle);
 				$sheet->mergeCells('A3:E3');
 				$sheet->getStyle('A3:E3')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('A3', "BARGAIN");
