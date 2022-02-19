@@ -663,9 +663,9 @@ class Job extends CI_Controller
 				}
 
 				$fileName = 'BargainsWEntries_' . time() . '.xls';
-				$sheet->mergeCells("A1:N1");
-				$sheet->getStyle('A1:N1')->getAlignment()->setHorizontal('center');
-				$sheet->setCellValue('A1', $pdfTitle == "" ? "Bargain's With Entries" : $pdfTitle);
+				$sheet->mergeCells("D1:K1");
+				$sheet->getStyle('D1:K1')->getAlignment()->setHorizontal('center');
+				$sheet->setCellValue('D1', $pdfTitle == "" ? "Bargain's With Entries" : $pdfTitle);
 
 				$pdfSubTitle = $filterredBy == "status_f" && $status != "" ?
 					strtoupper($status) : ($filterredBy == "firm_f" && $firmId != "" ?
@@ -677,9 +677,9 @@ class Job extends CI_Controller
 
 				$sheet->getStyle('A3:L3')->getFont()->setSize("12")->setBold(true);
 
-				$sheet->mergeCells("C2:L2");
-				$sheet->getStyle('C2:L2')->getAlignment()->setHorizontal('center');
-				$sheet->setCellValue('C2', $pdfSubTitle);
+				$sheet->mergeCells("D2:K2");
+				$sheet->getStyle('D2:K2')->getAlignment()->setHorizontal('center');
+				$sheet->setCellValue('D2', $pdfSubTitle);
 				$sheet->mergeCells('A3:E3');
 				$sheet->getStyle('A3:E3')->getAlignment()->setHorizontal('center');
 				$sheet->setCellValue('A3', "BARGAIN");
