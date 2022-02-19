@@ -725,9 +725,11 @@ class Job extends CI_Controller
 							$sheet->setCellValue('L' . $rows, $val["bargain"]->price);
 							$sheet->setCellValue('M' . $rows, $val["bargain"]->commodity);
 							$sheet->setCellValue('N' . $rows, $eval->userFirm);
+
+							$rows++;
 						}
 					}
-					$rows++;
+
 					// $eserial++;
 				}
 			}
