@@ -705,6 +705,10 @@ class Job extends CI_Controller
 				$rows = 5;
 
 				$eserial = 1;
+				echo "<pre>";
+				print_r($entries);
+				echo "</pre>";
+				die();
 				foreach ($entries as $val) {
 					$sheet->setCellValue('A' . $rows, $val["bargain"]->jobCreatedDate);
 					$sheet->setCellValue('B' . $rows, $val["bargain"]->remaining_quantity);
